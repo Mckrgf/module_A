@@ -1,4 +1,4 @@
-package com.yaobing.framemvpproject
+package com.yaobing.framemvpproject.mylibrary
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
