@@ -11,7 +11,7 @@ class TestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
         findViewById<Button>(R.id.bt_a).setOnClickListener {
-            IntentRouter.go(this,"qwer")
+            IntentRouter.go(this,"MainActivity")
         }
     }
 }
