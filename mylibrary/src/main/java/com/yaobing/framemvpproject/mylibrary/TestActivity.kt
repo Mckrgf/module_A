@@ -14,12 +14,14 @@ import java.util.*
 @Router("asdf")
 class TestActivity : BaseActivity() {
     @BindByTag("bt_a")
-    var btA: ImageButton? = null
+    var btA: Button? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("zxcv","测试btA是否已经获取了")
+        val a = rootView.findViewWithTag<View>("bt_a")
+
         findViewById<Button>(R.id.bt_a).setOnClickListener {
             bindTag(this,rootView)
             IntentRouter.go(this, "MainActivity")
