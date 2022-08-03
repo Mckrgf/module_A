@@ -5,8 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
-import com.yaobing.module_apt.BindByTag
-import com.yaobing.module_apt.Router
+import com.yaobing.module_apt.*
 import com.yaobing.module_middleware.activity.BaseActivity
 import java.lang.reflect.Field
 import java.util.*
@@ -14,6 +13,9 @@ import java.util.*
 @Router("asdf")
 class TestActivity : BaseActivity() {
     @BindByTag("bt_a")
+    @BindByTagA("bt_a")
+    @BindByTagB("bt_a")
+    @BindByTagC("bt_a")
     var btA: Button? = null
 
 
