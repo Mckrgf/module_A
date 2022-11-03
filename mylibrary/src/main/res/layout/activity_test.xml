@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".TestActivity">
 
     <Button
@@ -12,5 +13,11 @@
         android:text="跳转"
         android:tag="bt_a"
         android:id="@+id/bt_a"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="通过扩展函数实现字符串检测"
+        android:tag="et_b"
+        android:id="@+id/et_b"/>
 
 </LinearLayout>

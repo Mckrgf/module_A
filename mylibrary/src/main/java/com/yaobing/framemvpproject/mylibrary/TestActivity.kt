@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import androidx.core.widget.addTextChangedListener
 import com.yaobing.module_apt.*
+import com.yaobing.module_middleware.Utils.ToastUtils
 import com.yaobing.module_middleware.activity.BaseActivity
 import java.lang.reflect.Field
 import java.util.*
@@ -29,6 +31,15 @@ class TestActivity : BaseActivity() {
             IntentRouter.go(this, "MainActivity")
         }
 //        bindTag(this,rootView)
+    }
+
+    override fun initListener() {
+        super.initListener()
+        findViewById<Button>(R.id.et_b).addTextChangedListener {
+            if (it.toString().isNotEmpty()) {
+                ToastUtils.show(this,it.toString().checkComma())
+            }
+        }
     }
 
     override fun getLayoutID(): Int {
@@ -79,4 +90,12 @@ class TestActivity : BaseActivity() {
         return fieldList
     }
 
+}
+
+fun String.checkComma() :String {
+    return if (this.contains(",")) {
+        "有逗号"
+    }else {
+        "没有逗号"
+    }
 }
