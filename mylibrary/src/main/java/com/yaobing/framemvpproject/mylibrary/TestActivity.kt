@@ -29,6 +29,10 @@ class TestActivity : BaseActivity() {
         findViewById<Button>(R.id.bt_a).setOnClickListener {
             bindTag(this,rootView)
             IntentRouter.go(this, "MainActivity")
+
+            //单例模式创建对象
+            val javaBestSingleton = JavaBestSingleton.getInstance()
+            Log.d("zxcv",javaBestSingleton.toString())
         }
 //        bindTag(this,rootView)
     }
