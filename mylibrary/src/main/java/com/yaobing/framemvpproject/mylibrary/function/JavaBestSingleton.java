@@ -1,9 +1,4 @@
-package com.yaobing.framemvpproject.mylibrary;
-
-import android.util.Log;
-
-import com.yaobing.module_middleware.Utils.LogUtil;
-import com.yaobing.module_middleware.Utils.ToastUtils;
+package com.yaobing.framemvpproject.mylibrary.function;
 
 public class JavaBestSingleton {
     //通过静态内部类实现单例模式,完美解决懒汉式的线程安全问题和饿汉式的内存问题

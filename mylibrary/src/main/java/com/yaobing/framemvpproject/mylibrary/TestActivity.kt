@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.ImageButton
 import androidx.core.widget.addTextChangedListener
+import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.module_apt.*
 import com.yaobing.module_middleware.Utils.ToastUtils
 import com.yaobing.module_middleware.activity.BaseActivity
