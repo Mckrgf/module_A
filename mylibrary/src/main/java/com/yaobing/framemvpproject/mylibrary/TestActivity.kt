@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import androidx.core.widget.addTextChangedListener
 import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
+import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
 import com.yaobing.module_apt.*
 import com.yaobing.module_middleware.Utils.ToastUtils
 import com.yaobing.module_middleware.activity.BaseActivity
@@ -32,7 +33,11 @@ class TestActivity : BaseActivity() {
 
             //单例模式创建对象
             val javaBestSingleton = JavaBestSingleton.getInstance()
-            Log.d("zxcv",javaBestSingleton.toString())
+            Log.d("zxcv java 静态内部类",javaBestSingleton.toString())
+
+            //kotlin单例模式：懒汉
+            val kotlinSingleton = SingletonKotlin.getSingle()
+            Log.d("zxcv kotlin 懒汉",kotlinSingleton.toString())
         }
 //        bindTag(this,rootView)
     }
