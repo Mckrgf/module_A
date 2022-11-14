@@ -40,6 +40,11 @@ class TestActivity : BaseActivity() {
             val kotlinSingleton = SingletonKotlin.getSingle()
             Log.d("zxcv kotlin 懒汉", kotlinSingleton.toString())
         }
+        findViewById<Button>(R.id.bt_b).setOnClickListener {
+            val person = Person(30,"敲代码")
+            person.work = "敲代码"
+            person.say("我用扩展方法说话了：" + person.work)
+        }
 //        bindTag(this,rootView)
     }
 

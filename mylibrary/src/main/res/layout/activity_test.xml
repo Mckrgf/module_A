@@ -7,12 +7,25 @@
     android:orientation="vertical"
     tools:context=".TestActivity">
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="跳转"
-        android:tag="bt_a"
-        android:id="@+id/bt_a"/>
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跳转"
+            android:tag="bt_a"
+            android:id="@+id/bt_a"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="对象的扩展函数"
+            android:tag="bt_b"
+            android:id="@+id/bt_b"/>
+
+    </LinearLayout>
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
