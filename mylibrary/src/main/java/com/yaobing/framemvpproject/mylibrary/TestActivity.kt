@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
 import com.yaobing.module_apt.*
-import com.yaobing.module_middleware.Utils.ToastUtils
+import com.yaobing.module_middleware.Utils.*
 import com.yaobing.module_middleware.activity.BaseActivity
 import java.lang.reflect.Field
 import java.util.*
@@ -24,29 +25,35 @@ class TestActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("zxcv","测试btA是否已经获取了")
+        Log.d("zxcv", "测试btA是否已经获取了")
         val a = rootView.findViewWithTag<View>("bt_a")
 
         findViewById<Button>(R.id.bt_a).setOnClickListener {
-            bindTag(this,rootView)
+            bindTag(this, rootView)
             IntentRouter.go(this, "MainActivity")
 
             //单例模式创建对象
             val javaBestSingleton = JavaBestSingleton.getInstance()
-            Log.d("zxcv java 静态内部类",javaBestSingleton.toString())
+            Log.d("zxcv java 静态内部类", javaBestSingleton.toString())
 
             //kotlin单例模式：懒汉
             val kotlinSingleton = SingletonKotlin.getSingle()
-            Log.d("zxcv kotlin 懒汉",kotlinSingleton.toString())
+            Log.d("zxcv kotlin 懒汉", kotlinSingleton.toString())
         }
 //        bindTag(this,rootView)
     }
 
     override fun initListener() {
+        var isBold = true
         super.initListener()
-        findViewById<Button>(R.id.et_b).addTextChangedListener {
+        findViewById<EditText>(R.id.et_b).addTextChangedListener {
             if (it.toString().isNotEmpty()) {
-                ToastUtils.show(this,it.toString().checkComma())
+                //给Edittext设置扩展属性
+                isBold = !isBold
+                findViewById<EditText>(R.id.et_b).isBold = !isBold
+                ToastUtils.show(this, it.toString().checkComma())
+
+
             }
         }
     }
@@ -57,7 +64,7 @@ class TestActivity : BaseActivity() {
 
     override fun initView() {
         super.initView()
-        Log.d("zxcv","测试btA是否已经获取了")
+        Log.d("zxcv", "测试btA是否已经获取了")
     }
 
     fun bindTag(target: Any, source: View) {
@@ -85,6 +92,7 @@ class TestActivity : BaseActivity() {
             }
         }
     }
+
     private fun getAllContextFields(target: Any): List<Field> {
         val fieldList: MutableList<Field> = ArrayList()
         var tempClass: Class<*>? = target.javaClass
@@ -101,10 +109,3 @@ class TestActivity : BaseActivity() {
 
 }
 
-fun String.checkComma() :String {
-    return if (this.contains(",")) {
-        "有逗号"
-    }else {
-        "没有逗号"
-    }
-}
