@@ -22,10 +22,38 @@ class TestActivity : BaseActivity() {
     @BindByTagC("bt_a")
     var btA: Button? = null
 
+    init {
+        Log.d("zxv","init了")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("zxv","onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("zxv","onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("zxv","onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("zxv","onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("zxv","onDestroy")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("zxcv", "测试btA是否已经获取了")
+        Log.d("zxv", "onCreate")
         val a = rootView.findViewWithTag<View>("bt_a")
 
         findViewById<Button>(R.id.bt_a).setOnClickListener {
@@ -46,8 +74,22 @@ class TestActivity : BaseActivity() {
             person.say("我用扩展方法说话了：" + person.work)
         }
 //        bindTag(this,rootView)
+        Log.d("zxcvaaa",stringLengthFunc("aaa"))
+        stringMapper("Android", { input ->
+            input.length
+        })
     }
 
+    //kotlin匿名函数
+    val stringLengthFunc: (String) -> String = { input ->
+        "输入的字符串$input 的长度为"+input.length
+    }
+
+    //kt高阶函数
+    private fun stringMapper(str: String, mapper1: (String) -> Int): Int {
+        // Invoke function
+        return mapper1(str)
+    }
     override fun initListener() {
         var isBold = true
         super.initListener()
