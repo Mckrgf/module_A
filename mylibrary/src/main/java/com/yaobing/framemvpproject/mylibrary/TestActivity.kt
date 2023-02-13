@@ -60,6 +60,7 @@ class TestActivity : BaseActivity() {
             bindTag(this, rootView)
             IntentRouter.go(this, "MainActivity")
 
+
             //单例模式创建对象
             val javaBestSingleton = JavaBestSingleton.getInstance()
             Log.d("zxcv java 静态内部类", javaBestSingleton.toString())
@@ -71,7 +72,8 @@ class TestActivity : BaseActivity() {
         findViewById<Button>(R.id.bt_b).setOnClickListener {
             val person = Person(30,"敲代码")
             person.work = "敲代码"
-            person.say("我用扩展方法说话了：" + person.work)
+            person.say("我用扩展方法说话了：" + person.work+ ";且我跳转到moduleB页面了")
+            IntentRouter.go(this, "TestCActivity")
         }
 //        bindTag(this,rootView)
         Log.d("zxcvaaa",stringLengthFunc("aaa"))
