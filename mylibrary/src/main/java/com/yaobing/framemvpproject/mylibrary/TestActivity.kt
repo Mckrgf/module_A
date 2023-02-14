@@ -22,35 +22,6 @@ class TestActivity : BaseActivity() {
     @BindByTagC("bt_a")
     var btA: Button? = null
 
-    init {
-        Log.d("zxv","init了")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("zxv","onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("zxv","onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("zxv","onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("zxv","onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("zxv","onDestroy")
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("zxv", "onCreate")
@@ -69,14 +40,18 @@ class TestActivity : BaseActivity() {
             val kotlinSingleton = SingletonKotlin.getSingle()
             Log.d("zxcv kotlin 懒汉", kotlinSingleton.toString())
         }
+
+
         findViewById<Button>(R.id.bt_b).setOnClickListener {
-            val person = Person(30,"敲代码")
+            val person = Person(30, "敲代码")
             person.work = "敲代码"
-            person.say("我用扩展方法说话了：" + person.work+ ";且我跳转到moduleB页面了")
+            person.say("我用扩展方法说话了：" + person.work + ";且我跳转到moduleB页面了")
+
             IntentRouter.go(this, "TestCActivity")
         }
-//        bindTag(this,rootView)
-        Log.d("zxcvaaa",stringLengthFunc("aaa"))
+
+
+        Log.d("zxcvaaa", stringLengthFunc("aaa"))
         stringMapper("Android", { input ->
             input.length
         })
@@ -84,7 +59,7 @@ class TestActivity : BaseActivity() {
 
     //kotlin匿名函数
     val stringLengthFunc: (String) -> String = { input ->
-        "输入的字符串$input 的长度为"+input.length
+        "输入的字符串$input 的长度为" + input.length
     }
 
     //kt高阶函数
@@ -92,6 +67,7 @@ class TestActivity : BaseActivity() {
         // Invoke function
         return mapper1(str)
     }
+
     override fun initListener() {
         var isBold = true
         super.initListener()
@@ -154,6 +130,36 @@ class TestActivity : BaseActivity() {
             }
         }
         return fieldList
+    }
+
+
+    init {
+        Log.d("zxv", "init了")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("zxv", "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("zxv", "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("zxv", "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("zxv", "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("zxv", "onDestroy")
     }
 
 }
