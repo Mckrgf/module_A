@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
+import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
 import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
 import com.yaobing.module_apt.*
@@ -51,7 +52,7 @@ class TestActivity : BaseActivity() {
         }
 
         findViewById<Button>(R.id.bt_paging).setOnClickListener {
-
+            IntentRouter.go(this, "PagingActivity")
         }
 
 

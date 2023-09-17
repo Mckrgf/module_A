@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:supportsRtl="true">
         <activity
-            android:name=".PagingActivity"
+            android:name=".activity.PagingActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
