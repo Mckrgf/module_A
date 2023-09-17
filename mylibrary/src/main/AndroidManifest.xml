@@ -5,7 +5,15 @@
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
-        <activity android:name="TestActivity"
+        <activity
+            android:name=".PagingActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".TestActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

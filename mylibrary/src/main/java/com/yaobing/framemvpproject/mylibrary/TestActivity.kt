@@ -50,6 +50,10 @@ class TestActivity : BaseActivity() {
             IntentRouter.go(this, "TestCActivity")
         }
 
+        findViewById<Button>(R.id.bt_paging).setOnClickListener {
+
+        }
+
 
         Log.d("zxcvaaa", stringLengthFunc("aaa"))
         stringMapper("Android", { input ->
