@@ -26,28 +26,27 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+
+//
+/**
+ * 结合viewModel+liveData+paging+协程+retrofit，具体结构如下
+ *
+ * 1.定义接口service用来保存retrofit请求方法
+ * 本来是用call/single/observable等作为返回参数，在用suspend关键字的前提下，用返回数据的类型即可
+ * 再定义一个create方法用来实例化该retrofit的service
+ * 2.定义一个Repository单例（通过object关键字），定义一个fun，传入Pager的构造函数（config+pagingResourceFactory），同时返回flow对象
+ * 3。2缺一个pagingSource，做一个。
+ * 4.
+ */
+
 @Router(value = "PagingActivity")
 class PagingActivity : BaseControllerActivity() {
-    private val aa: Flowable<ArrayList<RepoData>> by lazy {
-        val name = "MCKRGF"
-        val queryMap = HashMap<String, Int>()
-        queryMap["page"] = 1
-        queryMap["per_page"] = 5
-        Api.getInstance().retrofit.create(APIService::class.java).listRx(name, queryMap)
-    }
+
     private val viewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     private var repoAdapter = RepoAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        mCompositeSubscription.add(aa.onErrorReturn {
-//            Log.d("zxcvb0", Thread.currentThread().name)
-//            arrayListOf<RepoData>()
-//        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe {
-//            Log.d("zxcvb1", Thread.currentThread().name)
-//
-//            Log.d("zxcv", it.toString())
-//        })
         val rv = findViewById<RecyclerView>(R.id.rv)
         val progressBar = findViewById<ProgressBar>(R.id.progress_bar)
         rv.layoutManager = LinearLayoutManager(this)
