@@ -76,6 +76,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:text="paging"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="向左侧按钮"
+            android:id="@+id/bt_trans"
+            app:layout_constraintStart_toEndOf="@id/bt_paging"
+            app:layout_constraintTop_toTopOf="@id/bt_paging"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

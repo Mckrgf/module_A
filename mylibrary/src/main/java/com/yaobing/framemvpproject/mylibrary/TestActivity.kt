@@ -2,11 +2,13 @@ package com.yaobing.framemvpproject.mylibrary
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
+import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
 import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
 import com.yaobing.module_apt.*
@@ -22,13 +24,16 @@ class TestActivity : BaseActivity() {
     @BindByTagB("bt_a")
     @BindByTagC("bt_a")
     var btA: Button? = null
+    var hide = true
+    private val binding by lazy {
+        ActivityTestBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("zxv", "onCreate")
-        val a = rootView.findViewWithTag<View>("bt_a")
-
-        findViewById<Button>(R.id.bt_a).setOnClickListener {
+        setContentView(binding.root)
+        binding.btA.setOnClickListener {
             bindTag(this, rootView)
             IntentRouter.go(this, "MainActivity")
 
@@ -43,7 +48,7 @@ class TestActivity : BaseActivity() {
         }
 
 
-        findViewById<Button>(R.id.bt_b).setOnClickListener {
+        binding.btB.setOnClickListener {
             val person = Person(30, "敲代码")
             person.work = "敲代码"
             person.say("我用扩展方法说话了：" + person.work + ";且我跳转到moduleB页面了")
@@ -51,8 +56,19 @@ class TestActivity : BaseActivity() {
             IntentRouter.go(this, "TestCActivity")
         }
 
-        findViewById<Button>(R.id.bt_paging).setOnClickListener {
+        binding.btPaging.setOnClickListener {
             IntentRouter.go(this, "PagingActivity")
+        }
+        binding.btTrans.setOnClickListener {
+            var x = 0f
+            x = if (hide) {
+                -binding.btPaging.width.toFloat()
+            } else {
+                0f
+            }
+            binding.btPaging.animate().translationX(x)
+            binding.btTrans.animate().translationX(x)
+            hide = !hide
         }
 
 
@@ -76,11 +92,11 @@ class TestActivity : BaseActivity() {
     override fun initListener() {
         var isBold = true
         super.initListener()
-        findViewById<EditText>(R.id.et_b).addTextChangedListener {
+        binding.etB.addTextChangedListener {
             if (it.toString().isNotEmpty()) {
                 //给Edittext设置扩展属性
                 isBold = !isBold
-                findViewById<EditText>(R.id.et_b).isBold = !isBold
+                binding.etB.isBold = !isBold
                 ToastUtils.show(this, it.toString().checkComma())
 
 
@@ -89,7 +105,7 @@ class TestActivity : BaseActivity() {
     }
 
     override fun getLayoutID(): Int {
-        return R.layout.activity_test
+        return NO_VIEW
     }
 
     override fun initView() {
