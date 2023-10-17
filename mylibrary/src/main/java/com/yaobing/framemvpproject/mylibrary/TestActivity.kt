@@ -2,10 +2,7 @@ package com.yaobing.framemvpproject.mylibrary
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
@@ -19,12 +16,7 @@ import java.util.*
 
 @Router("asdf")
 class TestActivity : BaseActivity() {
-    @BindByTag("bt_a")
-    @BindByTagA("bt_a")
-    @BindByTagB("bt_a")
-    @BindByTagC("bt_a")
-    var btA: Button? = null
-    var hide = true
+    private var hide = true
     private val binding by lazy {
         ActivityTestBinding.inflate(layoutInflater)
     }
@@ -60,22 +52,19 @@ class TestActivity : BaseActivity() {
             IntentRouter.go(this, "PagingActivity")
         }
         binding.btTrans.setOnClickListener {
-            var x = 0f
-            x = if (hide) {
+            val x: Float = if (hide) {
                 -binding.btPaging.width.toFloat()
             } else {
                 0f
             }
             binding.btPaging.animate().translationX(x)
-            binding.btTrans.animate().translationX(x)
+            binding.btTrans.animate().translationX(x).startDelay = 100L
             hide = !hide
         }
 
-
-        Log.d("zxcvaaa", stringLengthFunc("aaa"))
-        stringMapper("Android", { input ->
+        stringMapper("Android") { input ->
             input.length
-        })
+        }
     }
 
     //kotlin匿名函数
@@ -113,17 +102,18 @@ class TestActivity : BaseActivity() {
         Log.d("zxcv", "测试btA是否已经获取了")
     }
 
-    fun bindTag(target: Any, source: View) {
+    private fun bindTag(target: Any, source: View) {
         val fields: List<Field> = getAllContextFields(target)
         if (fields.isNotEmpty()) {
             for (field in fields) {
                 try {
                     field.isAccessible = true
-                    val bindByTag: BindByTag = field.getAnnotation(BindByTag::class.java)
+                    val bindByTag: BindByTag =
+                        field.getAnnotation(BindByTag::class.java) as BindByTag
                     val tag: String = bindByTag.value
                     field[target] = source.findViewWithTag(tag)
                     try {
-                        val button = field[this@TestActivity]
+                        field[this@TestActivity]
                         Log.d("zxcv", "墙砖成功")
                     } catch (e: Exception) {
                         Log.d("zxcv", "墙砖失败")
@@ -146,7 +136,7 @@ class TestActivity : BaseActivity() {
             tempClass = if (tempClass.name.contains("com.yaobing.framemvpproject")) {
                 null
             } else {
-                fieldList.addAll(Arrays.asList(*tempClass.declaredFields))
+                fieldList.addAll(listOf(*tempClass.declaredFields))
                 tempClass.superclass //得到父类,然后赋给自己
             }
         }
