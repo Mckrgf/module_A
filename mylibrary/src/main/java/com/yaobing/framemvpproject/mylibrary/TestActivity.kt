@@ -87,7 +87,7 @@ class TestActivity : BaseActivity() {
                 isBold = !isBold
                 binding.etB.isBold = !isBold
                 ToastUtils.show(this, it.toString().checkComma())
-
+                //haha
 
             }
         }
