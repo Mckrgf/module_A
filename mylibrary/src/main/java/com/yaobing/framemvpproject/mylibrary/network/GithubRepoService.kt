@@ -15,26 +15,23 @@ import retrofit2.http.QueryMap
 interface GithubRepoService {
     //分页显示repo,rxjava(自己库的数据)
     @GET("users/{user}/repos")
-    suspend fun listRx(
-        @Path("user") user: String?,
-        @QueryMap(encoded = true) page: HashMap<String, Int>
-    ): Flowable<ArrayList<RepoData>>
+    suspend fun listRx(@Path("user") user: String?, @QueryMap(encoded = true) page: HashMap<String, Int>): Flowable<ArrayList<RepoData>>
 
     //分页显示repo,rxjava（所有android库的数据）
     @GET("search/repositories?sort=stars&q=Android")
     suspend fun searchRepos(@Query("page") page: Int, @Query("per_page") perPage: Int): RepoResponse
+
     //分页显示repo,rxjava（所有android库的数据）
     @GET("search/repositories?sort=stars&q=Android")
     fun searchReposa(@Query("page") page: Int, @Query("per_page") perPage: Int): Call<RepoResponse>
 
     companion object {
-        private val baseUrl = "https://api.github.com/"
+        private const val baseUrl = "https://api.github.com/"
 
         fun create(): GithubRepoService {
-            return Retrofit.Builder().baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(
-                    RxJava2CallAdapterFactory.create()).build()
-                .create(GithubRepoService::class.java)
+            return Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(
+                    RxJava2CallAdapterFactory.create()
+                ).build().create(GithubRepoService::class.java)
         }
     }
 }
