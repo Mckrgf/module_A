@@ -26,7 +26,7 @@ class TestActivity : BaseActivity() {
         Log.d("zxv", "onCreate")
         setContentView(binding.root)
         binding.btA.setOnClickListener {
-            bindTag(this, rootView)
+            bindTag(this, binding.root)
             IntentRouter.go(this, "MainActivity")
 
 
