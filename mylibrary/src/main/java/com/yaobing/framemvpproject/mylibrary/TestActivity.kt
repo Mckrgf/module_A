@@ -1,5 +1,6 @@
 package com.yaobing.framemvpproject.mylibrary
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -25,6 +26,9 @@ class TestActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         Log.d("zxv", "onCreate")
         setContentView(binding.root)
+        val aaa = packageManager.getApplicationInfo(packageName,PackageManager.GET_META_DATA).metaData.get("aaa")
+        ToastUtils.show(this,aaa.toString(),0)
+        Log.i("zxcv",aaa.toString())
         binding.btA.setOnClickListener {
             bindTag(this, binding.root)
             IntentRouter.go(this, "MainActivity")
