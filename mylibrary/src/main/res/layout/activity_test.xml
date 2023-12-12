@@ -84,6 +84,23 @@
             android:id="@+id/bt_trans"
             app:layout_constraintStart_toEndOf="@id/bt_paging"
             app:layout_constraintTop_toTopOf="@id/bt_paging"/>
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/circle_image"
+            android:layout_width="170px"
+            android:layout_height="170px"
+            android:scaleType="fitXY"
+            android:src="@drawable/aaa"
+            app:layout_constraintTop_toTopOf="@id/bt_trans"
+            app:layout_constraintStart_toEndOf="@id/bt_trans"
+            app:roundPercent="0.5"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="圆角进度0-1"
+            android:inputType="numberDecimal"
+            android:id="@+id/et_circle"
+            app:layout_constraintStart_toEndOf="@id/circle_image"
+            app:layout_constraintTop_toTopOf="@+id/circle_image"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

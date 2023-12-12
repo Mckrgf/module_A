@@ -69,6 +69,16 @@ class TestActivity : BaseActivity() {
         stringMapper("Android") { input ->
             input.length
         }
+
+        binding.etCircle.addTextChangedListener {
+            try {
+                if (it.toString().isNotEmpty() && it.toString().toFloat() in 0f..1f) {
+                    binding.circleImage.roundPercent = it.toString().toFloat()
+                }
+            }catch (e: java.lang.Exception) {
+                ToastUtils.show(this,e.toString())
+            }
+        }
     }
 
     //kotlin匿名函数
