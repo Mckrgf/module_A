@@ -92,6 +92,8 @@
             android:src="@drawable/aaa"
             app:layout_constraintTop_toTopOf="@id/bt_trans"
             app:layout_constraintStart_toEndOf="@id/bt_trans"
+            app:altSrc="@drawable/aaaaa"
+            app:crossfade="0.5"
             app:roundPercent="0.5"/>
         <EditText
             android:layout_width="wrap_content"
@@ -101,6 +103,14 @@
             android:id="@+id/et_circle"
             app:layout_constraintStart_toEndOf="@id/circle_image"
             app:layout_constraintTop_toTopOf="@+id/circle_image"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="约束布局隐藏某个控件导致重叠问题"
+            android:id="@+id/bt_c"
+            app:layout_constraintTop_toBottomOf="@+id/circle_image"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

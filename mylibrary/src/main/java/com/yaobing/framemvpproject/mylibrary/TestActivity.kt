@@ -52,6 +52,10 @@ class TestActivity : BaseActivity() {
             IntentRouter.go(this, "TestCActivity")
         }
 
+        binding.btC.setOnClickListener {
+            IntentRouter.go(this, "testd")
+        }
+
         binding.btPaging.setOnClickListener {
             IntentRouter.go(this, "PagingActivity")
         }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".activity.TestDActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/viewstub_des"
+        android:id="@+id/tv_des"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_a"
+        android:text="bt_a"
+        app:layout_constraintTop_toBottomOf="@+id/tv_des"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_b"
+        android:text="bt_b"
+        app:layout_constraintTop_toBottomOf="@+id/bt_a"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <ViewStub
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/vs_c"
+        android:text="bt_c"
+        app:layout_constraintTop_toBottomOf="@+id/bt_b"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <ViewStub
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/vs_d"
+        android:text="bt_d"
+        app:layout_constraintTop_toBottomOf="@+id/vs_c"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
