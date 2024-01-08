@@ -2,6 +2,7 @@ package com.yaobing.framemvpproject.mylibrary
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
@@ -58,6 +59,9 @@ class TestActivity : BaseActivity() {
 
         binding.btPaging.setOnClickListener {
             IntentRouter.go(this, "PagingActivity")
+        }
+        binding.btCeilingA.setOnClickListener {
+            IntentRouter.go(this, "CeilingAlphaActivity")
         }
         binding.btTrans.setOnClickListener {
             val x: Float = if (hide) {
@@ -190,6 +194,24 @@ class TestActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d("zxv", "onDestroy")
+    }
+
+    fun testNull() {
+        var data_a :String? = null
+        var data_b :String?  = "listOf<Any>()"
+        if (Math.random().equals(1f)) {
+            data_a = "aa"
+        }
+        try {
+            if (TextUtils.isEmpty(data_a)) {
+                Log.d("zxcv","data_a1?")
+            }else {
+                Log.d("zxcv",data_a!!)
+            }
+
+        }catch (e : java.lang.Exception) {
+            Log.d("zxcv","e")
+        }
     }
 
 }

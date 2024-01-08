@@ -12,6 +12,9 @@
             android:name=".activity.MainaaaaActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.TestCeilingAlphaActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.PagingActivity"
             android:exported="false">
             <meta-data

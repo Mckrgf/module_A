@@ -111,6 +111,13 @@
             android:id="@+id/bt_c"
             app:layout_constraintTop_toBottomOf="@+id/circle_image"
             app:layout_constraintStart_toStartOf="parent"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="吸顶效果01"
+            android:id="@+id/bt_ceiling_a"
+            app:layout_constraintTop_toBottomOf="@+id/circle_image"
+            app:layout_constraintStart_toEndOf="@id/bt_c"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

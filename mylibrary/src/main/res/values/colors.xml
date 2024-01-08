@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_f5f5f5">#f5f5f5</color>
+    <color name="color_dddddd">#dddddd</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_f26767">#f26767</color>
+    <color name="color_ce4242">#ce4242</color>
+    <color name="color_64a027">#64a027</color>
+    <color name="color_fbfbfb">#FBFBFB</color>
+    <color name="color_e8e8e8">#e8e8e8</color>
+    <color name="color_05000000">#05000000</color>
+    <color name="color_7796c7">#7796C7</color>
+    <color name="color_94add5">#94ADD5</color>
+    <color name="color_c68685">#C68685</color>
+    <color name="color_d59b9a">#D59B9A</color>
+
+    <color name="color_6c9881">#6C9881</color>
+    <color name="color_85a695">#85A695</color>
+    <color name="color_a59a93">#A59A93</color>
+    <color name="color_b8ada9">#B8ADA9</color>
+
+    <color name="color_FF1010">#FF1010</color>
+    <color name="color_FFF6F0">#FFF6F0</color>
+    <color name="color_E9EDFF">#E9EDFF</color>
+    <color name="color_6dd400">#6DD400</color>
+    <color name="color_5ac74e">#5AC74E</color>
+    <color name="color_66percent_666666">#A8666666</color>
+    <color name="black_121212">#121212</color>
+    <color name="notify_tabbartext_select">#253746</color>
+</resources>
