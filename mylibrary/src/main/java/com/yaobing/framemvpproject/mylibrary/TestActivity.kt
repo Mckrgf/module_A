@@ -33,7 +33,7 @@ class TestActivity : BaseActivity() {
         binding.btA.setOnClickListener {
             bindTag(this, binding.root)
             IntentRouter.go(this, "MainActivity")
-
+            var a :RoundedBorderImageView
 
             //单例模式创建对象
             val javaBestSingleton = JavaBestSingleton.getInstance()

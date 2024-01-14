@@ -119,6 +119,40 @@
             app:layout_constraintTop_toBottomOf="@+id/circle_image"
             app:layout_constraintStart_toEndOf="@id/bt_c"/>
 
+        <com.yaobing.framemvpproject.mylibrary.RoundedBorderImageView
+            android:padding="1px"
+            android:id="@+id/circle_bord_image"
+            android:layout_width="170px"
+            android:layout_height="170px"
+            android:scaleType="fitXY"
+            android:src="@drawable/aaa"
+            app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+
+        <ImageView
+            android:id="@+id/iv_dfds"
+            android:padding="2dp"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/shape_drawable"
+            android:src="@mipmap/bb"
+            app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a"
+            app:layout_constraintStart_toEndOf="@+id/circle_bord_image"/>
+
+        <ImageView
+            android:padding="4dp"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/ccc"
+            android:src="@mipmap/bb"
+            app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a"
+            app:layout_constraintStart_toEndOf="@+id/iv_dfds"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
