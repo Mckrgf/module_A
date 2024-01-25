@@ -51,4 +51,11 @@ dependencies {
     api project(path: ':module_common_view')
     implementation project(path: ':module_base:module_apt')
     kapt project(path: ':module_base:module_compiler')
+
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    kapt 'com.github.bumptech.glide:compiler:4.13.2'
+//    implementation 'com.github.sahasbhop.apngdecoder:apngdecoder:1.5'
+    implementation 'com.github.penfeizhou.android.animation:apng:2.24.0'
+    implementation 'com.github.penfeizhou.android.animation:glide-plugin:2.24.0'
+
 }
