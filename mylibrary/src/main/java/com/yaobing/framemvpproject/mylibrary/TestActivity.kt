@@ -1,5 +1,7 @@
 package com.yaobing.framemvpproject.mylibrary
 
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.TextUtils
@@ -7,6 +9,8 @@ import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
+import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
+import com.yaobing.framemvpproject.mylibrary.activity.activity.SplashActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
 import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
@@ -87,6 +91,14 @@ class TestActivity : BaseActivity() {
                 ToastUtils.show(this,e.toString())
             }
         }
+
+        binding.btLifeCycler.setOnClickListener {
+            var intent = Intent(this,HOmeActivity::class.java)
+            startActivity(intent)
+        }
+
+//        Glide.with(this).load("https://www.wenjianbaike.com/wp-content/uploads/2021/04/apng_wenjan.png").set(
+//            AnimationDecoderOption.DISABLE_ANIMATION_GIF_DECODER, false).into(binding.ivDfds);
     }
 
     //kotlin匿名函数

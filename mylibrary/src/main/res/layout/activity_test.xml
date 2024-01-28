@@ -137,8 +137,6 @@
             android:layout_height="95dp"
             android:layout_marginLeft="10dp"
             android:scaleType="fitXY"
-            android:background="@drawable/shape_drawable"
-            android:src="@mipmap/bb"
             app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a"
             app:layout_constraintStart_toEndOf="@+id/circle_bord_image"/>
 
@@ -150,8 +148,17 @@
             android:scaleType="fitXY"
             android:background="@drawable/ccc"
             android:src="@mipmap/bb"
+            android:id="@+id/iv_glide"
             app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a"
             app:layout_constraintStart_toEndOf="@+id/iv_dfds"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试跳转生命周期"
+            android:id="@+id/bt_life_cycler"
+            app:layout_constraintTop_toBottomOf="@+id/iv_glide"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,7 +3,11 @@
     package="com.yaobing.framemvpproject.mylibrary">
 
     <application
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/AppTheme"
         android:allowBackup="true"
+        android:name=".MyApp"
         android:supportsRtl="true">
         <activity
             android:name=".activity.TestDActivity"
@@ -29,6 +33,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity"
+            android:launchMode="singleTask"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name="com.yaobing.framemvpproject.mylibrary.activity.activity.SplashActivity"
+            android:exported="false"
+            android:launchMode="singleTask">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
     </application>
 
