@@ -124,7 +124,7 @@ class TestActivity : BaseActivity() {
         }
         Glide.with(context)
             .asGif()
-            .load("file:///android_asset/test5.png")
+            .load("file:///android_asset/world-cup.gif")
             .listener(requestListener).into(binding.ivDfds)
     }
     public fun bitmapInputStream(bm: Bitmap, quality:Int) : InputStream {
