@@ -1,7 +1,6 @@
 package com.yaobing.framemvpproject.mylibrary
 
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -13,7 +12,6 @@ import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -22,7 +20,6 @@ import com.github.penfeizhou.animation.apng.APNGDrawable
 import com.github.penfeizhou.animation.gif.GifDrawable
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
 import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
-import com.yaobing.framemvpproject.mylibrary.activity.activity.SplashActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
 import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
@@ -115,24 +112,20 @@ class TestActivity : BaseActivity() {
 
 //        Glide.with(this).load("https://www.wenjianbaike.com/wp-content/uploads/2021/04/apng_wenjan.png").set(
 //            AnimationDecoderOption.DISABLE_ANIMATION_GIF_DECODER, false).into(binding.ivDfds);
-    }
+        val requestListener:RequestListener<com.bumptech.glide.load.resource.gif.GifDrawable> = object : RequestListener<com.bumptech.glide.load.resource.gif.GifDrawable>{
+            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<com.bumptech.glide.load.resource.gif.GifDrawable>?, isFirstResource: Boolean): Boolean {
+                return false
+            }
+
+            override fun onResourceReady(resource: com.bumptech.glide.load.resource.gif.GifDrawable?, model: Any?, target: Target<com.bumptech.glide.load.resource.gif.GifDrawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                return false
+            }
+
+        }
         Glide.with(context)
-//            .asGif()
+            .asGif()
             .load("file:///android_asset/test5.png")
-            .listener(object : RequestListener<Drawable?> {
-            override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable?>, isFirstResource: Boolean): Boolean {
-                return false
-            }
-
-            override fun onResourceReady(resource: Drawable?, model: Any, target: Target<Drawable?>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-                if (resource is APNGDrawable) {
-                    (resource as APNGDrawable).setLoopLimit(10)
-                }
-                return false
-            }
-        })
-            .into(binding.ivDfds)
-
+            .listener(requestListener).into(binding.ivDfds)
     }
     public fun bitmapInputStream(bm: Bitmap, quality:Int) : InputStream {
         val baos = ByteArrayOutputStream()
