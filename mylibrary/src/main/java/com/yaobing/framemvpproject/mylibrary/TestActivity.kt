@@ -1,5 +1,7 @@
 package com.yaobing.framemvpproject.mylibrary
 
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -19,6 +21,8 @@ import com.bumptech.glide.request.target.Target
 import com.github.penfeizhou.animation.apng.APNGDrawable
 import com.github.penfeizhou.animation.gif.GifDrawable
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
+import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
+import com.yaobing.framemvpproject.mylibrary.activity.activity.SplashActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
 import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
@@ -101,7 +105,17 @@ class TestActivity : BaseActivity() {
             }catch (e: java.lang.Exception) {
                 ToastUtils.show(this,e.toString())
             }
+
         }
+
+        binding.btLifeCycler.setOnClickListener {
+            var intent = Intent(this,HOmeActivity::class.java)
+            startActivity(intent)
+        }
+
+//        Glide.with(this).load("https://www.wenjianbaike.com/wp-content/uploads/2021/04/apng_wenjan.png").set(
+//            AnimationDecoderOption.DISABLE_ANIMATION_GIF_DECODER, false).into(binding.ivDfds);
+    }
         Glide.with(context)
 //            .asGif()
             .load("file:///android_asset/test5.png")
