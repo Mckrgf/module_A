@@ -10,14 +10,16 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.github.penfeizhou.animation.apng.APNGDrawable
-import com.github.penfeizhou.animation.gif.GifDrawable
+import com.hjq.window.EasyWindow
+import com.hjq.window.draggable.MovingDraggable
+import com.hjq.window.draggable.SpringBackDraggable
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
 import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
@@ -31,6 +33,7 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.lang.reflect.Field
 import java.util.*
+
 
 @Router("asdf")
 class TestActivity : BaseActivity() {
@@ -110,6 +113,10 @@ class TestActivity : BaseActivity() {
             startActivity(intent)
         }
 
+        binding.btAddDragView.setOnClickListener {
+            addDraggableView()
+        }
+
 //        Glide.with(this).load("https://www.wenjianbaike.com/wp-content/uploads/2021/04/apng_wenjan.png").set(
 //            AnimationDecoderOption.DISABLE_ANIMATION_GIF_DECODER, false).into(binding.ivDfds);
         val requestListener:RequestListener<com.bumptech.glide.load.resource.gif.GifDrawable> = object : RequestListener<com.bumptech.glide.load.resource.gif.GifDrawable>{
@@ -126,6 +133,11 @@ class TestActivity : BaseActivity() {
             .asGif()
             .load("file:///android_asset/world-cup.gif")
             .listener(requestListener).into(binding.ivDfds)
+        // 传入 Activity 对象表示设置成局部的，不需要有悬浮窗权限
+// 传入 Application 对象表示设置成全局的，但需要有悬浮窗权限
+        // 传入 Activity 对象表示设置成局部的，不需要有悬浮窗权限
+// 传入 Application 对象表示设置成全局的，但需要有悬浮窗权限
+
     }
     public fun bitmapInputStream(bm: Bitmap, quality:Int) : InputStream {
         val baos = ByteArrayOutputStream()
@@ -134,6 +146,16 @@ class TestActivity : BaseActivity() {
     }
 
 
+    fun addDraggableView() {
+        EasyWindow.with(this)
+            .setContentView(R.layout.window_hint)
+            .setAnimStyle(R.style.IOSAnimStyle)
+            .setImageDrawable(android.R.id.icon, R.drawable.ic_launcher_background)
+            .setText(android.R.id.message, "点我消失") // 设置成可拖拽的
+            .setDraggable(SpringBackDraggable())
+            .setOnClickListener(android.R.id.message, EasyWindow.OnClickListener<TextView?> { easyWindow, view -> easyWindow.cancel() })
+            .show()
+    }
     fun drawableToBitmap(drawable: Drawable): Bitmap? {
         val bitmap = Bitmap
             .createBitmap(

@@ -57,5 +57,6 @@ dependencies {
 //    implementation 'com.github.sahasbhop.apngdecoder:apngdecoder:1.5'
     implementation 'com.github.penfeizhou.android.animation:apng:2.24.0'
     implementation 'com.github.penfeizhou.android.animation:glide-plugin:2.24.0'
+    implementation 'com.github.getActivity:EasyWindow:10.6'
 
 }
