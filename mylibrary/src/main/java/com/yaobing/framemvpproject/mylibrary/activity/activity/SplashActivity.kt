@@ -22,7 +22,7 @@ class SplashActivity : AppCompatActivity() {
         }
         Thread.sleep(1000) // 延迟 1000 毫秒（1 秒）
         Log.d("zxcv","延迟了")
-        retutnTo()
+//        retutnTo()
 
     }
 

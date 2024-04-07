@@ -1,5 +1,6 @@
 package com.yaobing.framemvpproject.mylibrary
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -7,19 +8,19 @@ import android.graphics.Canvas
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Environment
+import android.os.Environment.DIRECTORY_DOCUMENTS
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.TextView
+import androidx.core.app.ActivityCompat
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.hjq.window.EasyWindow
-import com.hjq.window.draggable.MovingDraggable
-import com.hjq.window.draggable.SpringBackDraggable
+import com.tencent.mars.xlog.Xlog
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
 import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
@@ -28,12 +29,9 @@ import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
 import com.yaobing.module_apt.*
 import com.yaobing.module_middleware.Utils.*
 import com.yaobing.module_middleware.activity.BaseActivity
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
+import java.io.*
 import java.lang.reflect.Field
 import java.util.*
-
 
 @Router("asdf")
 class TestActivity : BaseActivity() {
@@ -42,8 +40,18 @@ class TestActivity : BaseActivity() {
         ActivityTestBinding.inflate(layoutInflater)
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        com.tencent.mars.xlog.Log.d("zcxv","dfsf")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.MANAGE_EXTERNAL_STORAGE),0)
         Log.d("zxv", "onCreate")
         setContentView(binding.root)
         val aaa = packageManager.getApplicationInfo(packageName,PackageManager.GET_META_DATA).metaData.get("aaa")
@@ -61,6 +69,21 @@ class TestActivity : BaseActivity() {
             //kotlin单例模式：懒汉
             val kotlinSingleton = SingletonKotlin.getSingle()
             Log.d("zxcv kotlin 懒汉", kotlinSingleton.toString())
+
+            saveTestFile()
+            checkFile()
+
+
+            //1w次 110k左右
+            //10w次 1200k左右
+            //10.w次 10700k左右
+            Thread {
+                for (i in 0..998) {
+                    com.tencent.mars.xlog.Log.d("zxcv", "我要打印了：$i")
+                }
+                com.tencent.mars.xlog.Log.appenderFlush()
+                com.tencent.mars.xlog.Log.d("zxcv", "打印完了")
+            }.start()
         }
 
 
@@ -113,10 +136,6 @@ class TestActivity : BaseActivity() {
             startActivity(intent)
         }
 
-        binding.btAddDragView.setOnClickListener {
-            addDraggableView()
-        }
-
 //        Glide.with(this).load("https://www.wenjianbaike.com/wp-content/uploads/2021/04/apng_wenjan.png").set(
 //            AnimationDecoderOption.DISABLE_ANIMATION_GIF_DECODER, false).into(binding.ivDfds);
         val requestListener:RequestListener<com.bumptech.glide.load.resource.gif.GifDrawable> = object : RequestListener<com.bumptech.glide.load.resource.gif.GifDrawable>{
@@ -133,12 +152,52 @@ class TestActivity : BaseActivity() {
             .asGif()
             .load("file:///android_asset/world-cup.gif")
             .listener(requestListener).into(binding.ivDfds)
-        // 传入 Activity 对象表示设置成局部的，不需要有悬浮窗权限
-// 传入 Application 对象表示设置成全局的，但需要有悬浮窗权限
-        // 传入 Activity 对象表示设置成局部的，不需要有悬浮窗权限
-// 传入 Application 对象表示设置成全局的，但需要有悬浮窗权限
 
+        System.loadLibrary("c++_shared")
+        System.loadLibrary("marsxlog")
+
+        val SDCARD: String = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).absolutePath
+        val logPath = "$SDCARD/marssample/log"
+
+//        val cachePath: String = this.filesDir + "/xlog"
+
+        val xlog = Xlog()
+        com.tencent.mars.xlog.Log.setLogImp(xlog)
+
+        if (BuildConfig.DEBUG) {
+            com.tencent.mars.xlog.Log.setConsoleLogOpen(true)
+            com.tencent.mars.xlog.Log.appenderOpen(Xlog.LEVEL_DEBUG, Xlog.AppednerModeAsync, "", logPath, "hah", 0)
+        } else {
+            com.tencent.mars.xlog.Log.setConsoleLogOpen(false)
+            com.tencent.mars.xlog.Log.appenderOpen(
+                Xlog.LEVEL_DEBUG,
+                Xlog.AppednerModeAsync,
+                "",
+                logPath,
+                "hah",
+                0
+            )
+        }
     }
+
+    private fun checkFile() {
+        val file = File(filesDir, "haha_20240407.xlog")
+        Log.d("zxcv","file大小：" + file.length())
+        com.tencent.mars.xlog.Log.d("zxcv","file大小：" + file.length())
+    }
+
+    private fun saveTestFile() {
+        // 创建一个 File 对象，指定要保存的文件的路径
+        val file = File(filesDir, "my_file.txt")
+
+        // 使用 OutputStream 类将文件内容写入到 File 对象中
+        val outputStream: OutputStream = FileOutputStream(file)
+        outputStream.write("This is a text file.".toByteArray())
+        outputStream.close()
+        Log.d("zxcv","保存了文件" + file.length())
+        com.tencent.mars.xlog.Log.d("zxcv","保存了文件" + file.length())
+    }
+
     public fun bitmapInputStream(bm: Bitmap, quality:Int) : InputStream {
         val baos = ByteArrayOutputStream()
         bm.compress(Bitmap.CompressFormat.PNG, quality, baos)
@@ -146,16 +205,6 @@ class TestActivity : BaseActivity() {
     }
 
 
-    fun addDraggableView() {
-        EasyWindow.with(this)
-            .setContentView(R.layout.window_hint)
-            .setAnimStyle(R.style.IOSAnimStyle)
-            .setImageDrawable(android.R.id.icon, R.drawable.ic_launcher_background)
-            .setText(android.R.id.message, "点我消失") // 设置成可拖拽的
-            .setDraggable(SpringBackDraggable())
-            .setOnClickListener(android.R.id.message, EasyWindow.OnClickListener<TextView?> { easyWindow, view -> easyWindow.cancel() })
-            .show()
-    }
     fun drawableToBitmap(drawable: Drawable): Bitmap? {
         val bitmap = Bitmap
             .createBitmap(
@@ -278,25 +327,26 @@ class TestActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d("zxv", "onDestroy")
+        com.tencent.mars.xlog.Log.appenderClose();
     }
 
-    fun testNull() {
-        var data_a :String? = null
-        var data_b :String?  = "listOf<Any>()"
-        if (Math.random().equals(1f)) {
-            data_a = "aa"
-        }
-        try {
-            if (TextUtils.isEmpty(data_a)) {
-                Log.d("zxcv","data_a1?")
-            }else {
-                Log.d("zxcv",data_a!!)
-            }
-
-        }catch (e : java.lang.Exception) {
-            Log.d("zxcv","e")
-        }
-    }
+//    fun testNull() {
+//        var data_a :String? = null
+//        var data_b :String?  = "listOf<Any>()"
+//        if (Math.random().equals(1f)) {
+//            data_a = "aa"
+//        }
+//        try {
+//            if (TextUtils.isEmpty(data_a)) {
+//                Log.d("zxcv","data_a1?")
+//            }else {
+//                Log.d("zxcv",data_a!!)
+//            }
+//
+//        }catch (e : java.lang.Exception) {
+//            Log.d("zxcv","e")
+//        }
+//    }
 
 }
 
