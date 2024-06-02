@@ -169,6 +169,42 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_glide"
             app:layout_constraintStart_toEndOf="@+id/bt_life_cycler"/>
 
+
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:clipChildren="true"
+            android:id="@+id/tabLayout"
+            app:tabMode="scrollable"
+            app:tabMinWidth="0dp"
+            app:tabPadding="0dp"
+            app:tabGravity="fill"
+            app:layout_constraintTop_toBottomOf="@id/bt_add_drag_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="哈"/>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="哈哈哈"/>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="哈哈哈哈哈哈"/>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="哈哈"/>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="哈哈"/>
+        </com.google.android.material.tabs.TabLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

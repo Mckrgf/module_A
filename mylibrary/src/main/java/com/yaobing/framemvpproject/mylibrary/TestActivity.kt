@@ -70,8 +70,8 @@ class TestActivity : BaseActivity() {
             val kotlinSingleton = SingletonKotlin.getSingle()
             Log.d("zxcv kotlin 懒汉", kotlinSingleton.toString())
 
-            saveTestFile()
-            checkFile()
+//            saveTestFile()
+//            checkFile()
 
 
             //1w次 110k左右
@@ -153,31 +153,27 @@ class TestActivity : BaseActivity() {
             .load("file:///android_asset/world-cup.gif")
             .listener(requestListener).into(binding.ivDfds)
 
-        System.loadLibrary("c++_shared")
-        System.loadLibrary("marsxlog")
-
+//        System.loadLibrary("c++_shared")
+//        System.loadLibrary("marsxlog")
         val SDCARD: String = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).absolutePath
         val logPath = "$SDCARD/marssample/log"
-
 //        val cachePath: String = this.filesDir + "/xlog"
-
-        val xlog = Xlog()
-        com.tencent.mars.xlog.Log.setLogImp(xlog)
-
-        if (BuildConfig.DEBUG) {
-            com.tencent.mars.xlog.Log.setConsoleLogOpen(true)
-            com.tencent.mars.xlog.Log.appenderOpen(Xlog.LEVEL_DEBUG, Xlog.AppednerModeAsync, "", logPath, "hah", 0)
-        } else {
-            com.tencent.mars.xlog.Log.setConsoleLogOpen(false)
-            com.tencent.mars.xlog.Log.appenderOpen(
-                Xlog.LEVEL_DEBUG,
-                Xlog.AppednerModeAsync,
-                "",
-                logPath,
-                "hah",
-                0
-            )
-        }
+//        val xlog = Xlog()
+//        com.tencent.mars.xlog.Log.setLogImp(xlog)
+//        if (BuildConfig.DEBUG) {
+//            com.tencent.mars.xlog.Log.setConsoleLogOpen(true)
+//            com.tencent.mars.xlog.Log.appenderOpen(Xlog.LEVEL_DEBUG, Xlog.AppednerModeAsync, "", logPath, "hah", 0)
+//        } else {
+//            com.tencent.mars.xlog.Log.setConsoleLogOpen(false)
+//            com.tencent.mars.xlog.Log.appenderOpen(
+//                Xlog.LEVEL_DEBUG,
+//                Xlog.AppednerModeAsync,
+//                "",
+//                logPath,
+//                "hah",
+//                0
+//            )
+//        }
     }
 
     private fun checkFile() {
