@@ -10,7 +10,6 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Environment
 import android.os.Environment.DIRECTORY_DOCUMENTS
-import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -20,7 +19,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.tencent.mars.xlog.Xlog
+import com.google.android.material.tabs.TabLayout
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
 import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
@@ -32,6 +31,7 @@ import com.yaobing.module_middleware.activity.BaseActivity
 import java.io.*
 import java.lang.reflect.Field
 import java.util.*
+
 
 @Router("asdf")
 class TestActivity : BaseActivity() {
@@ -174,6 +174,24 @@ class TestActivity : BaseActivity() {
 //                0
 //            )
 //        }
+        measureAndSetText()
+    }
+
+    /**
+     * 根据文字内容动态设置textview宽度
+     * 乍一看无用：用warp不就行了
+     * 其实不然，这个功能的用处如下：
+     * 一个tablelayout内有5个item，需要这五个item根据内容长度来显示item宽度且充满屏幕
+     * 但是tablelayout原生不满足需求，warp的话（也就是scrollable mode）并不会充满屏幕。
+     * 而充满屏幕的mode（fixed）是五个item均分屏幕空间，且不可修改宽度，也不满足需求。
+     * 所以就应该在scrollable模式下测试出各个item的宽度，计算出他们的宽度的权重，基于屏幕宽度及间隔要求重新设置item的新宽度。
+     */
+    private fun measureAndSetText() {
+        val testContent = "我是测试文字"
+        val width = binding.tvTest.paint.measureText(testContent)
+        val layoutParams = binding.tvTest.layoutParams
+        layoutParams.width = width.toInt()
+        binding.tvTest.text = testContent
     }
 
     private fun checkFile() {
