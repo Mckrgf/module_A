@@ -243,6 +243,13 @@
             <!-- 假设我们动态添加行数据 -->
         </TableLayout>
 
+        <Button
+            android:id="@+id/bt_ani"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="吸顶动画/隐藏头/滑动列表的效果"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout_b"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

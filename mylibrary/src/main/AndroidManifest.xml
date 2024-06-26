@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yaobing.framemvpproject.mylibrary">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
+        android:name=".MyApp"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/AppTheme"
-        android:allowBackup="true"
-        android:name=".MyApp"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".AniRecyclerActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.TestDActivity"
             android:exported="false" />
@@ -39,15 +43,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity"
-            android:launchMode="singleTask"
-            android:exported="false">
+            android:name=".activity.activity.HOmeActivity"
+            android:exported="false"
+            android:launchMode="singleTask">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="com.yaobing.framemvpproject.mylibrary.activity.activity.SplashActivity"
+            android:name=".activity.activity.SplashActivity"
             android:exported="false"
             android:launchMode="singleTask">
             <meta-data

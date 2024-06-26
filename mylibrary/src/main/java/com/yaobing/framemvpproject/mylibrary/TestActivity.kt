@@ -135,6 +135,10 @@ class TestActivity : BaseActivity() {
             var intent = Intent(this,HOmeActivity::class.java)
             startActivity(intent)
         }
+        binding.btAni.setOnClickListener {
+            val intent = Intent(this, AniRecyclerActivity::class.java) // 替换成你的新页面 Activity 类名
+            startActivity(intent)
+        }
 
 //        Glide.with(this).load("https://www.wenjianbaike.com/wp-content/uploads/2021/04/apng_wenjan.png").set(
 //            AnimationDecoderOption.DISABLE_ANIMATION_GIF_DECODER, false).into(binding.ivDfds);
