@@ -16,19 +16,20 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AniRecyclerActivity"
-            android:exported="false" />
+            android:theme="@style/TransparentTheme"
+            android:exported="true" />
         <activity
             android:name=".activity.TestDActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.MainaaaaActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.TestCeilingAlphaActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.PagingActivity"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -44,7 +45,7 @@
         </activity>
         <activity
             android:name=".activity.activity.HOmeActivity"
-            android:exported="false"
+            android:exported="true"
             android:launchMode="singleTask">
             <meta-data
                 android:name="android.app.lib_name"
@@ -52,7 +53,7 @@
         </activity>
         <activity
             android:name=".activity.activity.SplashActivity"
-            android:exported="false"
+            android:exported="true"
             android:launchMode="singleTask">
             <meta-data
                 android:name="android.app.lib_name"
