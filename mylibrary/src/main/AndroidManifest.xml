@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AniRecyclerActivity"
-            android:theme="@style/TransparentTheme"
+            android:theme="@style/ActivityTranslucent"
             android:exported="true" />
         <activity
             android:name=".activity.TestDActivity"
