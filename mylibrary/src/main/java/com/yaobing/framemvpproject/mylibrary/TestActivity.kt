@@ -22,6 +22,7 @@ import com.bumptech.glide.request.target.Target
 import com.google.android.material.tabs.TabLayout
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
 import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
+import com.yaobing.framemvpproject.mylibrary.activity.activity.SnapshotActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
 import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
@@ -137,6 +138,10 @@ class TestActivity : BaseActivity() {
         }
         binding.btAni.setOnClickListener {
             val intent = Intent(this, AniRecyclerActivity::class.java) // 替换成你的新页面 Activity 类名
+            startActivity(intent)
+        }
+        binding.btSnapshotScrollview.setOnClickListener {
+            val intent = Intent(this, SnapshotActivity::class.java) // 替换成你的新页面 Activity 类名
             startActivity(intent)
         }
 
