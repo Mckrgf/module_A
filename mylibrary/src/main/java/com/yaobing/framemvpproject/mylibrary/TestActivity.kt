@@ -1,37 +1,54 @@
 package com.yaobing.framemvpproject.mylibrary
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Environment
 import android.os.Environment.DIRECTORY_DOCUMENTS
+import android.os.Environment.getExternalStorageDirectory
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.android.material.tabs.TabLayout
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils
+import com.inewise.QRcodeUtil
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
 import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
 import com.yaobing.framemvpproject.mylibrary.activity.activity.SnapshotActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
 import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
-import com.yaobing.module_apt.*
-import com.yaobing.module_middleware.Utils.*
+import com.yaobing.module_apt.BindByTag
+import com.yaobing.module_apt.Router
+import com.yaobing.module_middleware.Utils.Person
+import com.yaobing.module_middleware.Utils.ToastUtils
+import com.yaobing.module_middleware.Utils.checkComma
+import com.yaobing.module_middleware.Utils.isBold
+import com.yaobing.module_middleware.Utils.say
 import com.yaobing.module_middleware.activity.BaseActivity
-import java.io.*
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.lang.reflect.Field
-import java.util.*
 
 
 @Router("asdf")
@@ -41,27 +58,40 @@ class TestActivity : BaseActivity() {
         ActivityTestBinding.inflate(layoutInflater)
     }
 
+    private var imageFile: File? = null
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        com.tencent.mars.xlog.Log.d("zcxv","dfsf")
+        com.tencent.mars.xlog.Log.d("zcxv", "dfsf")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.MANAGE_EXTERNAL_STORAGE),0)
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.MANAGE_EXTERNAL_STORAGE
+            ),
+            0
+        )
         Log.d("zxv", "onCreate")
         setContentView(binding.root)
-        val aaa = packageManager.getApplicationInfo(packageName,PackageManager.GET_META_DATA).metaData.get("aaa")
-        ToastUtils.show(this,aaa.toString(),0)
-        Log.i("zxcv",aaa.toString())
+        val aaa = packageManager.getApplicationInfo(
+            packageName,
+            PackageManager.GET_META_DATA
+        ).metaData.get("aaa")
+//        ToastUtils.show(this,aaa.toString(),0)
+        Log.i("zxcv", aaa.toString())
         binding.btA.setOnClickListener {
             bindTag(this, binding.root)
             IntentRouter.go(this, "MainActivity")
-            var a :RoundedBorderImageView
+            var a: RoundedBorderImageView
 
             //单例模式创建对象
             val javaBestSingleton = JavaBestSingleton.getInstance()
@@ -87,7 +117,12 @@ class TestActivity : BaseActivity() {
             }.start()
         }
 
+        val permissions = arrayOf(
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE"
+        )
 
+        ActivityCompat.requestPermissions(this, permissions, 1)
         binding.btB.setOnClickListener {
             val person = Person(30, "敲代码")
             person.work = "敲代码"
@@ -105,6 +140,30 @@ class TestActivity : BaseActivity() {
         }
         binding.btCeilingA.setOnClickListener {
             IntentRouter.go(this, "CeilingAlphaActivity")
+        }
+        binding.btCamera.setOnClickListener {
+            imageFile = createImageFile()
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile))
+//            startActivityForResult(intent, 111)
+
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // 请求权限
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 111);
+            } else {
+                // 权限已经被授予，可以进行相关操作
+                val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+                // 确保有相机活动处理该Intent
+                if (takePictureIntent.resolveActivity(packageManager) != null) {
+
+                }
+                startActivityForResult(takePictureIntent, 1111)
+            }
         }
         binding.btTrans.setOnClickListener {
             val x: Float = if (hide) {
@@ -126,14 +185,14 @@ class TestActivity : BaseActivity() {
                 if (it.toString().isNotEmpty() && it.toString().toFloat() in 0f..1f) {
                     binding.circleImage.roundPercent = it.toString().toFloat()
                 }
-            }catch (e: java.lang.Exception) {
-                ToastUtils.show(this,e.toString())
+            } catch (e: java.lang.Exception) {
+                ToastUtils.show(this, e.toString())
             }
 
         }
 
         binding.btLifeCycler.setOnClickListener {
-            var intent = Intent(this,HOmeActivity::class.java)
+            var intent = Intent(this, HOmeActivity::class.java)
             startActivity(intent)
         }
         binding.btAni.setOnClickListener {
@@ -144,19 +203,34 @@ class TestActivity : BaseActivity() {
             val intent = Intent(this, SnapshotActivity::class.java) // 替换成你的新页面 Activity 类名
             startActivity(intent)
         }
+        binding.btDecodeQr.setOnClickListener {
+            decodeFile()
+        }
 
 //        Glide.with(this).load("https://www.wenjianbaike.com/wp-content/uploads/2021/04/apng_wenjan.png").set(
 //            AnimationDecoderOption.DISABLE_ANIMATION_GIF_DECODER, false).into(binding.ivDfds);
-        val requestListener:RequestListener<com.bumptech.glide.load.resource.gif.GifDrawable> = object : RequestListener<com.bumptech.glide.load.resource.gif.GifDrawable>{
-            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<com.bumptech.glide.load.resource.gif.GifDrawable>?, isFirstResource: Boolean): Boolean {
-                return false
-            }
+        val requestListener: RequestListener<com.bumptech.glide.load.resource.gif.GifDrawable> =
+            object : RequestListener<com.bumptech.glide.load.resource.gif.GifDrawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<com.bumptech.glide.load.resource.gif.GifDrawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
 
-            override fun onResourceReady(resource: com.bumptech.glide.load.resource.gif.GifDrawable?, model: Any?, target: Target<com.bumptech.glide.load.resource.gif.GifDrawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                return false
-            }
+                override fun onResourceReady(
+                    resource: com.bumptech.glide.load.resource.gif.GifDrawable?,
+                    model: Any?,
+                    target: Target<com.bumptech.glide.load.resource.gif.GifDrawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
 
-        }
+            }
         Glide.with(context)
             .asGif()
             .load("file:///android_asset/world-cup.gif")
@@ -164,7 +238,8 @@ class TestActivity : BaseActivity() {
 
 //        System.loadLibrary("c++_shared")
 //        System.loadLibrary("marsxlog")
-        val SDCARD: String = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).absolutePath
+        val SDCARD: String =
+            Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).absolutePath
         val logPath = "$SDCARD/marssample/log"
 //        val cachePath: String = this.filesDir + "/xlog"
 //        val xlog = Xlog()
@@ -184,6 +259,41 @@ class TestActivity : BaseActivity() {
 //            )
 //        }
         measureAndSetText()
+    }
+    fun getBitmapFromAssets(fileName: String?): Bitmap? {
+        var bitmap: Bitmap? = null
+        try {
+            context.assets.use { assetManager ->
+                assetManager.open(fileName!!).use { asset ->
+                    asset.use { inputStream ->
+                        bitmap = BitmapFactory.decodeStream(inputStream)
+                    }
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return bitmap
+    }
+    private fun decodeFile() {
+        val bitmap = getBitmapFromAssets("aaaaaa.png")
+        val file = File(getExternalStorageDirectory(), "Pictures/my_image.png")
+        val outputStream = FileOutputStream(file)
+        bitmap!!.compress(Bitmap.CompressFormat.PNG, 90, outputStream)
+        outputStream.close();
+        if (file.exists()) {
+            val absolutePath = file.absolutePath
+            val parentDirPath = absolutePath.split("/").dropLast(1).joinToString("/")
+            println("Parent Directory Path: $parentDirPath")
+            val decodeString = QRcodeUtil.simpleDecode("my_image", "png", "$parentDirPath/", 1)
+            Log.d("zxcv", decodeString)
+        }
+    }
+
+    private fun createImageFile(): File {
+        val storageDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        return File(storageDir, "IMG_" + System.currentTimeMillis() + ".jpg")
     }
 
     /**
@@ -205,8 +315,8 @@ class TestActivity : BaseActivity() {
 
     private fun checkFile() {
         val file = File(filesDir, "haha_20240407.xlog")
-        Log.d("zxcv","file大小：" + file.length())
-        com.tencent.mars.xlog.Log.d("zxcv","file大小：" + file.length())
+        Log.d("zxcv", "file大小：" + file.length())
+        com.tencent.mars.xlog.Log.d("zxcv", "file大小：" + file.length())
     }
 
     private fun saveTestFile() {
@@ -217,11 +327,11 @@ class TestActivity : BaseActivity() {
         val outputStream: OutputStream = FileOutputStream(file)
         outputStream.write("This is a text file.".toByteArray())
         outputStream.close()
-        Log.d("zxcv","保存了文件" + file.length())
-        com.tencent.mars.xlog.Log.d("zxcv","保存了文件" + file.length())
+        Log.d("zxcv", "保存了文件" + file.length())
+        com.tencent.mars.xlog.Log.d("zxcv", "保存了文件" + file.length())
     }
 
-    public fun bitmapInputStream(bm: Bitmap, quality:Int) : InputStream {
+    public fun bitmapInputStream(bm: Bitmap, quality: Int): InputStream {
         val baos = ByteArrayOutputStream()
         bm.compress(Bitmap.CompressFormat.PNG, quality, baos)
         return ByteArrayInputStream(baos.toByteArray())
@@ -245,6 +355,7 @@ class TestActivity : BaseActivity() {
         drawable.draw(canvas)
         return bitmap
     }
+
     //kotlin匿名函数
     val stringLengthFunc: (String) -> String = { input ->
         "输入的字符串$input 的长度为" + input.length
@@ -353,6 +464,32 @@ class TestActivity : BaseActivity() {
         com.tencent.mars.xlog.Log.appenderClose();
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        decodeFile()
+        if (requestCode == 111 && resultCode == RESULT_OK) {
+            // 照片已成功拍摄
+            copyImageToExternalContentUri(imageFile!!)
+        } else {
+            // 处理失败
+        }
+    }
+
+    private fun copyImageToExternalContentUri(imageFile: File) {
+        val resolver = contentResolver
+        val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val dstUri = resolver.insert(contentUri, ContentValues())
+
+        try {
+            FileInputStream(imageFile).use { fis ->
+                resolver.openOutputStream(dstUri!!).use { os ->
+                    IOUtils.copy(fis, os)
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
 //    fun testNull() {
 //        var data_a :String? = null
 //        var data_b :String?  = "listOf<Any>()"

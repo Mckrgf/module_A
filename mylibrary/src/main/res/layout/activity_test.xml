@@ -258,6 +258,20 @@
             android:text="scrollview长截图"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bt_ani"/>
+        <Button
+            android:id="@+id/bt_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拍照01"
+            app:layout_constraintStart_toEndOf="@+id/bt_ani"
+            app:layout_constraintTop_toTopOf="@+id/bt_ani"/>
+        <Button
+            android:id="@+id/bt_decode_qr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="解析二维码"
+            app:layout_constraintStart_toEndOf="@+id/bt_camera"
+            app:layout_constraintTop_toTopOf="@+id/bt_ani"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
