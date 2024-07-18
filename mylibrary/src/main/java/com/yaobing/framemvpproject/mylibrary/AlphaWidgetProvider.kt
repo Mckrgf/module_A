@@ -48,6 +48,9 @@ class AlphaWidgetProvider : AppWidgetProvider() {
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
         Log.d("zxcv", "AlphaWidgetProvider onReceive")
+        if (null == appWidgetManager) {
+            return
+        }
         val views = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
         views.setTextViewText(R.id.tv_name, "onReceive了")
         appWidgetManager!!.updateAppWidget(appWidgetIds, views)
