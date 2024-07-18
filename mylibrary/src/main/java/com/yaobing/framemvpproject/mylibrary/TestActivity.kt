@@ -24,7 +24,6 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils
 import com.inewise.QRcodeUtil
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
 import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
@@ -476,19 +475,19 @@ class TestActivity : BaseActivity() {
     }
 
     private fun copyImageToExternalContentUri(imageFile: File) {
-        val resolver = contentResolver
-        val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        val dstUri = resolver.insert(contentUri, ContentValues())
-
-        try {
-            FileInputStream(imageFile).use { fis ->
-                resolver.openOutputStream(dstUri!!).use { os ->
-                    IOUtils.copy(fis, os)
-                }
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+//        val resolver = contentResolver
+//        val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+//        val dstUri = resolver.insert(contentUri, ContentValues())
+//
+//        try {
+//            FileInputStream(imageFile).use { fis ->
+//                resolver.openOutputStream(dstUri!!).use { os ->
+//                    IOUtils.copy(fis, os)
+//                }
+//            }
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
     }
 //    fun testNull() {
 //        var data_a :String? = null
