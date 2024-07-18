@@ -7,12 +7,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.RemoteViews
+import com.yaobing.framemvpproject.mylibrary.data.RepoData
 import com.yaobing.framemvpproject.mylibrary.network.APIService
 import com.yaobing.module_middleware.network.Api
+import io.reactivex.FlowableSubscriber
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
+import org.reactivestreams.Subscription
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -25,7 +29,12 @@ class AlphaWidgetProvider : AppWidgetProvider() {
         Log.d("zxcv", "AlphaWidgetProvider AlphaWidgetProvider")
     }
 
-    override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int, newOptions: Bundle) {
+    override fun onAppWidgetOptionsChanged(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
+        newOptions: Bundle
+    ) {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
         Log.d("zxcv", "AlphaWidgetProvider onAppWidgetOptionsChanged")
     }
@@ -56,7 +65,11 @@ class AlphaWidgetProvider : AppWidgetProvider() {
         appWidgetManager!!.updateAppWidget(appWidgetIds, views)
     }
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         this.appWidgetManager = appWidgetManager
         this.appWidgetIds = appWidgetIds
@@ -65,7 +78,8 @@ class AlphaWidgetProvider : AppWidgetProvider() {
         views.setTextViewText(R.id.tv_name, "update了")
         appWidgetManager.updateAppWidget(appWidgetIds, views)
 
-        val retrofit = Retrofit.Builder().baseUrl("https://api.github.com/").addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        val retrofit = Retrofit.Builder().baseUrl("https://api.github.com/")
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
@@ -73,12 +87,17 @@ class AlphaWidgetProvider : AppWidgetProvider() {
             .listReposRx("MCKRGF")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
+            .subscribe({ it ->
                 Log.d("zxcv", "获取到数据了 +$it")
                 val views = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
                 views.setTextViewText(R.id.tv_name, "data: $it")
                 appWidgetManager.updateAppWidget(appWidgetIds, views)
-            }
+            }, { bb ->
+                Log.d("zxcv", "获取到数据失败 +$bb")
+                val views = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
+                views.setTextViewText(R.id.tv_name, "data: $bb")
+                appWidgetManager.updateAppWidget(appWidgetIds, views)
+            })
     }
 
     override fun onEnabled(context: Context) {
