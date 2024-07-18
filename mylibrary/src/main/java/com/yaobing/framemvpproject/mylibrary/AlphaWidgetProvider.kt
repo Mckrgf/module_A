@@ -1,71 +1,63 @@
-package com.yaobing.framemvpproject.mylibrary;
+package com.yaobing.framemvpproject.mylibrary
 
-import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProvider;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.RemoteViews;
-import android.widget.TextView;
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.widget.RemoteViews
 
-public class AlphaWidgetProvider extends AppWidgetProvider {
-    AppWidgetManager appWidgetManager = null;
-    int[] appWidgetIds = null;
-    public AlphaWidgetProvider() {
-        super();
-        Log.d("zxcv","AlphaWidgetProvider AlphaWidgetProvider");
+class AlphaWidgetProvider : AppWidgetProvider() {
+    var appWidgetManager: AppWidgetManager? = null
+    var appWidgetIds: IntArray? = null
+
+    init {
+        Log.d("zxcv", "AlphaWidgetProvider AlphaWidgetProvider")
     }
 
-    @Override
-    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
-        Log.d("zxcv","AlphaWidgetProvider onAppWidgetOptionsChanged");
+    override fun onAppWidgetOptionsChanged(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int, newOptions: Bundle) {
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
+        Log.d("zxcv", "AlphaWidgetProvider onAppWidgetOptionsChanged")
     }
 
-    @Override
-    public void onDeleted(Context context, int[] appWidgetIds) {
-        super.onDeleted(context, appWidgetIds);
-        Log.d("zxcv","AlphaWidgetProvider onDeleted");
+    override fun onDeleted(context: Context, appWidgetIds: IntArray) {
+        super.onDeleted(context, appWidgetIds)
+        Log.d("zxcv", "AlphaWidgetProvider onDeleted")
     }
 
-    @Override
-    public void onDisabled(Context context) {
-        super.onDisabled(context);
-        Log.d("zxcv","AlphaWidgetProvider onDisabled");
+    override fun onDisabled(context: Context) {
+        super.onDisabled(context)
+        Log.d("zxcv", "AlphaWidgetProvider onDisabled")
     }
 
-    @Override
-    public void onRestored(Context context, int[] oldWidgetIds, int[] newWidgetIds) {
-        super.onRestored(context, oldWidgetIds, newWidgetIds);
-        Log.d("zxcv","AlphaWidgetProvider onRestored");
+    override fun onRestored(context: Context, oldWidgetIds: IntArray, newWidgetIds: IntArray) {
+        super.onRestored(context, oldWidgetIds, newWidgetIds)
+        Log.d("zxcv", "AlphaWidgetProvider onRestored")
     }
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
-        Log.d("zxcv","AlphaWidgetProvider onReceive");
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.alpha_widget_layout);
-        views.setTextViewText(R.id.tv_name,"onReceive了");
-        appWidgetManager.updateAppWidget(appWidgetIds,views);
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+        Log.d("zxcv", "AlphaWidgetProvider onReceive")
+        val views = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
+        views.setTextViewText(R.id.tv_name, "onReceive了")
+        appWidgetManager!!.updateAppWidget(appWidgetIds, views)
     }
 
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
-        this.appWidgetManager = appWidgetManager;
-        this.appWidgetIds = appWidgetIds;
-        Log.d("zxcv","AlphaWidgetProvider onUpdate");
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.alpha_widget_layout);
-        views.setTextViewText(R.id.tv_name,"update了");
-        appWidgetManager.updateAppWidget(appWidgetIds,views);
+    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+        this.appWidgetManager = appWidgetManager
+        this.appWidgetIds = appWidgetIds
+        Log.d("zxcv", "AlphaWidgetProvider onUpdate")
+        val views = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
+        views.setTextViewText(R.id.tv_name, "update了")
+        appWidgetManager.updateAppWidget(appWidgetIds, views)
     }
 
-    @Override
-    public void onEnabled(Context context) {
-        super.onEnabled(context);
-        Log.d("zxcv","onEnabled");
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.alpha_widget_layout);
-        views.setTextViewText(R.id.tv_name,"onEnabled了");
+    override fun onEnabled(context: Context) {
+        super.onEnabled(context)
+        Log.d("zxcv", "onEnabled")
+        val views = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
+        views.setTextViewText(R.id.tv_name, "onEnabled了")
     }
 }
