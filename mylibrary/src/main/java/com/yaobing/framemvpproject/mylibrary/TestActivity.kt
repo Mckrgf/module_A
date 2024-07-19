@@ -1,7 +1,6 @@
 package com.yaobing.framemvpproject.mylibrary
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -14,6 +13,7 @@ import android.os.Environment
 import android.os.Environment.DIRECTORY_DOCUMENTS
 import android.os.Environment.getExternalStorageDirectory
 import android.provider.MediaStore
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -42,7 +42,6 @@ import com.yaobing.module_middleware.activity.BaseActivity
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
@@ -70,6 +69,12 @@ class TestActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val widgetContent = intent.getStringExtra("aa")
+        Log.d("zxcv","准备获取widget携带的数据$widgetContent")
+        if (!TextUtils.isEmpty(widgetContent)) {
+            ToastUtils.show(this,widgetContent)
+        }
         ActivityCompat.requestPermissions(
             this,
             arrayOf(
@@ -445,6 +450,7 @@ class TestActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         Log.d("zxv", "onResume")
+
     }
 
     override fun onPause() {
