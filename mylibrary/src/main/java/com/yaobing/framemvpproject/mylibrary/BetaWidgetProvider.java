@@ -44,9 +44,9 @@ public class BetaWidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         Log.d("zxcv","BetaWidgetProvider onReceive");
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.alpha_widget_layout);
-        views.setTextViewText(R.id.tv_name,"onReceive了");
-        appWidgetManager.updateAppWidget(appWidgetIds,views);
+//        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.alpha_widget_layout);
+//        views.setTextViewText(R.id.tv_name,"onReceive了");
+//        appWidgetManager.updateAppWidget(appWidgetIds,views);
     }
 
     @Override

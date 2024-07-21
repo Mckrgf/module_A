@@ -1,6 +1,8 @@
 package com.yaobing.framemvpproject.mylibrary
 
 import android.Manifest
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -144,6 +146,14 @@ class TestActivity : BaseActivity() {
         }
         binding.btCeilingA.setOnClickListener {
             IntentRouter.go(this, "CeilingAlphaActivity")
+        }
+        binding.updateWidgetBroadcast.setOnClickListener {
+
+            val intent = Intent("com.yaobing.framemvpproject.mylibrary.update")
+            val appWidgetManager = AppWidgetManager.getInstance(context) // 获取 AppWidgetManager 实例
+            val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(context, javaClass))
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds)
+            context.sendBroadcast(intent)
         }
         binding.btCamera.setOnClickListener {
             imageFile = createImageFile()

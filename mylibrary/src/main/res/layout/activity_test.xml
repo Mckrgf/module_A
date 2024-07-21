@@ -272,6 +272,13 @@
             android:text="解析二维码"
             app:layout_constraintStart_toEndOf="@+id/bt_camera"
             app:layout_constraintTop_toTopOf="@+id/bt_ani"/>
+        <Button
+            android:id="@+id/updateWidgetBroadcast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="广播更新小组件"
+            app:layout_constraintStart_toEndOf="@+id/bt_snapshot_scrollview"
+            app:layout_constraintTop_toTopOf="@+id/bt_snapshot_scrollview"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

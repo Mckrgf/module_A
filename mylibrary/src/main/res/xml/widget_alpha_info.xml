@@ -5,11 +5,11 @@
     android:targetCellHeight="1"
     android:maxResizeWidth="280dp"
     android:maxResizeHeight="280dp"
+    android:previewImage="@mipmap/sdasd"
     android:updatePeriodMillis="86400000"
     android:description="@string/alpha_widget"
-    android:previewLayout="@layout/alpha_widget_layout"
+    android:initialKeyguardLayout="@layout/alpha_widget_layout_preview"
     android:initialLayout="@layout/alpha_widget_layout"
     android:resizeMode="horizontal|vertical"
-    android:widgetCategory="home_screen"
     android:widgetFeatures="reconfigurable|configuration_optional">
 </appwidget-provider>

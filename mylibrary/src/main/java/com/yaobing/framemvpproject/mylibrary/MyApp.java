@@ -56,10 +56,10 @@ public class MyApp extends BaseApp {
                         e.printStackTrace();
                         Log.d("zxcv", e.toString());
                     } //18:54:40.805开始home回到主页
-                    Intent intent = new Intent(topActivity, SplashActivity.class);
-                    intent.addFlags(FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-                    topActivity.startActivity(intent);
-                    Log.d("zxcv", "APP回到前台");
+//                    Intent intent = new Intent(topActivity, SplashActivity.class);
+//                    intent.addFlags(FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+//                    topActivity.startActivity(intent);
+//                    Log.d("zxcv", "APP回到前台");
                 }
 
             }
