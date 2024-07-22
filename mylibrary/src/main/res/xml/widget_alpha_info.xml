@@ -6,7 +6,7 @@
     android:maxResizeWidth="280dp"
     android:maxResizeHeight="280dp"
     android:previewImage="@mipmap/sdasd"
-    android:updatePeriodMillis="86400000"
+    android:updatePeriodMillis="0"
     android:description="@string/alpha_widget"
     android:initialKeyguardLayout="@layout/alpha_widget_layout_preview"
     android:initialLayout="@layout/alpha_widget_layout"

@@ -45,6 +45,7 @@ class AlphaWidgetProvider : AppWidgetProvider() {
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         super.onDeleted(context, appWidgetIds)
         Log.d("zxcv", "AlphaWidgetProvider onDeleted")
+        alarmManager?.cancel(pendingIntent)
     }
 
     override fun onDisabled(context: Context) {
@@ -79,7 +80,9 @@ class AlphaWidgetProvider : AppWidgetProvider() {
             requestData(views, context, appWidgetManager, appWidgetIds)
         }
     }
-
+    var intent : Intent? = null
+    var pendingIntent : PendingIntent? = null
+    var alarmManager : AlarmManager? = null
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -98,12 +101,12 @@ class AlphaWidgetProvider : AppWidgetProvider() {
 
         // 设置警报
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, AlphaWidgetProvider::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, FLAG_MUTABLE)
+        intent = Intent(context, AlphaWidgetProvider::class.java)
+        pendingIntent = PendingIntent.getBroadcast(context, 0, intent!!, FLAG_MUTABLE)
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             System.currentTimeMillis(),
-            1000 * 60 * 30,
+            1000 * 60 * 1,
             pendingIntent
         )
 
