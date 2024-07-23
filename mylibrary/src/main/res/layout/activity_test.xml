@@ -156,9 +156,7 @@
             android:layout_height="95dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/ccc"
-            android:padding="4dp"
             android:scaleType="fitXY"
-            android:src="@mipmap/bb"
             app:layout_constraintStart_toEndOf="@+id/iv_dfds"
             app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a" />
 
