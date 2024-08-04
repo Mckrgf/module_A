@@ -5,16 +5,10 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.BitmapShader
 import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
 import android.graphics.PixelFormat
-import android.graphics.RectF
-import android.graphics.Shader
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Environment
@@ -224,27 +218,15 @@ class TestActivity : BaseActivity() {
             startActivity(intent)
         }
         binding.btDecodeQr.setOnClickListener {
-//            decodeFile()
             val resId = resources.getIdentifier("bb", "mipmap", packageName)
 
             val bitmap = BitmapFactory.decodeResource(resources, resId)
-            var w = 0
-            var h = 0
-            if (bitmap.width > bitmap.height) {
-                w = bitmap.height
-                h = bitmap.height
-            }else if (bitmap.width < bitmap.height) {
-                w = bitmap.width
-                h = bitmap.width
-            }else if (bitmap.width == bitmap.height){
-                w = bitmap.width
-                h = bitmap.width
-            }
-            val bitmapRound = getRoundBitmapByShader(bitmap,w,h,120,0)
+            Glide.with(context)
+                .load(resources.getDrawable(R.mipmap.bb,null))
+                .into(binding.ivDfds)
+            val bitmapRound = BitmapUtil().getRoundedCornerBitmapWithoutScaling(bitmap,120f)
             binding.ivGlide.setImageBitmap(bitmapRound)
-
         }
-
 
 //        Glide.with(this).load("https://www.wenjianbaike.com/wp-content/uploads/2021/04/apng_wenjan.png").set(
 //            AnimationDecoderOption.DISABLE_ANIMATION_GIF_DECODER, false).into(binding.ivDfds);
@@ -299,41 +281,12 @@ class TestActivity : BaseActivity() {
 //        }
         measureAndSetText()
     }
-    fun getRoundedBitmap(originalBitmap: Bitmap, cornerRadius: Float): Bitmap {
-        val roundedBitmap = Bitmap.createBitmap(originalBitmap.width, originalBitmap.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(roundedBitmap)
-        val paint = Paint()
-        paint.isAntiAlias = true
-        val path = Path()
-        val cornerRadiusPx = cornerRadius.dpToPx()
-        path.addRoundRect(0f, 0f, roundedBitmap.width.toFloat(), roundedBitmap.height.toFloat(), cornerRadiusPx, cornerRadiusPx,Path.Direction.CW)
-        canvas.drawPath(path, paint)
-        canvas.drawBitmap(originalBitmap, 0f, 0f, paint)
-        return roundedBitmap
-    }
 
-    fun Float.dpToPx(): Float {
-        val density = Resources.getSystem().displayMetrics.density
-        return this * density
-    }
-    fun getRoundBitmapByShader(bitmap: Bitmap?, width: Int, height: Int, radius: Int, margin: Int): Bitmap? {
-        var bitmap = bitmap ?: return null
-        val bitmapShader: BitmapShader
-        if (margin > 0) {
-            bitmap = Bitmap.createBitmap(bitmap.width + 2 * margin, bitmap.height + 2 * margin, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            canvas.drawBitmap(bitmap, margin.toFloat(), margin.toFloat(), null)
-        }
-        bitmapShader = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-        val paint = Paint()
-        paint.isAntiAlias = true
-        paint.shader = bitmapShader
-        val roundBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(roundBitmap)
-        val rectF = RectF(0f, 0f, width.toFloat(), height.toFloat())
-        canvas.drawRoundRect(rectF, radius.toFloat(), radius.toFloat(), paint)
-        return roundBitmap
-    }
+
+
+
+
+
     fun getBitmapFromAssets(fileName: String?): Bitmap? {
         var bitmap: Bitmap? = null
         try {

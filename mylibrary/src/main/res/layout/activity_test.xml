@@ -143,20 +143,18 @@
             android:id="@+id/iv_dfds"
             android:layout_width="95dp"
             android:layout_height="95dp"
-            android:layout_marginLeft="10dp"
-            android:background="@color/black"
             android:padding="2dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             app:layout_constraintStart_toEndOf="@+id/circle_bord_image"
             app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a" />
 
         <ImageView
             android:id="@+id/iv_glide"
-            android:layout_width="195dp"
-            android:layout_height="195dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/lpGreen"
-            android:scaleType="fitCenter"
+            android:background="@color/transparent"
+            android:scaleType="centerCrop"
             app:layout_constraintStart_toEndOf="@+id/iv_dfds"
             app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a" />
 
