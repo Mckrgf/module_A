@@ -221,17 +221,19 @@ class TestActivity : BaseActivity() {
             startActivity(intent)
         }
         binding.btDecodeQr.setOnClickListener {
-            val resId = resources.getIdentifier("bb", "mipmap", packageName)
+            val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.bb)
 
-            val bitmap = BitmapFactory.decodeResource(resources, resId)
+            //加载原图（不含圆角，做个对比）
             Glide.with(context)
                 .load(resources.getDrawable(R.mipmap.bb,null))
                 .into(binding.ivDfds)
+
+            //获取圆角图片
             val bitmapRound = BitmapUtil().getRoundedCornerBitmapWithoutScaling(bitmap,120f)
             binding.ivGlide.setImageBitmap(bitmapRound)
 
-            val bigImg = resources.getIdentifier("big_img", "mipmap", packageName)
-            val bitmapBig = BitmapFactory.decodeResource(resources, bigImg)
+            //获取大图（在某些情况下比如小组件可能会有bitmap大小的限制，所以要进行压缩）
+            val bitmapBig = BitmapFactory.decodeResource(resources, R.mipmap.big_img)
             Log.d("zxcv","bitmap size ${bitmapBig.byteCount}")
             val bitmapCompress = BitmapUtil().compressImageByScale(bitmapBig, dp2pxInt(150f),dp2pxInt(150f))
             bitmapCompress.let {
