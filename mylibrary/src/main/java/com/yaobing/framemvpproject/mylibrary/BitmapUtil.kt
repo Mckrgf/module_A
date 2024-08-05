@@ -3,6 +3,7 @@ package com.yaobing.framemvpproject.mylibrary
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.BitmapShader
 import android.graphics.Canvas
 import android.graphics.Color
@@ -13,10 +14,21 @@ import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Shader
+import android.util.Log
+import java.io.ByteArrayOutputStream
 import kotlin.math.min
 
 class BitmapUtil {
-
+    fun compressImageByScale(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+        val width = bitmap.width
+        val height = bitmap.height
+        val scaleWidth = maxWidth.toFloat() / width
+        val scaleHeight = maxHeight.toFloat() / height
+        val scale = Math.min(scaleWidth, scaleHeight)
+        val newWidth = (width * scale).toInt()
+        val newHeight = (height * scale).toInt()
+        return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
+    }
     /**
      * 获取圆角图片，且居中展示
      */

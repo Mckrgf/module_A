@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
@@ -17,6 +18,7 @@ import android.os.Environment.getExternalStorageDirectory
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -36,6 +38,7 @@ import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
 import com.yaobing.module_apt.BindByTag
 import com.yaobing.module_apt.Router
 import com.yaobing.module_middleware.Utils.Person
+import com.yaobing.module_middleware.Utils.ScreenUtils
 import com.yaobing.module_middleware.Utils.ToastUtils
 import com.yaobing.module_middleware.Utils.checkComma
 import com.yaobing.module_middleware.Utils.isBold
@@ -226,6 +229,16 @@ class TestActivity : BaseActivity() {
                 .into(binding.ivDfds)
             val bitmapRound = BitmapUtil().getRoundedCornerBitmapWithoutScaling(bitmap,120f)
             binding.ivGlide.setImageBitmap(bitmapRound)
+
+            val bigImg = resources.getIdentifier("big_img", "mipmap", packageName)
+            val bitmapBig = BitmapFactory.decodeResource(resources, bigImg)
+            Log.d("zxcv","bitmap size ${bitmapBig.byteCount}")
+            val bitmapCompress = BitmapUtil().compressImageByScale(bitmapBig, dp2pxInt(150f),dp2pxInt(150f))
+            bitmapCompress.let {
+                Log.d("zxcv","bitmapCompress size ${bitmapCompress!!.byteCount}")
+                binding.circleBordImage.setImageBitmap(bitmapCompress)
+            }
+
         }
 
 //        Glide.with(this).load("https://www.wenjianbaike.com/wp-content/uploads/2021/04/apng_wenjan.png").set(
@@ -284,7 +297,12 @@ class TestActivity : BaseActivity() {
 
 
 
+    fun dp2px(dp: Float): Float =
+        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().displayMetrics)
 
+    fun dp2pxInt(dp: Float): Int =
+        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().displayMetrics)
+            .toInt()
 
 
     fun getBitmapFromAssets(fileName: String?): Bitmap? {
