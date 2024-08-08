@@ -220,6 +220,10 @@ class TestActivity : BaseActivity() {
             val intent = Intent(this, SnapshotActivity::class.java) // 替换成你的新页面 Activity 类名
             startActivity(intent)
         }
+        binding.btConstraint.setOnClickListener {
+            val intent = Intent(this, ConstraintActivity::class.java) // 替换成你的新页面 Activity 类名
+            startActivity(intent)
+        }
         binding.btDecodeQr.setOnClickListener {
             val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.bb)
 

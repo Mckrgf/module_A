@@ -165,6 +165,13 @@
             android:text="测试跳转生命周期"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_glide" />
+        <Button
+            android:id="@+id/bt_constraint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="约束布局相关"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/circle_bord_image" />
 
         <Button
             android:id="@+id/bt_add_drag_view"
