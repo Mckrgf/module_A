@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:clipChildren="false"
     tools:context=".TestActivity">
 
     <TextView
@@ -73,6 +74,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:clipChildren="false"
         android:layout_height="wrap_content">
 
         <Button
@@ -165,6 +167,7 @@
             android:text="测试跳转生命周期"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_glide" />
+
         <Button
             android:id="@+id/bt_constraint"
             android:layout_width="wrap_content"
@@ -182,14 +185,14 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_glide" />
 
         <TextView
+            android:id="@+id/tv_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_test"
-            app:layout_constraintTop_toTopOf="@+id/bt_add_drag_view"
-            app:layout_constraintStart_toEndOf="@+id/bt_add_drag_view"
-            android:text="aa"
+            android:layout_marginLeft="10dp"
             android:background="@color/purple_200"
-            android:layout_marginLeft="10dp"/>
+            android:text="aa"
+            app:layout_constraintStart_toEndOf="@+id/bt_add_drag_view"
+            app:layout_constraintTop_toTopOf="@+id/bt_add_drag_view" />
 
         <TableLayout
             android:id="@+id/tabLayout_b"
@@ -214,33 +217,33 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:layout_marginLeft="10dp"
                     android:text="年龄" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:layout_marginLeft="10dp"
                     android:text="年龄龄" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="4"
                     android:gravity="center"
-                    android:layout_marginLeft="10dp"
                     android:text="年龄龄龄" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="5"
                     android:gravity="center"
-                    android:layout_marginLeft="10dp"
                     android:text="年龄龄龄龄" />
             </TableRow>
             <!-- 假设我们动态添加行数据 -->
@@ -252,7 +255,7 @@
             android:layout_height="wrap_content"
             android:text="吸顶动画/隐藏头/滑动列表的效果"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLayout_b"/>
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout_b" />
 
         <Button
             android:id="@+id/bt_snapshot_scrollview"
@@ -260,28 +263,44 @@
             android:layout_height="wrap_content"
             android:text="scrollview长截图"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bt_ani"/>
+            app:layout_constraintTop_toBottomOf="@+id/bt_ani" />
+
         <Button
             android:id="@+id/bt_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="拍照01"
             app:layout_constraintStart_toEndOf="@+id/bt_ani"
-            app:layout_constraintTop_toTopOf="@+id/bt_ani"/>
+            app:layout_constraintTop_toTopOf="@+id/bt_ani" />
+
         <Button
             android:id="@+id/bt_decode_qr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="解析二维码"
             app:layout_constraintStart_toEndOf="@+id/bt_camera"
-            app:layout_constraintTop_toTopOf="@+id/bt_ani"/>
+            app:layout_constraintTop_toTopOf="@+id/bt_ani" />
+
         <Button
             android:id="@+id/updateWidgetBroadcast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="广播更新小组件"
             app:layout_constraintStart_toEndOf="@+id/bt_snapshot_scrollview"
-            app:layout_constraintTop_toTopOf="@+id/bt_snapshot_scrollview"/>
+            app:layout_constraintTop_toTopOf="@+id/bt_snapshot_scrollview" />
+
+
+        <include
+            layout="@layout/pendant_layout"
+            android:id="@+id/rl_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/lpGreen"
+            android:clipChildren="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/updateWidgetBroadcast">
+
+        </include>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
