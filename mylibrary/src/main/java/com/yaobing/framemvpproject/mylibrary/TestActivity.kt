@@ -149,35 +149,36 @@ class TestActivity : BaseActivity() {
 
         }
         Glide.with(context)
-            .asGif()
-            .load("file:///android_asset/world-cup.gif")
-            .listener(requestListener).into(binding.ivDfds)
+//            .asGif()
+//            .load("file:///android_asset/world-cup.gif")
+            .load("https://ueapp.oss-cn-hangzhou.aliyuncs.com/nativeApp/test/14465cc46b69453d8c8f367eeafd5eb3")
+            .into(binding.ivDfds)
 
-        System.loadLibrary("c++_shared")
-        System.loadLibrary("marsxlog")
-
-        val SDCARD: String = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).absolutePath
-        val logPath = "$SDCARD/marssample/log"
+//        System.loadLibrary("c++_shared")
+//        System.loadLibrary("marsxlog")
+//
+//        val SDCARD: String = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).absolutePath
+//        val logPath = "$SDCARD/marssample/log"
 
 //        val cachePath: String = this.filesDir + "/xlog"
 
-        val xlog = Xlog()
-        com.tencent.mars.xlog.Log.setLogImp(xlog)
+//        val xlog = Xlog()
+//        com.tencent.mars.xlog.Log.setLogImp(xlog)
 
-        if (BuildConfig.DEBUG) {
-            com.tencent.mars.xlog.Log.setConsoleLogOpen(true)
-            com.tencent.mars.xlog.Log.appenderOpen(Xlog.LEVEL_DEBUG, Xlog.AppednerModeAsync, "", logPath, "hah", 0)
-        } else {
-            com.tencent.mars.xlog.Log.setConsoleLogOpen(false)
-            com.tencent.mars.xlog.Log.appenderOpen(
-                Xlog.LEVEL_DEBUG,
-                Xlog.AppednerModeAsync,
-                "",
-                logPath,
-                "hah",
-                0
-            )
-        }
+//        if (BuildConfig.DEBUG) {
+//            com.tencent.mars.xlog.Log.setConsoleLogOpen(true)
+//            com.tencent.mars.xlog.Log.appenderOpen(Xlog.LEVEL_DEBUG, Xlog.AppednerModeAsync, "", logPath, "hah", 0)
+//        } else {
+//            com.tencent.mars.xlog.Log.setConsoleLogOpen(false)
+//            com.tencent.mars.xlog.Log.appenderOpen(
+//                Xlog.LEVEL_DEBUG,
+//                Xlog.AppednerModeAsync,
+//                "",
+//                logPath,
+//                "hah",
+//                0
+//            )
+//        }
     }
 
     private fun checkFile() {
