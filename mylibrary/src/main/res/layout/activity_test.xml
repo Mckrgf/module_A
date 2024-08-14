@@ -290,6 +290,15 @@
             app:layout_constraintTop_toTopOf="@+id/bt_snapshot_scrollview" />
 
 
+        <ImageView
+            android:id="@+id/iv_ssl"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@color/purple_200"
+            app:layout_constraintStart_toEndOf="@+id/bt_snapshot_scrollview"
+            app:layout_constraintTop_toBottomOf="@+id/bt_snapshot_scrollview" />
+
+
         <include
             layout="@layout/pendant_layout"
             android:id="@+id/rl_small"

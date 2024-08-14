@@ -224,6 +224,13 @@ class TestActivity : BaseActivity() {
             val intent = Intent(this, ConstraintActivity::class.java) // 替换成你的新页面 Activity 类名
             startActivity(intent)
         }
+
+        //加载原图（不含圆角，做个对比）
+        Glide.with(this)
+            .load("https://ueapp.oss-cn-hangzhou.aliyuncs.com/nativeApp/test/14465cc46b69453d8c8f367eeafd5eb3")
+            .centerCrop()
+            .placeholder(R.mipmap.ic_launcher)
+            .into(binding.ivSsl)
         binding.btDecodeQr.setOnClickListener {
             val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.bb)
 

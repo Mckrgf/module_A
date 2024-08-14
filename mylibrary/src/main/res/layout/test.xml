@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:visibility="visible"
+        android:id="@+id/userImage"
+        android:padding="2.5dp"
+        android:layout_margin="30dp"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/item_pendant"
+        android:visibility="visible"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        app:layout_constraintStart_toStartOf="@+id/userImage"
+        app:layout_constraintEnd_toEndOf="@+id/userImage"
+        app:layout_constraintTop_toTopOf="@+id/userImage"
+        app:layout_constraintBottom_toBottomOf="@+id/userImage"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/bbb" />
+</androidx.constraintlayout.widget.ConstraintLayout>
