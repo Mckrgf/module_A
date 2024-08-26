@@ -26,6 +26,7 @@ import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.inewise.QRcodeUtil
@@ -150,6 +151,9 @@ class TestActivity : BaseActivity() {
         binding.btCeilingA.setOnClickListener {
             IntentRouter.go(this, "CeilingAlphaActivity")
         }
+        binding.btWebp.setOnClickListener {
+            IntentRouter.go(this, "webpactivity")
+        }
         binding.updateWidgetBroadcast.setOnClickListener {
 
             val intent = Intent("com.yaobing.framemvpproject.mylibrary.update")
@@ -261,17 +265,17 @@ class TestActivity : BaseActivity() {
                 override fun onLoadFailed(
                     e: GlideException?,
                     model: Any?,
-                    target: Target<com.bumptech.glide.load.resource.gif.GifDrawable>?,
+                    target: Target<com.bumptech.glide.load.resource.gif.GifDrawable>,
                     isFirstResource: Boolean
                 ): Boolean {
                     return false
                 }
 
                 override fun onResourceReady(
-                    resource: com.bumptech.glide.load.resource.gif.GifDrawable?,
-                    model: Any?,
+                    resource: com.bumptech.glide.load.resource.gif.GifDrawable,
+                    model: Any,
                     target: Target<com.bumptech.glide.load.resource.gif.GifDrawable>?,
-                    dataSource: DataSource?,
+                    dataSource: DataSource,
                     isFirstResource: Boolean
                 ): Boolean {
                     return false

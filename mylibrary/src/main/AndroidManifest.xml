@@ -31,7 +31,7 @@
             android:name=".activity.TestDActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.MainaaaaActivity"
+            android:name=".activity.WebpActivity"
             android:exported="true" />
         <activity
             android:name=".activity.TestCeilingAlphaActivity"
