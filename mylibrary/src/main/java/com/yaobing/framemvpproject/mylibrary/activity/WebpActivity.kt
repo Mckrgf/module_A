@@ -54,6 +54,7 @@ class WebpActivity : AppCompatActivity() {
         Glide.with(this)
 //            .load("https://ueapp.oss-cn-hangzhou.aliyuncs.com/nativeApp/test/ccccc.webp")
             .load("https://bbc-sit.oss-cn-hangzhou.aliyuncs.com/2024/08/13/33fd2abeeea64c60a4cabaeca2be0468")
+//            .load("https://bbc-sit.oss-cn-hangzhou.aliyuncs.com/2024/08/13/ce3f6c997a4c4940a86c4e2ad842bbf7")
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
                     return false
