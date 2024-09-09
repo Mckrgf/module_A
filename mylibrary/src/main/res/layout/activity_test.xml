@@ -322,6 +322,30 @@
 
             </include>
 
+            <RatingBar
+                android:id="@+id/ratingBarA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rl_small"/>
+
+            <RatingBar
+                android:id="@+id/ratingBarB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBarA"/>
+
+            <Button
+                android:id="@+id/btRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="recyclerviewfooterView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBarB"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

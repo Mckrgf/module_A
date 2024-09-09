@@ -25,6 +25,12 @@ public class MyApp extends BaseApp {
     @Override
     public void onCreate() {
         super.onCreate();
+        int a = 10;
+        int b = 7;
+        Object c = 444/555;
+        float d = a/(float)b;
+        int f = Math.round(d);
+        Object e = 444/555;
         initActivity();
     }
     private void changeTopActivity(Activity activity) {

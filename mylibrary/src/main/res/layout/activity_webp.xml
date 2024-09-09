@@ -56,4 +56,13 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_c"
         android:text="图片固有次数为0（无限循环）"/>
 
+    <EditText
+        android:id="@+id/et_d"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_c"
+        android:text="https://bbc-sit.oss-cn-hangzhou.aliyuncs.com/2024/08/13/ce3f6c997a4c4940a86c4e2ad842bbf7"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

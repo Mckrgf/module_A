@@ -144,6 +144,9 @@ class TestActivity : BaseActivity() {
         binding.btC.setOnClickListener {
             IntentRouter.go(this, "testd")
         }
+        binding.btRecyclerView.setOnClickListener {
+            IntentRouter.go(this, "recyclerviewactivity")
+        }
 
         binding.btPaging.setOnClickListener {
             IntentRouter.go(this, "PagingActivity")

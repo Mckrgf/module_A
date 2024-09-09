@@ -4,12 +4,13 @@ import android.content.Context
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
-import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.module.AppGlideModule
+import com.yaobing.framemvpproject.mylibrary.glide.SSHUtil
 import okhttp3.OkHttpClient
 import java.io.InputStream
 import java.security.SecureRandom
+import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.X509TrustManager
@@ -25,10 +26,19 @@ class LPAppGlideModule  : AppGlideModule(){
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
 
 
-        val builder = OkHttpClient.Builder()
-        builder.sslSocketFactory(sSLSocketFactory, trustManager)
-        val okHttpClient = builder.build()
-        registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(okHttpClient))
+//        val builder = OkHttpClient.Builder()
+//        builder.sslSocketFactory(sSLSocketFactory, trustManager)
+//        val okHttpClient = builder.build()
+//        registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(okHttpClient))
+
+        val okhttpClient = OkHttpClient.Builder()
+            .retryOnConnectionFailure(true) // 设置出现错误进行重新连接。
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout((60 * 1000).toLong(), TimeUnit.MILLISECONDS)
+            .sslSocketFactory(SSHUtil.getSslSocketFactory().sSLSocketFactory)
+            .hostnameVerifier(SSHUtil.getHostnameVerifier())
+            .build()
+        registry.replace(GlideUrl::class.java, InputStream::class.java, com.yaobing.framemvpproject.mylibrary.glide.OkHttpUrlLoader.Factory(okhttpClient))
     }
 
     /** 获取一个SSLSocketFactory */

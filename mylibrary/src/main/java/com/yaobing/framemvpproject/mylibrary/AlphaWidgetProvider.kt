@@ -106,7 +106,7 @@ class AlphaWidgetProvider : AppWidgetProvider() {
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             System.currentTimeMillis(),
-            1000 * 60 * 1,
+            1000 * 1 * 10,
             pendingIntent
         )
 
