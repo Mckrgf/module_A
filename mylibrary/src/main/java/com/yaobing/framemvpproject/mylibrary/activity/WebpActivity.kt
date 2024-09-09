@@ -2,7 +2,9 @@ package com.yaobing.framemvpproject.mylibrary.activity
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.setPadding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -66,5 +68,18 @@ class WebpActivity : AppCompatActivity() {
 
             })
             .into(binding.ivC)
+
+        Glide.with(this)
+            .load("https://ueapp.oss-cn-hangzhou.aliyuncs.com/nativeApp/test/14465cc46b69453d8c8f367eeafd5eb3")
+            .into(binding.ivD)
+
+        binding.tvD.setOnClickListener {
+            Log.d("zxcv","设置padding一次")
+            binding.ivD.setPadding(0)
+            binding.ivD.setPadding(0)
+            binding.ivD.setPadding(0)
+            binding.ivD.setPadding(19)
+            binding.ivD.isRoundAsCircle = true
+        }
     }
 }

@@ -2,24 +2,19 @@ package com.yaobing.framemvpproject.mylibrary.activity
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
-import android.widget.ProgressBar
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.horizontal.SmartRefreshHorizontal
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.wrapper.RefreshFooterWrapper
 import com.yaobing.framemvpproject.mylibrary.R
-import com.yaobing.framemvpproject.mylibrary.RepoAdapter
 import com.yaobing.framemvpproject.mylibrary.adapter.DemoAdapter
 import com.yaobing.framemvpproject.mylibrary.data.RepoData
-import com.yaobing.framemvpproject.mylibrary.viewModel.MainViewModel
 import com.yaobing.module_apt.Router
 import com.yaobing.module_middleware.activity.BaseControllerActivity
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 
 //
@@ -53,16 +48,18 @@ class RecyclerViewActivity : BaseControllerActivity() {
             data.add(repoData)
         }
         demoAdapter.setNewData(data)
-        val footerView = View.inflate(this,R.layout.footer,null)
 
-        demoAdapter.addFooterView(footerView)
-        val lp = footerView.layoutParams
-        lp.width = dp2pxInt(30f)
-        footerView.layoutParams = lp
+        val refreshLayout: SmartRefreshHorizontal = findViewById(R.id.srh)
+        refreshLayout.setReboundDuration(1)
+        val footer = View.inflate(getContext(),R.layout.item_load_more,null)
+        refreshLayout.setRefreshHeader(MaterialHeader(getContext()))
+        refreshLayout.setRefreshFooter(
+            RefreshFooterWrapper(footer)
+        )
     }
 
     override fun getLayoutID(): Int {
-        return (R.layout.activity_paging)
+        return (R.layout.activity_paging_hor)
     }
 
     override fun onDestroy() {

@@ -80,7 +80,7 @@
             android:id="@+id/bt_webp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="动态webp图片测试"
+            android:hint="动态webp图片测试/圆角图片padding测试"
             android:tag="et_b" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
