@@ -2,6 +2,7 @@ package com.yaobing.framemvpproject.mylibrary.activity
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.horizontal.SmartRefreshHorizontal
 import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.scwang.smart.refresh.layout.wrapper.RefreshFooterWrapper
 import com.yaobing.framemvpproject.mylibrary.R
 import com.yaobing.framemvpproject.mylibrary.adapter.DemoAdapter
@@ -50,12 +52,23 @@ class RecyclerViewActivity : BaseControllerActivity() {
         demoAdapter.setNewData(data)
 
         val refreshLayout: SmartRefreshHorizontal = findViewById(R.id.srh)
-        refreshLayout.setReboundDuration(1)
         val footer = View.inflate(getContext(),R.layout.item_load_more,null)
         refreshLayout.setRefreshHeader(MaterialHeader(getContext()))
         refreshLayout.setRefreshFooter(
             RefreshFooterWrapper(footer)
         )
+        refreshLayout.setEnableAutoLoadMore(false);//使上拉加载具有弹性效果
+        refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                Log.d("zxcv","refresh")
+            }
+
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
+                Log.d("zxcv","loadMore")
+                refreshLayout.closeHeaderOrFooter()
+            }
+
+        })
     }
 
     override fun getLayoutID(): Int {
