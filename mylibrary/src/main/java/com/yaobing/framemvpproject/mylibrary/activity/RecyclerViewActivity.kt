@@ -4,10 +4,12 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.horizontal.HorizontalFooter
 import com.scwang.smart.refresh.horizontal.SmartRefreshHorizontal
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -52,7 +54,10 @@ class RecyclerViewActivity : BaseControllerActivity() {
         demoAdapter.setNewData(data)
 
         val refreshLayout: SmartRefreshHorizontal = findViewById(R.id.srh)
-        val footer = View.inflate(getContext(),R.layout.item_load_more,null)
+        val customFooterView = View.inflate(getContext(),R.layout.item_load_more,null)
+        val footer : HorizontalFooter= HorizontalFooter(customFooterView)
+        footer.gravity = Gravity.CENTER_VERTICAL
+        footer.setBackgroundColor(resources.getColor(R.color.greenPlayAll,null))
         refreshLayout.setRefreshHeader(MaterialHeader(getContext()))
         refreshLayout.setRefreshFooter(
             RefreshFooterWrapper(footer)
