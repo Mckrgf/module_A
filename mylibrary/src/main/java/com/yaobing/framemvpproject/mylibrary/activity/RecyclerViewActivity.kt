@@ -1,18 +1,24 @@
 package com.yaobing.framemvpproject.mylibrary.activity
 
+import android.animation.ObjectAnimator
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.core.animation.addListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.horizontal.HorizontalFooter
 import com.scwang.smart.refresh.horizontal.SmartRefreshHorizontal
+import com.scwang.smart.refresh.layout.api.RefreshFooter
+import com.scwang.smart.refresh.layout.api.RefreshHeader
 import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
+import com.scwang.smart.refresh.layout.constant.RefreshState
+import com.scwang.smart.refresh.layout.listener.OnMultiListener
 import com.scwang.smart.refresh.layout.wrapper.RefreshFooterWrapper
 import com.yaobing.framemvpproject.mylibrary.R
 import com.yaobing.framemvpproject.mylibrary.adapter.DemoAdapter
@@ -62,8 +68,38 @@ class RecyclerViewActivity : BaseControllerActivity() {
         refreshLayout.setRefreshFooter(
             RefreshFooterWrapper(footer)
         )
+
+        //动画
+        val animator = ObjectAnimator.ofFloat(customFooterView, "rotation", 0f, 180f)
+        animator.setDuration(200)
+        animator.interpolator = AccelerateDecelerateInterpolator()
+        animator.addUpdateListener {
+            animator.animatedValue//获取进度
+        }
+
+
         refreshLayout.setEnableAutoLoadMore(false);//使上拉加载具有弹性效果
-        refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+        refreshLayout.setOnMultiListener(object : OnMultiListener {
+
+            override fun onFooterMoving(
+                footer: RefreshFooter?,
+                isDragging: Boolean,
+                percent: Float,
+                offset: Int,
+                footerHeight: Int,
+                maxDragHeight: Int
+            ) {
+                Log.d("zxcv","footer move \n percent: $percent \n offset: $offset \n" +
+                        " footerHeight: $footerHeight\n" +
+                        " maxDragHeight: $maxDragHeight ")
+                if (percent < 1) {
+
+
+                    animator.start()
+                }else {
+
+                }
+            }
             override fun onRefresh(refreshLayout: RefreshLayout) {
                 Log.d("zxcv","refresh")
             }
@@ -71,6 +107,68 @@ class RecyclerViewActivity : BaseControllerActivity() {
             override fun onLoadMore(refreshLayout: RefreshLayout) {
                 Log.d("zxcv","loadMore")
                 refreshLayout.closeHeaderOrFooter()
+            }
+
+            override fun onStateChanged(
+                refreshLayout: RefreshLayout,
+                oldState: RefreshState,
+                newState: RefreshState
+            ) {
+                Log.d("zxcv","onStateChanged")
+            }
+
+
+            override fun onHeaderMoving(
+                header: RefreshHeader?,
+                isDragging: Boolean,
+                percent: Float,
+                offset: Int,
+                headerHeight: Int,
+                maxDragHeight: Int
+            ) {
+
+            }
+
+            override fun onHeaderReleased(
+                header: RefreshHeader?,
+                headerHeight: Int,
+                maxDragHeight: Int
+            ) {
+
+            }
+
+            override fun onHeaderStartAnimator(
+                header: RefreshHeader?,
+                headerHeight: Int,
+                maxDragHeight: Int
+            ) {
+
+            }
+
+            override fun onHeaderFinish(header: RefreshHeader?, success: Boolean) {
+
+            }
+
+
+
+            override fun onFooterReleased(
+                footer: RefreshFooter?,
+                footerHeight: Int,
+                maxDragHeight: Int
+            ) {
+                Log.d("zxcv","onFooterReleased")
+            }
+
+            override fun onFooterStartAnimator(
+                footer: RefreshFooter?,
+                footerHeight: Int,
+                maxDragHeight: Int
+            ) {
+                Log.d("zxcv","onFooterStartAnimator")
+            }
+
+            override fun onFooterFinish(footer: RefreshFooter?, success: Boolean) {
+                Log.d("zxcv","onFooterFinish")
             }
 
         })
