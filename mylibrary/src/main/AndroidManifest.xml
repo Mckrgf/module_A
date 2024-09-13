@@ -37,6 +37,9 @@
             android:name=".activity.TestCeilingAlphaActivity"
             android:exported="true" />
         <activity
+            android:name=".activity.CustomViewActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.PagingActivity"
             android:exported="true">
             <meta-data

@@ -157,6 +157,9 @@ class TestActivity : BaseActivity() {
         binding.btWebp.setOnClickListener {
             IntentRouter.go(this, "webpactivity")
         }
+        binding.customView.setOnClickListener {
+            IntentRouter.go(this, "customviewactivity")
+        }
         binding.updateWidgetBroadcast.setOnClickListener {
 
             val intent = Intent("com.yaobing.framemvpproject.mylibrary.update")

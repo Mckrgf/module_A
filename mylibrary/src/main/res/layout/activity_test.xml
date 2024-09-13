@@ -82,6 +82,12 @@
             android:layout_height="wrap_content"
             android:hint="动态webp图片测试/圆角图片padding测试"
             android:tag="et_b" />
+        <Button
+            android:id="@+id/customView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="自定义控件"
+            android:tag="et_b" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
