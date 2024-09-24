@@ -147,6 +147,9 @@ class TestActivity : BaseActivity() {
         binding.btRecyclerView.setOnClickListener {
             IntentRouter.go(this, "recyclerviewactivity")
         }
+        binding.btDoubleRecyclerView.setOnClickListener {
+            IntentRouter.go(this, "doubleRecyclerviewactivity")
+        }
 
         binding.btPaging.setOnClickListener {
             IntentRouter.go(this, "PagingActivity")

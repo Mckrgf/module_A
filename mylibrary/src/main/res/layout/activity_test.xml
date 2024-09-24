@@ -352,6 +352,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ratingBarB"/>
 
+            <Button
+                android:id="@+id/btDoubleRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="竖向两个recyclerview"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btRecyclerView"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

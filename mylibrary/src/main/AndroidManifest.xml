@@ -40,6 +40,9 @@
             android:name=".activity.CustomViewActivity"
             android:exported="true" />
         <activity
+            android:name=".activity.DoubleRecyclerViewActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.PagingActivity"
             android:exported="true">
             <meta-data
