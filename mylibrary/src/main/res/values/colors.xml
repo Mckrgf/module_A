@@ -74,4 +74,6 @@
     <color name="transparent_90">#F2000000</color>
     <color name="whiteT40">#66FFFFFF</color>
     <color name="whiteT60">#99FFFFFF</color>
+    <color name="popMask">#8F000000</color>
+    <color name="tabLine">#64A028</color>
 </resources>

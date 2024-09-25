@@ -7,7 +7,10 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.PopupWindow
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +25,9 @@ import com.scwang.smart.refresh.layout.listener.OnMultiListener
 import com.scwang.smart.refresh.layout.wrapper.RefreshFooterWrapper
 import com.yaobing.framemvpproject.mylibrary.R
 import com.yaobing.framemvpproject.mylibrary.adapter.DemoAdapter
+import com.yaobing.framemvpproject.mylibrary.adapter.PopWindowOptionAdapter
 import com.yaobing.framemvpproject.mylibrary.data.RepoData
+import com.yaobing.framemvpproject.mylibrary.data.ShopData
 import com.yaobing.module_apt.Router
 import com.yaobing.module_middleware.activity.BaseControllerActivity
 
@@ -40,34 +45,60 @@ import com.yaobing.module_middleware.activity.BaseControllerActivity
  */
 
 @Router(value = "doubleRecyclerviewactivity")
-class DoubleRecyclerViewActivity : BaseControllerActivity() {
+class DoubleRecyclerViewActivity : AppCompatActivity() {
 
-
+    private val popupMenu by lazy {
+        PopupWindow(
+            View.inflate(
+                this,
+                R.layout.popwindow_option,
+                null
+            ), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_double_recyclerview)
         val demoAdapterA = DemoAdapter()
         val demoAdapterB = DemoAdapter()
         val rvA = findViewById<RecyclerView>(R.id.rv_a)
         val rvB = findViewById<RecyclerView>(R.id.rv_b)
         rvA.adapter = demoAdapterA
         rvB.adapter = demoAdapterB
-        rvA.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        rvB.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        rvA.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rvB.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         var data = mutableListOf<RepoData>()
         for (i in 0 until 20) {
             val repoData = RepoData(i)
-            repoData.full_name = "我是名字： +$i"
+            repoData.full_name = "店铺名字： +$i"
             data.add(repoData)
         }
         demoAdapterA.setNewData(data)
         demoAdapterB.setNewData(data)
 
+        val types = mutableListOf<String>()
+        types.add("美食")
+        types.add("住宿")
+        types.add("体验")
+        val sorts = mutableListOf<String>()
+        sorts.add("综合排序")
+        sorts.add("距离优先")
+        sorts.add("好评优先")
+        sorts.add("人气优先")
+        sorts.add("福利优先")
+
+        val rv = popupMenu.contentView.findViewById<RecyclerView>(R.id.rv)
+        rv.layoutManager = LinearLayoutManager(this)
+
+        val carTypeAdapter = PopWindowOptionAdapter(mutableListOf())
+        rv.adapter = carTypeAdapter
+
+
+        // TODO: 通过点击排序/分类，给列表设置不同的数据，用同一个rv展示 
+
     }
 
-    override fun getLayoutID(): Int {
-        return (R.layout.activity_double_recyclerview)
-    }
 
 
 }
