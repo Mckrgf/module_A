@@ -88,14 +88,14 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
         sorts.add("人气优先")
         sorts.add("福利优先")
 
-        val rv = popupMenu.contentView.findViewById<RecyclerView>(R.id.rv)
-        rv.layoutManager = LinearLayoutManager(this)
+//        val rv = popupMenu.contentView.findViewById<RecyclerView>(R.id.rv)
+//        rv.layoutManager = LinearLayoutManager(this)
+//
+//        val carTypeAdapter = PopWindowOptionAdapter(mutableListOf())
+//        rv.adapter = carTypeAdapter
 
-        val carTypeAdapter = PopWindowOptionAdapter(mutableListOf())
-        rv.adapter = carTypeAdapter
 
-
-        // TODO: 通过点击排序/分类，给列表设置不同的数据，用同一个rv展示 
+        // TODO: 通过点击排序/分类，给列表设置不同的数据，用同一个rv展示
 
     }
 
