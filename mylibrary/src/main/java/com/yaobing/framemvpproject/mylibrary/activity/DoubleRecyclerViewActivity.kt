@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,6 +57,7 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
             ), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_double_recyclerview)
@@ -63,6 +65,10 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
         val demoAdapterB = DemoAdapter()
         val rvA = findViewById<RecyclerView>(R.id.rv_a)
         val rvB = findViewById<RecyclerView>(R.id.rv_b)
+        val tvSort = findViewById<TextView>(R.id.tvSort)
+        val tvType = findViewById<TextView>(R.id.tvType)
+        val rv = popupMenu.contentView.findViewById<RecyclerView>(R.id.rv)
+        rv.layoutManager = LinearLayoutManager(this)
         rvA.adapter = demoAdapterA
         rvB.adapter = demoAdapterB
         rvA.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -87,18 +93,28 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
         sorts.add("好评优先")
         sorts.add("人气优先")
         sorts.add("福利优先")
+        tvSort.setOnClickListener {
+            Log.d("zxcv", "pop sort")
 
-//        val rv = popupMenu.contentView.findViewById<RecyclerView>(R.id.rv)
-//        rv.layoutManager = LinearLayoutManager(this)
+            val carTypeAdapter = PopWindowOptionAdapter(sorts)
+            rv.adapter = carTypeAdapter
+            // TODO: pop要show 
+//            carTypeAdapter.setNewData(sorts)
+        }
+
+        tvType.setOnClickListener {
+            Log.d("zxcv", "pop type")
+        }
+
+
 //
-//        val carTypeAdapter = PopWindowOptionAdapter(mutableListOf())
+//
 //        rv.adapter = carTypeAdapter
 
 
         // TODO: 通过点击排序/分类，给列表设置不同的数据，用同一个rv展示
 
     }
-
 
 
 }
