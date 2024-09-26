@@ -7,6 +7,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +40,12 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
     }
     private val rvB by lazy {
         findViewById<RecyclerView>(R.id.rv_b)
+    }
+    private val ivSortArrow by lazy {
+        findViewById<ImageView>(R.id.ivArrowSort)
+    }
+    private val ivTypeArrow by lazy {
+        findViewById<ImageView>(R.id.ivArrowType)
     }
     private val vMask by lazy {
         findViewById<View>(R.id.viewMask)
@@ -104,6 +111,8 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
         )
         popupMenu.setOnDismissListener {
             vMask.visibility = View.GONE
+            rotationArrow(ivSortArrow,0f)
+            rotationArrow(ivTypeArrow,0f)
         }
         val sortAdapter = PopWindowOptionAdapter(sorts)
         val typeAdapter = PopWindowOptionAdapter(types)
@@ -112,6 +121,7 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
             if (popupMenu.isShowing) {
                 popupMenu.dismiss()
             } else {
+                rotationArrow(ivSortArrow,180f)
                 val rv = popupMenu.contentView.findViewById<RecyclerView>(R.id.rv)
                 rv.layoutManager = LinearLayoutManager(this)
                 rv.adapter = sortAdapter
@@ -139,7 +149,7 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
             if (popupMenu.isShowing) {
                 popupMenu.dismiss()
             } else {
-
+                rotationArrow(ivTypeArrow,180f)
                 vMask.visibility = View.VISIBLE
                 val rv = popupMenu.contentView.findViewById<RecyclerView>(R.id.rv)
                 rv.layoutManager = LinearLayoutManager(this)
@@ -162,6 +172,11 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun rotationArrow(img : ImageView, rotate:Float) {
+        img.animate().setDuration(0).rotation(rotate)
+    }
+
     private fun initShopData() {
         demoAdapterA.emptyView = View.inflate(this@DoubleRecyclerViewActivity,R.layout.no_shop_view,null)
         demoAdapterB.emptyView = View.inflate(this@DoubleRecyclerViewActivity,R.layout.no_shop_view,null)
