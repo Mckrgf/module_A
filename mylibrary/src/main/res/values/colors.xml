@@ -76,4 +76,5 @@
     <color name="whiteT60">#99FFFFFF</color>
     <color name="popMask">#8F000000</color>
     <color name="tabLine">#64A028</color>
+    <color name="tabLineA">#009200</color>
 </resources>
