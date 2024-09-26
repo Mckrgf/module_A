@@ -56,4 +56,9 @@
         <item name="android:windowEnterAnimation">@anim/window_right_in</item>
         <item name="android:windowExitAnimation">@anim/window_right_out</item>
     </style>
+
+    <style name="pop_option_animation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pop_option_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_option_out</item>
+    </style>
 </resources>
