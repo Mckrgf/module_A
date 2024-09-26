@@ -2,7 +2,6 @@ package com.yaobing.framemvpproject.mylibrary.activity
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
@@ -16,6 +15,8 @@ import com.yaobing.framemvpproject.mylibrary.adapter.DemoAdapter
 import com.yaobing.framemvpproject.mylibrary.adapter.PopWindowOptionAdapter
 import com.yaobing.framemvpproject.mylibrary.data.RepoData
 import com.yaobing.module_apt.Router
+import kotlin.random.Random
+import com.yaobing.module_middleware.Utils.StatusBarUtil
 
 @Router(value = "doubleRecyclerviewactivity")
 class DoubleRecyclerViewActivity : AppCompatActivity() {
@@ -36,10 +37,14 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
     private val rvB by lazy {
         findViewById<RecyclerView>(R.id.rv_b)
     }
+    private val vMask by lazy {
+        findViewById<View>(R.id.viewMask)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_double_recyclerview)
+        StatusBarUtil.setAppStatusBar(this)
         initShopData()
         initSortData()
     }
@@ -71,10 +76,15 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
                 )
             )
         )
+        popupMenu.setOnDismissListener {
+            vMask.visibility = View.GONE
+        }
         tvSort.setOnClickListener {
             if (popupMenu.isShowing) {
+
                 popupMenu.dismiss()
             } else {
+                vMask.visibility = View.VISIBLE
                 val rv = popupMenu.contentView.findViewById<RecyclerView>(R.id.rv)
                 rv.layoutManager = LinearLayoutManager(this)
                 val sortAdapter = PopWindowOptionAdapter(sorts)
@@ -89,6 +99,7 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
             if (popupMenu.isShowing) {
                 popupMenu.dismiss()
             } else {
+                vMask.visibility = View.VISIBLE
                 val rv = popupMenu.contentView.findViewById<RecyclerView>(R.id.rv)
                 rv.layoutManager = LinearLayoutManager(this)
                 val typeAdapter = PopWindowOptionAdapter(types)
@@ -112,6 +123,7 @@ class DoubleRecyclerViewActivity : AppCompatActivity() {
         for (i in 0 until 10) {
             val repoData = RepoData(i)
             repoData.full_name = "店铺名字： +$i"
+            repoData.i = Random.nextInt(3,5)
             data.add(repoData)
         }
         demoAdapterA.setNewData(data)

@@ -27,7 +27,8 @@ class DemoAdapter() : BaseQuickAdapter<RepoData, BaseViewHolder>(R.layout.item_s
         }else {
             dp2pxInt(20f)
         }
-
+        helper.setText(R.id.tv_name,item.full_name)
+        helper.setText(R.id.tv_star,"" + item.i + "")
         helper.itemView.findViewById<TextView>(R.id.tv_coupon_content_b).post {
             val x = helper.itemView.width // view距离 屏幕左边的距离（即x轴方向）
             val x1 = helper.itemView.findViewById<TextView>(R.id.tv_coupon_content_b).right
