@@ -43,12 +43,8 @@ public class DashedLineHorView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int startX = 0;
-        int startY = getHeight() / 2;
-        int stopX = getWidth();
-        int stopY = getHeight() / 2;
-        mPath.moveTo(startX, startY);
-        mPath.lineTo(stopX, stopY);
+        mPath.moveTo(0,  getHeight() / 2);
+        mPath.lineTo(getWidth(), getHeight() / 2);
         canvas.drawPath(mPath, mPaint);
 
 //        int startX = getWidth() / 2;

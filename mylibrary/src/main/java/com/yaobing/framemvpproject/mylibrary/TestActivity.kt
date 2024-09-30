@@ -150,6 +150,9 @@ class TestActivity : BaseActivity() {
         binding.btDoubleRecyclerView.setOnClickListener {
             IntentRouter.go(this, "doubleRecyclerviewactivity")
         }
+        binding.btTimeLineRecyclerView.setOnClickListener {
+            IntentRouter.go(this, "timeLineRecyclerviewactivity")
+        }
 
         binding.btPaging.setOnClickListener {
             IntentRouter.go(this, "PagingActivity")
