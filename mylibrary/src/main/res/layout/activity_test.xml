@@ -88,7 +88,16 @@
             android:layout_height="wrap_content"
             android:hint="自定义控件"
             android:tag="et_b" />
-
+        <com.yaobing.framemvpproject.mylibrary.ui.DashedLineVerticalView
+            android:background="@color/lpGreen"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/dashLineA" />
+        <com.yaobing.framemvpproject.mylibrary.ui.DashedLineHorView
+            android:background="@color/lpGreen"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/dashLineB" />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:clipChildren="false"
