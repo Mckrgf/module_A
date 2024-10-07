@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="bt_b"
-                android:text="对象的扩展函数" />
+                android:text="扩展函数/委托" />
 
         </LinearLayout>
 
