@@ -15,7 +15,7 @@
         android:src="@mipmap/back"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <TextView
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
         android:id="@+id/tv_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="106dp"
         android:layout_marginStart="24dp"/>
-    <TextView
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
+        android:layout_marginLeft="4dp"
         android:id="@+id/tv_count_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +39,8 @@
         app:layout_constraintStart_toEndOf="@+id/tv_count"
         app:layout_constraintBottom_toBottomOf="@+id/tv_count"
         android:layout_marginTop="106dp"/>
-    <TextView
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
+        android:layout_marginLeft="4dp"
         android:id="@+id/tv_count_tail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_count"
         android:layout_marginTop="106dp"/>
 
-    <TextView
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
         android:id="@+id/tv_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,7 +65,7 @@
         android:layout_marginTop="18dp"
         android:layout_marginStart="24dp"/>
 
-    <TextView
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
         android:id="@+id/tv_save_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,11 +73,13 @@
         android:textSize="30sp"
         android:textStyle="bold"
         android:text="15"
+        android:layout_marginLeft="4dp"
         app:layout_constraintStart_toEndOf="@+id/tv_save"
         app:layout_constraintBottom_toBottomOf="@+id/tv_save"/>
 
-    <TextView
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
         android:id="@+id/tv_save_tail"
+        android:layout_marginLeft="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#333333"
