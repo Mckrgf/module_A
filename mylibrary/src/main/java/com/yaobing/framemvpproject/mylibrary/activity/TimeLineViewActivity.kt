@@ -92,6 +92,13 @@ class TimeLineViewActivity : AppCompatActivity() {
             val repoData = RepoData(i)
             repoData.full_name = "店铺名字： +$i"
             repoData.i = Random.nextInt(3,5)
+            if (i < 3) {
+                repoData.year = "2024"
+            }else if (i in 3..8) {
+                repoData.year = "2023"
+            } else {
+                repoData.year = "2022"
+            }
             data.add(repoData)
         }
         timeLineAdapter.setNewData(data)
