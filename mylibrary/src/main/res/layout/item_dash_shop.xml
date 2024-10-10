@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
 
@@ -70,16 +70,22 @@
         app:layout_constraintTop_toTopOf="@+id/tvYear" />
 
 
-    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
+    <TextView
         android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:includeFontPadding="false"
         android:gravity="top"
-        android:text="商店名称"
+        android:text="商店名称商店名称商店名称商店名称"
+        android:layout_marginEnd="10dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:textColor="#333333"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/iv_shop"
+        app:layout_constraintEnd_toStartOf="@+id/tvComment"
         app:layout_constraintTop_toTopOf="@id/iv_shop" />
 
     <ImageView
@@ -182,4 +188,17 @@
         android:layout_height="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_shop" />
+
+    <TextView
+        android:id="@+id/tvComment"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:background="@drawable/shape_club_activity_button"
+        android:layout_marginRight="24dp"
+        android:text="写评价"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_name"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -47,6 +47,7 @@ class TimeLineViewActivity : AppCompatActivity() {
     private fun initListener() {
         var scrollY = 0
         var hasShownTitle = false
+        findViewById<View>(R.id.iv_back).setOnClickListener { finish() }
         rvTimeLine.addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)

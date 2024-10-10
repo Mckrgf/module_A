@@ -30,9 +30,9 @@ class TimeLineAdapter() : BaseQuickAdapter<RepoData, BaseViewHolder>(R.layout.it
 
         setYearView(item, helper)
         setDashLine(helper)
-        helper.setText(R.id.tvYear,item.year)
+        helper.setText(R.id.tvYear,item.year + "年")
         map[item.year.toString()] = true
-        helper.setText(R.id.tv_name,item.full_name)
+        helper.setText(R.id.tv_name,item.full_name + "dewdewfewfwefewfwefweffewf")
         helper.setText(R.id.tv_star,"" + item.i + "")
         helper.itemView.findViewById<TextView>(R.id.tv_coupon_content_b).post {
             val x = helper.itemView.width // view距离 屏幕左边的距离（即x轴方向）
