@@ -1,8 +1,11 @@
 package com.yaobing.framemvpproject.mylibrary
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
@@ -17,6 +20,7 @@ import android.os.Environment
 import android.os.Environment.DIRECTORY_DOCUMENTS
 import android.os.Environment.getExternalStorageDirectory
 import android.provider.MediaStore
+import android.provider.MediaStore.Images
 import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
@@ -27,7 +31,6 @@ import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.inewise.QRcodeUtil
@@ -40,7 +43,6 @@ import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
 import com.yaobing.module_apt.BindByTag
 import com.yaobing.module_apt.Router
 import com.yaobing.module_middleware.Utils.Person
-import com.yaobing.module_middleware.Utils.ScreenUtils
 import com.yaobing.module_middleware.Utils.ToastUtils
 import com.yaobing.module_middleware.Utils.checkComma
 import com.yaobing.module_middleware.Utils.isBold
@@ -156,8 +158,16 @@ class TestActivity : BaseActivity() {
         }
         binding.btPathUri.setOnClickListener {
             val path = "/storage/emulated/0/Android/data/com.dahua.leapmotor/cache/Leapmotor/smallVideo/tempPic_1729161414328.jpg"
+
             val uri = Uri.fromFile(File(path))
             val newPath = uri.path
+            val fileExist = File(newPath).exists()
+
+            val uriB = getImageContentUri(this,File(path))
+            val newPathB = uriB?.path
+            val fileBExist = File(newPathB).exists()
+            val bitmap = Images.Media.getBitmap(this.contentResolver, uri)// TODO: 这里获取不到，转换为uri之后无法获取文件了很奇怪 
+//            val fileBExist1 = File(URI.create(newPathB))
         }
 
         binding.btPaging.setOnClickListener {
@@ -330,7 +340,23 @@ class TestActivity : BaseActivity() {
         measureAndSetText()
     }
 
-
+    @SuppressLint("Range")
+    fun getImageContentUri(context: Context, imageFile: File): Uri? {
+        val filePath = imageFile.absolutePath
+        val cursor = context.contentResolver.query(Images.Media.EXTERNAL_CONTENT_URI, arrayOf("_id"), "_data=? ", arrayOf(filePath), null as String?)
+        return if (cursor != null && cursor.moveToFirst()) {
+            val id = cursor.getInt(cursor.getColumnIndex("_id"))
+            val baseUri = Uri.parse("content://media/external/images/media")
+            cursor.close()
+            Uri.withAppendedPath(baseUri, id.toString())
+        } else if (imageFile.exists()) {
+            val values = ContentValues()
+            values.put("_data", filePath)
+            context.contentResolver.insert(Images.Media.EXTERNAL_CONTENT_URI, values)
+        } else {
+            null
+        }
+    }
 
     fun dp2px(dp: Float): Float =
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().displayMetrics)
