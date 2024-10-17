@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Environment.DIRECTORY_DOCUMENTS
@@ -152,6 +153,11 @@ class TestActivity : BaseActivity() {
         }
         binding.btTimeLineRecyclerView.setOnClickListener {
             IntentRouter.go(this, "timeLineRecyclerviewactivity")
+        }
+        binding.btPathUri.setOnClickListener {
+            val path = "/storage/emulated/0/Android/data/com.dahua.leapmotor/cache/Leapmotor/smallVideo/tempPic_1729161414328.jpg"
+            val uri = Uri.fromFile(File(path))
+            val newPath = uri.path
         }
 
         binding.btPaging.setOnClickListener {

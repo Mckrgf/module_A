@@ -376,6 +376,14 @@
                 app:layout_constraintStart_toEndOf="@+id/btDoubleRecyclerView"
                 app:layout_constraintTop_toBottomOf="@+id/btRecyclerView"/>
 
+            <Button
+                android:id="@+id/btPathUri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="path-uri-path"
+                app:layout_constraintStart_toEndOf="@+id/btTimeLineRecyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/btRecyclerView"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
