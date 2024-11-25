@@ -1,15 +1,12 @@
 package com.yaobing.framemvpproject.mylibrary;
 
-import static android.content.Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.yaobing.framemvpproject.mylibrary.activity.activity.SplashActivity;
+import com.blankj.utilcode.util.SPUtils;
 import com.yaobing.module_middleware.BaseApp;
 
 /**
@@ -31,7 +28,8 @@ public class MyApp extends BaseApp {
         float d = a/(float)b;
         int f = Math.round(d);
         Object e = 444/555;
-        initActivity();
+        SPUtils.getInstance().put("splash",false);
+//        initActivity();
     }
     private void changeTopActivity(Activity activity) {
         topActivity = activity;

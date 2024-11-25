@@ -11,12 +11,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.RemoteViews
-import android.widget.Toast
-import com.yaobing.framemvpproject.mylibrary.network.APIService
+import com.blankj.utilcode.util.SPUtils
+import com.yaobing.framemvpproject.mylibrary.activity.WidgetBridgeActivity
 import com.yaobing.module_middleware.Utils.MyDateUtils
-import com.yaobing.module_middleware.Utils.ToastUtils
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -79,6 +76,18 @@ class AlphaWidgetProvider : AppWidgetProvider() {
 
             requestData(views, context, appWidgetManager, appWidgetIds)
         }
+
+        var views1 = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
+        views1.setTextViewText(
+            R.id.tv_name,
+            MyDateUtils.getCurTime(MyDateUtils.date_Format) + "onReceive 设置pendingIntent"
+        )
+//        val intent = Intent(context, SplashActivity::class.java)
+//        intent.putExtra("aa", "bb")
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val pendingIntent = getPendIntent(context)
+        views1.setOnClickPendingIntent(R.id.bt_1a, pendingIntent)
+        appWidgetManager.updateAppWidget(appWidgetIds, views1)
     }
     var intent : Intent? = null
     var pendingIntent : PendingIntent? = null
@@ -92,26 +101,49 @@ class AlphaWidgetProvider : AppWidgetProvider() {
         this.appWidgetManager = appWidgetManager
         this.appWidgetIds = appWidgetIds
         Log.d("zxcv", "AlphaWidgetProvider onUpdate")
-        var views = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
-        views.setTextViewText(R.id.tv_name, "update了")
-        appWidgetManager.updateAppWidget(appWidgetIds, views)
-
-        requestData(views, context, appWidgetManager, appWidgetIds)
+        var views1 = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
+        views1.setTextViewText(
+            R.id.tv_name,
+            MyDateUtils.getCurTime(MyDateUtils.date_Format) + "onReceive 设置pendingIntent"
+        )
+//        val intent = Intent(context, SplashActivity::class.java)
+//        intent.putExtra("aa", "bb")
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val pendingIntent = getPendIntent(context)
+        views1.setOnClickPendingIntent(R.id.bt_1a, pendingIntent)
+        appWidgetManager.updateAppWidget(appWidgetIds, views1)
+//        var views = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
+//        views.setTextViewText(R.id.tv_name, "update了")
+//        appWidgetManager.updateAppWidget(appWidgetIds, views)
+//
+//        requestData(views, context, appWidgetManager, appWidgetIds)
 
 
         // 设置警报
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        intent = Intent(context, AlphaWidgetProvider::class.java)
-        pendingIntent = PendingIntent.getBroadcast(context, 0, intent!!, FLAG_MUTABLE)
-        alarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            System.currentTimeMillis(),
-            1000 * 1 * 10,
-            pendingIntent
-        )
+//        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//        intent = Intent(context, AlphaWidgetProvider::class.java)
+//        pendingIntent = PendingIntent.getBroadcast(context, 0, intent!!, FLAG_MUTABLE)
+//        alarmManager.setRepeating(
+//            AlarmManager.RTC_WAKEUP,
+//            System.currentTimeMillis(),
+//            1000 * 1 * 10,
+//            pendingIntent
+//        )
 
     }
-
+    fun getPendIntent(context: Context?): PendingIntent? {
+        val intent = Intent(context, WidgetBridgeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        var request = SPUtils.getInstance().getInt("WIDGET_UPDATE_COUNT", 0)
+        request++
+        Log.d("zxcv", "requestCode:$request")
+        val pendingIntent = PendingIntent.getActivity(
+            context, request,
+            intent, FLAG_MUTABLE
+        )
+        SPUtils.getInstance().put("WIDGET_UPDATE_COUNT", request)
+        return pendingIntent
+    }
     private fun requestData(
         views: RemoteViews,
         context: Context,
@@ -124,36 +156,36 @@ class AlphaWidgetProvider : AppWidgetProvider() {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
         Log.d("zxcv", MyDateUtils.getCurTime(MyDateUtils.date_Format) + "准备请求数据")
-        var disposable = retrofit.create(APIService::class.java)
-            .listReposRx("MCKRGF")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ it ->
-                run {
-                    Log.d("zxcv", MyDateUtils.getCurTime(MyDateUtils.date_Format) + "获取到数据了")
-                    views1 = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
-                    views1.setTextViewText(
-                        R.id.tv_name,
-                        MyDateUtils.getCurTime(MyDateUtils.date_Format) + "获取到数据了"
-                    )
-                    val intent = Intent(context, TestActivity::class.java)
-                    intent.putExtra("aa", "bb")
-                    val pendingIntent = PendingIntent.getActivity(context, 0, intent, FLAG_MUTABLE)
-                    views1.setOnClickPendingIntent(R.id.bt_1a, pendingIntent)
-                    appWidgetManager.updateAppWidget(appWidgetIds, views1)
-                }
-            }, { it ->
-                run {
-                    ToastUtils.show(context, "接口粗欧文")
-                }
-            })
+//        var disposable = retrofit.create(APIService::class.java)
+//            .listReposRx("MCKRGF")
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({ it ->
+//                run {
+//                    Log.d("zxcv", MyDateUtils.getCurTime(MyDateUtils.date_Format) + "获取到数据了")
+//                    views1 = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
+//                    views1.setTextViewText(
+//                        R.id.tv_name,
+//                        MyDateUtils.getCurTime(MyDateUtils.date_Format) + "获取到数据了"
+//                    )
+//                    val intent = Intent(context, TestActivity::class.java)
+//                    intent.putExtra("aa", "bb")
+//                    val pendingIntent = PendingIntent.getActivity(context, 0, intent, FLAG_MUTABLE)
+//                    views1.setOnClickPendingIntent(R.id.bt_1a, pendingIntent)
+//                    appWidgetManager.updateAppWidget(appWidgetIds, views1)
+//                }
+//            }, { it ->
+//                run {
+//                    ToastUtils.show(context, "接口粗欧文")
+//                }
+//            })
 //            }
     }
 
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
-        Log.d("zxcv", "onEnabled")
-        val views = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
-        views.setTextViewText(R.id.tv_name, "onEnabled了")
+//        Log.d("zxcv", "onEnabled")
+//        val views = RemoteViews(context.packageName, R.layout.alpha_widget_layout)
+//        views.setTextViewText(R.id.tv_name, "onEnabled了")
     }
 }

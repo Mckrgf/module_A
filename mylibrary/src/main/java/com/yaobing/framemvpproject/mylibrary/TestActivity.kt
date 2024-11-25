@@ -37,11 +37,13 @@ import com.inewise.QRcodeUtil
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
 import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
 import com.yaobing.framemvpproject.mylibrary.activity.activity.SnapshotActivity
+import com.yaobing.framemvpproject.mylibrary.data.Student
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
 import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
 import com.yaobing.module_apt.BindByTag
 import com.yaobing.module_apt.Router
+import com.yaobing.module_middleware.Utils.FileUtils
 import com.yaobing.module_middleware.Utils.Person
 import com.yaobing.module_middleware.Utils.ToastUtils
 import com.yaobing.module_middleware.Utils.checkComma
@@ -56,6 +58,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.reflect.Field
+import java.net.URL
 
 
 @Router("asdf")
@@ -78,9 +81,14 @@ class TestActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val student = Student("")
+        if (URL("https://www.exa2mple.com/some-page").host.contains("example",ignoreCase = false)) {
+            Log.d("zxcv", "url 包含关键字example")
+        } else {
+            Log.d("zxcv", "url 不包含关键字example")
+        }
         val widgetContent = intent.getStringExtra("aa")
-        Log.d("zxcv","准备获取widget携带的数据$widgetContent")
+//        Log.d("zxcv","准备获取widget携带的数据$widgetContent")
         if (!TextUtils.isEmpty(widgetContent)) {
             ToastUtils.show(this,widgetContent)
         }
@@ -165,9 +173,17 @@ class TestActivity : BaseActivity() {
 
             val uriB = getImageContentUri(this,File(path))
             val newPathB = uriB?.path
+            val newPathC = FileUtils.getPathFromUri(this,uriB)
             val fileBExist = File(newPathB).exists()
-            val bitmap = Images.Media.getBitmap(this.contentResolver, uri)// TODO: 这里获取不到，转换为uri之后无法获取文件了很奇怪 
+            val fileCExist = File(newPathC).exists()
+//            val bitmap = Images.Media.getBitmap(this.contentResolver, uri)// TODO: 这里获取不到，转换为uri之后无法获取文件了很奇怪
 //            val fileBExist1 = File(URI.create(newPathB))
+
+            val uurrii = FileUtils.getImageContentUri(this, File(path))
+            val ppaatthh = uri.path
+            val ppaatthh1 = FileUtils.getFilePathFromContentUri(uurrii, contentResolver)
+            val fileCExist1 = File(newPathC).exists()
+            val fileCExist12 = File(ppaatthh).exists()
         }
 
         binding.btPaging.setOnClickListener {
@@ -352,6 +368,7 @@ class TestActivity : BaseActivity() {
         } else if (imageFile.exists()) {
             val values = ContentValues()
             values.put("_data", filePath)
+            context.contentResolver.insert(Images.Media.EXTERNAL_CONTENT_URI, values)
             context.contentResolver.insert(Images.Media.EXTERNAL_CONTENT_URI, values)
         } else {
             null
