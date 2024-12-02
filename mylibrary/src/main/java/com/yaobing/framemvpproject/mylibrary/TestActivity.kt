@@ -31,7 +31,9 @@ import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.inewise.QRcodeUtil
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
@@ -263,6 +265,17 @@ class TestActivity : BaseActivity() {
             .centerCrop()
             .placeholder(R.mipmap.ic_launcher)
             .into(binding.ivSsl)
+        var cornerTransform =  CornerTransform(this, 10f);
+        cornerTransform.setNeedCorner(true, false, true, false);
+
+        var centerCropOptions = RequestOptions().transform( CenterCrop(), cornerTransform);
+        //加载图片，只在左侧做圆角处理
+        Glide.with(this)
+            .load("https://ueapp.oss-cn-hangzhou.aliyuncs.com/nativeApp/test/14465cc46b69453d8c8f367eeafd5eb3")
+            .centerCrop()
+            .placeholder(R.mipmap.ic_launcher)
+            .apply(centerCropOptions)
+            .into(binding.ivRoundSpec)
         binding.btDecodeQr.setOnClickListener {
             val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.bb)
 
