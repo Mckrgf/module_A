@@ -25,6 +25,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -49,7 +50,6 @@ import com.yaobing.module_middleware.Utils.ToastUtils
 import com.yaobing.module_middleware.Utils.checkComma
 import com.yaobing.module_middleware.Utils.isBold
 import com.yaobing.module_middleware.Utils.say
-import com.yaobing.module_middleware.activity.BaseActivity
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -62,7 +62,7 @@ import java.net.URL
 
 
 @Router("asdf")
-class TestActivity : BaseActivity() {
+class TestActivity : AppCompatActivity() {
     private var hide = true
     private val binding by lazy {
         ActivityTestBinding.inflate(layoutInflater)
@@ -201,10 +201,10 @@ class TestActivity : BaseActivity() {
         binding.updateWidgetBroadcast.setOnClickListener {
 
             val intent = Intent("com.yaobing.framemvpproject.mylibrary.update")
-            val appWidgetManager = AppWidgetManager.getInstance(context) // 获取 AppWidgetManager 实例
-            val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(context, javaClass))
+            val appWidgetManager = AppWidgetManager.getInstance(this) // 获取 AppWidgetManager 实例
+            val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(this, javaClass))
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds)
-            context.sendBroadcast(intent)
+            this.sendBroadcast(intent)
         }
         binding.btCamera.setOnClickListener {
             imageFile = createImageFile()
@@ -283,7 +283,7 @@ class TestActivity : BaseActivity() {
             val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.bb)
 
             //加载原图（不含圆角，做个对比）
-            Glide.with(context)
+            Glide.with(this)
                 .load(resources.getDrawable(R.mipmap.bb,null))
                 .into(binding.ivDfds)
 
@@ -326,7 +326,7 @@ class TestActivity : BaseActivity() {
                 }
 
             }
-        Glide.with(context)
+        Glide.with(this)
             .asGif()
             .load("file:///android_asset/world-cup.gif")
             .listener(requestListener).into(binding.ivDfds)
@@ -386,7 +386,7 @@ class TestActivity : BaseActivity() {
     fun getBitmapFromAssets(fileName: String?): Bitmap? {
         var bitmap: Bitmap? = null
         try {
-            context.assets.use { assetManager ->
+            this.assets.use { assetManager ->
                 assetManager.open(fileName!!).use { asset ->
                     asset.use { inputStream ->
                         bitmap = BitmapFactory.decodeStream(inputStream)
@@ -490,30 +490,30 @@ class TestActivity : BaseActivity() {
         return mapper1(str)
     }
 
-    override fun initListener() {
-        var isBold = true
-        super.initListener()
-        binding.etB.addTextChangedListener {
-            if (it.toString().isNotEmpty()) {
-                //给Edittext设置扩展属性
-                isBold = !isBold
-                binding.etB.isBold = !isBold
-                ToastUtils.show(this, it.toString().checkComma())
-                //hahahaha
-                //haha
+//    override fun initListener() {
+//        var isBold = true
+//        super.initListener()
+//        binding.etB.addTextChangedListener {
+//            if (it.toString().isNotEmpty()) {
+//                //给Edittext设置扩展属性
+//                isBold = !isBold
+//                binding.etB.isBold = !isBold
+//                ToastUtils.show(this, it.toString().checkComma())
+//                //hahahaha
+//                //haha
+//
+//            }
+//        }
+//    }
 
-            }
-        }
-    }
-
-    override fun getLayoutID(): Int {
-        return NO_VIEW
-    }
-
-    override fun initView() {
-        super.initView()
-        Log.d("zxcv", "测试btA是否已经获取了")
-    }
+//    override fun getLayoutID(): Int {
+//        return NO_VIEW
+//    }
+//
+//    override fun initView() {
+//        super.initView()
+//        Log.d("zxcv", "测试btA是否已经获取了")
+//    }
 
     private fun bindTag(target: Any, source: View) {
         val fields: List<Field> = getAllContextFields(target)
