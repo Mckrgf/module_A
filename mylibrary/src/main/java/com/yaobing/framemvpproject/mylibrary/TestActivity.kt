@@ -25,6 +25,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import android.widget.ImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -44,6 +45,7 @@ import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
 import com.yaobing.module_apt.BindByTag
 import com.yaobing.module_apt.Router
+import com.yaobing.module_common_view.views.PageDragView
 import com.yaobing.module_middleware.Utils.Person
 import com.yaobing.module_middleware.Utils.ToastUtils
 import com.yaobing.module_middleware.Utils.checkComma
@@ -258,7 +260,7 @@ class TestActivity : BaseActivity() {
             val intent = Intent(this, ConstraintActivity::class.java) // 替换成你的新页面 Activity 类名
             startActivity(intent)
         }
-
+        initDragView()
         //加载原图（不含圆角，做个对比）
         Glide.with(this)
             .load("https://ueapp.oss-cn-hangzhou.aliyuncs.com/nativeApp/test/14465cc46b69453d8c8f367eeafd5eb3")
@@ -351,6 +353,16 @@ class TestActivity : BaseActivity() {
 //            )
 //        }
         measureAndSetText()
+    }
+
+    private fun initDragView() {
+        val dragView = PageDragView(this)
+        //加载可拖动的图片
+        val img: ImageView = dragView.findViewById<ImageView>(R.id.iv_img)
+        Glide.with(context)
+            .load(resources.getDrawable(R.mipmap.bb, null))
+            .into(img)
+        dragView.initDrag(this)
     }
 
     @SuppressLint("Range")

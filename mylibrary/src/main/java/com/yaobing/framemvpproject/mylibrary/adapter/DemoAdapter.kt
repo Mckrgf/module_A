@@ -15,7 +15,7 @@ import com.yaobing.framemvpproject.mylibrary.data.RepoData
 /**
  * 零居页俱乐部-活动adapter
  */
-class DemoAdapter() : BaseQuickAdapter<RepoData, BaseViewHolder>(R.layout.item_shop) {
+class DemoAdapter() : BaseQuickAdapter<RepoData, BaseViewHolder>(R.layout.item_shop_so_long) {
     fun dp2pxInt(dp: Float): Int =
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().displayMetrics)
             .toInt()

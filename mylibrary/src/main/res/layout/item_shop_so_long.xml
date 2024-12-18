@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="990dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_shop"
+        android:layout_width="90dp"
+        android:layout_height="990dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/shop_a"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:gravity="top"
+        android:text="商店名称"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_shop"
+        app:layout_constraintTop_toTopOf="@id/iv_shop" />
+
+    <ImageView
+        android:id="@+id/iv_star"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_marginBottom="0dp"
+        android:src="@mipmap/star"
+        app:layout_constraintStart_toStartOf="@id/tv_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        app:layout_constraintBottom_toTopOf="@id/tv_type"/>
+
+    <TextView
+        android:id="@+id/tv_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="5.0"
+        android:textColor="#666666"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_star"
+        app:layout_constraintStart_toEndOf="@+id/iv_star"
+        app:layout_constraintTop_toTopOf="@id/iv_star" />
+
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="美食|1.3km|运动"
+        android:textColor="#666666"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_coupon"
+        app:layout_constraintStart_toStartOf="@+id/iv_star"
+        app:layout_constraintTop_toBottomOf="@id/iv_star" />
+
+
+    <TextView
+        android:id="@+id/tv_coupon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="#FDD6B1"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="送"
+        android:textColor="#956030"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_shop"
+        app:layout_constraintStart_toStartOf="@+id/iv_star" />
+
+    <TextView
+        android:id="@+id/tv_coupon_content"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="#FDEBC6"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="5dp"
+        android:text="零跑车友专享福利券"
+        android:textColor="#956030"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_shop"
+        app:layout_constraintStart_toEndOf="@+id/tv_coupon"
+        app:layout_constraintTop_toTopOf="@+id/tv_coupon" />
+
+    <TextView
+        android:id="@+id/tv_coupon_b"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:background="#FDD6B1"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="送"
+        android:textColor="#956030"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_shop"
+        app:layout_constraintStart_toEndOf="@+id/tv_coupon_content" />
+
+    <TextView
+        android:id="@+id/tv_coupon_content_b"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="#FDEBC6"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="5dp"
+        android:text="零跑车友专享福利券"
+        android:textColor="#956030"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_coupon_b"
+        app:layout_constraintTop_toTopOf="@+id/tv_coupon_b" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="#eeeeee"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_shop" />
+</androidx.constraintlayout.widget.ConstraintLayout>
