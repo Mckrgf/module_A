@@ -70,6 +70,44 @@
 
         </LinearLayout>
 
+        <com.yaobing.framemvpproject.mylibrary.ui.DynamicHeightSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:visibility="gone"
+            android:progress="50" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/grayBg">
+
+            <SeekBar
+
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:foregroundGravity="center_vertical"
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:background="@null"
+                android:progressDrawable="@drawable/custom_seekbar_track_low"
+                android:thumb="@drawable/transparent_thumb"
+                android:max="100"
+                android:progress="50"/>
+
+        </RelativeLayout>
+
+
+        <SeekBar
+            android:layout_gravity="center_vertical"
+            android:foregroundGravity="center_vertical"
+            android:id="@+id/seekBar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="50"/>
+
         <EditText
             android:id="@+id/et_b"
             android:layout_width="wrap_content"
@@ -396,6 +434,7 @@
 
 
             <TextView
+                android:id="@+id/tv_right"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:gravity="center"
@@ -405,6 +444,15 @@
                 app:layout_constraintTop_toTopOf="@+id/iv_round_spec"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_round_spec"
                 android:text="我是蛤蛤蛤哈"/>
+            <Button
+                android:id="@+id/bt_large"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                app:layout_constraintStart_toEndOf="@+id/tv_right"
+                app:layout_constraintTop_toTopOf="@+id/iv_round_spec"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_round_spec"
+                android:text="大字体适配"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

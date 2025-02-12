@@ -14,6 +14,9 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
+import android.graphics.drawable.ScaleDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -26,6 +29,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
+import android.widget.SeekBar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -37,6 +41,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.inewise.QRcodeUtil
+import com.tencent.mars.xlog.Xlog
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
 import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
 import com.yaobing.framemvpproject.mylibrary.activity.activity.SnapshotActivity
@@ -126,7 +131,7 @@ class TestActivity : BaseActivity() {
             //10w次 1200k左右
             //10.w次 10700k左右
             Thread {
-                for (i in 0..998) {
+                for (i in 0..99998) {
                     com.tencent.mars.xlog.Log.d("zxcv", "我要打印了：$i")
                 }
                 com.tencent.mars.xlog.Log.appenderFlush()
@@ -147,6 +152,22 @@ class TestActivity : BaseActivity() {
 
             IntentRouter.go(this, "TestCActivity")
         }
+
+        binding.seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                seekBar?.progressDrawable = getDrawable(R.drawable.custom_seekbar_track)
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                seekBar?.progressDrawable = getDrawable(R.drawable.custom_seekbar_track_low)
+            }
+
+        })
 
         binding.btC.setOnClickListener {
             IntentRouter.go(this, "testd")
@@ -176,6 +197,9 @@ class TestActivity : BaseActivity() {
 
         binding.btPaging.setOnClickListener {
             IntentRouter.go(this, "PagingActivity")
+        }
+        binding.btLarge.setOnClickListener {
+            IntentRouter.go(this, "teste")
         }
         binding.btCeilingA.setOnClickListener {
             IntentRouter.go(this, "CeilingAlphaActivity")
@@ -330,28 +354,37 @@ class TestActivity : BaseActivity() {
             .load("file:///android_asset/world-cup.gif")
             .listener(requestListener).into(binding.ivDfds)
 
-//        System.loadLibrary("c++_shared")
-//        System.loadLibrary("marsxlog")
+        System.loadLibrary("c++_shared")
+        System.loadLibrary("marsxlog")
         val SDCARD: String =
             Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).absolutePath
         val logPath = "$SDCARD/marssample/log"
-//        val cachePath: String = this.filesDir + "/xlog"
+        val cachePath: String = this.filesDir.path + "/xlog"
 //        val xlog = Xlog()
-//        com.tencent.mars.xlog.Log.setLogImp(xlog)
-//        if (BuildConfig.DEBUG) {
-//            com.tencent.mars.xlog.Log.setConsoleLogOpen(true)
-//            com.tencent.mars.xlog.Log.appenderOpen(Xlog.LEVEL_DEBUG, Xlog.AppednerModeAsync, "", logPath, "hah", 0)
-//        } else {
-//            com.tencent.mars.xlog.Log.setConsoleLogOpen(false)
-//            com.tencent.mars.xlog.Log.appenderOpen(
-//                Xlog.LEVEL_DEBUG,
-//                Xlog.AppednerModeAsync,
-//                "",
-//                logPath,
-//                "hah",
-//                0
-//            )
-//        }
+
+        val config: Xlog.XLogConfig = Xlog.XLogConfig()
+        //密钥
+        config.pubkey = "455d048c62c53c54f4a3d0e26e95bdac9f69f29343156b2a7a7dea7ae2be928abae2560337de4d637f85a3d458c39fe7cdf52232d07216d38e7a6ed27070f70e"
+        config.compressmode = Xlog.ZLIB_MODE
+//        config.compresslevel = 9
+        val xlog = Xlog()
+        xlog.newXlogInstance(config)
+
+        com.tencent.mars.xlog.Log.setLogImp(xlog)
+        if (BuildConfig.DEBUG) {
+            com.tencent.mars.xlog.Log.setConsoleLogOpen(true)
+            com.tencent.mars.xlog.Log.appenderOpen(Xlog.LEVEL_DEBUG, Xlog.AppednerModeAsync, "", logPath, "hah", 0)
+        } else {
+            com.tencent.mars.xlog.Log.setConsoleLogOpen(false)
+            com.tencent.mars.xlog.Log.appenderOpen(
+                Xlog.LEVEL_DEBUG,
+                Xlog.AppednerModeAsync,
+                "",
+                logPath,
+                "hah",
+                0
+            )
+        }
         measureAndSetText()
     }
 
@@ -364,6 +397,17 @@ class TestActivity : BaseActivity() {
             .into(img)
         dragView.initDrag(this)
     }
+
+    // 工具方法：dp转px
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
+    }
+    private fun animateSeekBar(seekBar: SeekBar, progress: Int) {
+        val scale = 1 + progress.toFloat() / seekBar.max // 计算变大的比例
+        seekBar.scaleX = scale // 设置X轴方向的缩放比例
+        seekBar.scaleY = scale // 设置Y轴方向的缩放比例
+    }
+
 
     @SuppressLint("Range")
     fun getImageContentUri(context: Context, imageFile: File): Uri? {
