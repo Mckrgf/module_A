@@ -396,6 +396,7 @@
 
 
             <TextView
+                android:id="@+id/tv_right"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:gravity="center"
@@ -405,6 +406,15 @@
                 app:layout_constraintTop_toTopOf="@+id/iv_round_spec"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_round_spec"
                 android:text="我是蛤蛤蛤哈"/>
+            <Button
+                android:id="@+id/bt_large"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                app:layout_constraintStart_toEndOf="@+id/tv_right"
+                app:layout_constraintTop_toTopOf="@+id/iv_round_spec"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_round_spec"
+                android:text="大字体适配"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

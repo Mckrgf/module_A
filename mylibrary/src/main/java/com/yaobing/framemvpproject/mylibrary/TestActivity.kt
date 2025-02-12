@@ -177,6 +177,9 @@ class TestActivity : BaseActivity() {
         binding.btPaging.setOnClickListener {
             IntentRouter.go(this, "PagingActivity")
         }
+        binding.btLarge.setOnClickListener {
+            IntentRouter.go(this, "teste")
+        }
         binding.btCeilingA.setOnClickListener {
             IntentRouter.go(this, "CeilingAlphaActivity")
         }
