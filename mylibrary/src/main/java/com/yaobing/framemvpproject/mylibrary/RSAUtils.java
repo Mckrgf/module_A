@@ -47,16 +47,30 @@ public class RSAUtils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String defaultPublicDecrypt(String data){
+    public static String defaultPublicDecrypt(String data) {
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.DECRYPT_MODE, getPublicKey(DEFAULT_PUBLIC_KEY));
-            byte[] secretTextDecoded = java.util.Base64.getDecoder().decode(data.getBytes("UTF-8"));
+            byte[] secretTextDecoded = java.util.Base64.getUrlDecoder().decode(data.getBytes("UTF-8"));
             byte[] tempBytes = cipher.doFinal(secretTextDecoded);
             return new String(tempBytes);
         } catch (Exception e) {
             Log.e("默认公钥解密异常:[data:{}]", data, e);
             return null;
+        }
+    }
+
+    public static void default1PublicDecrypt(String args) {
+        try {
+            // Try decoding with standard decoder (will fail)
+            // byte[] decodedBytes = Base64.getDecoder().decode(urlSafeEncodedString);
+
+            // Use URL-safe decoder
+            byte[] decodedBytes = java.util.Base64.getUrlDecoder().decode(args);
+            String decodedString = new String(decodedBytes);
+            System.out.println("Decoded URL-safe string: " + decodedString);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error decoding: " + e.getMessage());
         }
     }
 
