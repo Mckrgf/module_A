@@ -26,4 +26,9 @@ object AESUtils {
             throw RuntimeException("解密失败: ${e.message}")
         }
     }
+
+    fun testUnit(var1: String, var2:Int, invokeFun: (String) -> Unit,var3: String) {
+        var result = var1 + var2 + var3
+        invokeFun(result)
+    }
 }

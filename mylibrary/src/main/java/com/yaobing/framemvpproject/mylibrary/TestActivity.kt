@@ -272,6 +272,9 @@ class TestActivity : BaseActivity() {
             var intent = Intent(this, HOmeActivity::class.java)
             startActivity(intent)
         }
+        AESUtils.testUnit("dfsdf",200,{
+            Log.d("zxcv", "it: $it")
+        },"123")
         binding.btRsa.setOnClickListener {
             val token = "eyJpc3MiOiJKb2huIeyJpc3MiOiJKb2heyJpc3MiOiJKb2huIeyJpc3MiOiJKb2h"
             Log.d("zxcv", "token: $token")
