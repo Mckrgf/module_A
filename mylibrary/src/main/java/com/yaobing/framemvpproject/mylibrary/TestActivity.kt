@@ -273,15 +273,12 @@ class TestActivity : BaseActivity() {
             startActivity(intent)
         }
         binding.btRsa.setOnClickListener {
-            var token = "eyJpc3MiOiJKb2huIeyJpc3MiOiJKb2heyJpc3MiOiJKb2huIeyJpc3MiOiJKb2h"
-            var tokenEncode = RSAUtils.defaultPublicEncrypt(token)
-            var token1Encode = RSAUtils.default1PublicDecrypt(token)
-            var tokenDecode = RSAUtils.defaultPublicDecrypt(tokenEncode)
-
+            val token = "eyJpc3MiOiJKb2huIeyJpc3MiOiJKb2heyJpc3MiOiJKb2huIeyJpc3MiOiJKb2h"
             Log.d("zxcv", "token: $token")
+            val tokenEncode = AESUtils.encrypt(token)
             Log.d("zxcv", "tokenEncode: $tokenEncode")
+            val token1Encode = AESUtils.decrypt(tokenEncode)
             Log.d("zxcv", "token1Encode: $token1Encode")
-            Log.d("zxcv", "tokenDecode: $tokenDecode")
         }
         binding.btAni.setOnClickListener {
             val intent = Intent(this, AniRecyclerActivity::class.java) // 替换成你的新页面 Activity 类名
