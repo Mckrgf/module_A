@@ -458,7 +458,7 @@
                 app:layout_constraintStart_toEndOf="@+id/tv_right"
                 app:layout_constraintTop_toTopOf="@+id/iv_round_spec"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_round_spec"
-                android:text="大字体适配"/>
+                android:text="大字体适配/clip实战"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
