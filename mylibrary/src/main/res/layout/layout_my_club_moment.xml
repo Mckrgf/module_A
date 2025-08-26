@@ -97,7 +97,6 @@
         android:gravity="center"
         android:textColor="#333333"
         android:textSize="12dp"
-        android:background="@drawable/bg_look_mien_btn"
         android:text="查看风采"/>
 
     <TextView
