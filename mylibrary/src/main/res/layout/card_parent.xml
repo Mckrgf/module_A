@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+<!--    <View-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintStart_toStartOf="@id/card_view"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/card_view"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/card_view"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/chat_view"/>-->
+
+<!--    <include layout="@layout/layout_my_club_moment"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
+
+
+    <com.yaobing.framemvpproject.mylibrary.ui.ClubMomentCardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginTop="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
