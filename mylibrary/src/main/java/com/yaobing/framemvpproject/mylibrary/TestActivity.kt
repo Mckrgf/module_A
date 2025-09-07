@@ -2,6 +2,7 @@ package com.yaobing.framemvpproject.mylibrary
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.ContentValues
@@ -30,6 +31,7 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -43,6 +45,7 @@ import com.bumptech.glide.request.target.Target
 import com.inewise.QRcodeUtil
 import com.tencent.mars.xlog.Xlog
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
+import com.yaobing.framemvpproject.mylibrary.activity.WebpActivity
 import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
 import com.yaobing.framemvpproject.mylibrary.activity.activity.SnapshotActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
@@ -87,7 +90,12 @@ class TestActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // 处理返回的结果
+                Log.d("zxcv","get data : "+result.data?.getStringExtra("cccc").toString())
+            }
+        }
         val widgetContent = intent.getStringExtra("aa")
         Log.d("zxcv","准备获取widget携带的数据$widgetContent")
         if (!TextUtils.isEmpty(widgetContent)) {
@@ -205,7 +213,10 @@ class TestActivity : BaseActivity() {
             IntentRouter.go(this, "CeilingAlphaActivity")
         }
         binding.btWebp.setOnClickListener {
-            IntentRouter.go(this, "webpactivity")
+//            IntentRouter.go(this, "webpactivity")
+
+            val intent = Intent(this, WebpActivity::class.java)
+            launcher.launch(intent)
         }
         binding.customView.setOnClickListener {
             IntentRouter.go(this, "customviewactivity")
@@ -653,6 +664,9 @@ class TestActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == -1) {
+            return
+        }
         decodeFile()
         if (requestCode == 111 && resultCode == RESULT_OK) {
             // 照片已成功拍摄
