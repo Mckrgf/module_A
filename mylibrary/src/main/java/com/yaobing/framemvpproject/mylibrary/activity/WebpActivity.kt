@@ -1,5 +1,7 @@
 package com.yaobing.framemvpproject.mylibrary.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -80,6 +82,12 @@ class WebpActivity : AppCompatActivity() {
             binding.ivD.setPadding(0)
             binding.ivD.setPadding(19)
             binding.ivD.isRoundAsCircle = true
+        }
+        binding.tvC.setOnClickListener {
+            val intent = Intent()
+            intent.putExtra("cccc","2222")
+            setResult(Activity.RESULT_OK,intent)
+            finish()
         }
     }
 }

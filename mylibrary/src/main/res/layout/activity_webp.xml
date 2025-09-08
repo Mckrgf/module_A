@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_b"
-        android:text="图片固有次数为2"/>
+        android:text="图片固有次数为2(点击就返回上一个页面带result)"/>
 
     <ImageView
         android:id="@+id/iv_c"
