@@ -34,6 +34,7 @@ import android.widget.SeekBar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -41,7 +42,9 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
 import com.inewise.QRcodeUtil
 import com.tencent.mars.xlog.Xlog
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
@@ -68,6 +71,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.reflect.Field
+import androidx.core.graphics.scale
 
 
 @Router("asdf")
@@ -278,7 +282,38 @@ class TestActivity : BaseActivity() {
             }
 
         }
+        //用TextView的drawableTop设置图片，有隐患：获取到的图片如果不裁剪那就很大，裁剪了指定大小又是根据左上的图片内容。
+        //所以最后还是采取textview+iamgeview的方式来实现，这样能完美展示缩放图片
+        val rul = "https://ueapp-oss-static.leapmotor.com/img/app/club/20230925/4d2c9bdab1d74515844c100519a22b35.png"
+        Glide.with(context).asBitmap().load(rul).into(object : CustomTarget<Bitmap?>() {
+            override fun onResourceReady(
+                resource: Bitmap,
+                transition: Transition<in Bitmap?>?
+            ) {
+                val drawables = binding.sharelibIvClubChat.compoundDrawablesRelative // 推荐使用 Relative (Start/End)
+                val originalTopDrawable = drawables[1]
+                if (originalTopDrawable != null) {
+                    val originalBounds = originalTopDrawable.bounds
+                    val width = if (originalBounds.isEmpty) {
+                        originalTopDrawable.intrinsicWidth.takeIf { it > 0 } ?: 0
+                    } else {
+                        originalBounds.width()
+                    }
+                    val height = if (originalBounds.isEmpty) {
+                        originalTopDrawable.intrinsicHeight.takeIf { it > 0 } ?: 0
+                    } else {
+                        originalBounds.height()
+                    }
+                    val newResource = resource.scale(133, 133)
+                    val newDrawable = newResource.toDrawable(context.resources)
+                    newDrawable.setBounds(0, 0, width, height)
+                    binding.sharelibIvClubChat.setCompoundDrawablesWithIntrinsicBounds(null, newDrawable, null, null)
+                }
+            }
 
+            override fun onLoadCleared(placeholder: Drawable?) {
+            }
+        })
         binding.btLifeCycler.setOnClickListener {
             var intent = Intent(this, HOmeActivity::class.java)
             startActivity(intent)

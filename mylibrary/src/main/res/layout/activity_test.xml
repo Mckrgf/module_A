@@ -368,7 +368,14 @@
                 app:layout_constraintStart_toEndOf="@+id/bt_snapshot_scrollview"
                 app:layout_constraintTop_toBottomOf="@+id/bt_snapshot_scrollview" />
 
-
+            <View
+                android:id="@+id/iv_cover_rotate"
+                android:layout_width="186dp"
+                android:layout_height="182dp"
+                android:background="#009100"
+                android:rotation="30"
+                app:layout_constraintStart_toEndOf="@+id/iv_ssl"
+                app:layout_constraintTop_toTopOf="@+id/iv_ssl" />
             <include
                 layout="@layout/pendant_layout"
                 android:id="@+id/rl_small"
@@ -380,6 +387,7 @@
                 app:layout_constraintTop_toBottomOf="@id/updateWidgetBroadcast">
 
             </include>
+
 
             <RatingBar
                 android:id="@+id/ratingBarA"
@@ -460,7 +468,21 @@
                 app:layout_constraintBottom_toBottomOf="@+id/iv_round_spec"
                 android:text="大字体适配/clip实战"/>
 
+            <TextView
+                android:id="@+id/sharelib_iv_club_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="aaa"
+                android:drawableTop="@drawable/icon_share_club"
 
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="visible"
+                tools:ignore="RtlSymmetry,UseCompatTextViewDrawableXml"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bt_large"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
