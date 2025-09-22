@@ -66,7 +66,6 @@
         </activity>
         <activity
             android:name=".TestActivity"
-            android:theme="@style/AppTheme.TransparentStatusBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

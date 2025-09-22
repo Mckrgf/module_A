@@ -246,6 +246,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/circle_bord_image" />
 
+            <TextView
+                android:id="@+id/tv_multi_line"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="测试两汉"
+                app:layout_constraintStart_toEndOf="@+id/bt_constraint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/bt_constraint" />
+
             <Button
                 android:id="@+id/bt_add_drag_view"
                 android:layout_width="wrap_content"

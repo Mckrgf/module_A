@@ -13,40 +13,39 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
-import android.graphics.drawable.ScaleDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.Environment.DIRECTORY_DOCUMENTS
 import android.os.Environment.getExternalStorageDirectory
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
+import android.text.SpannableString
+import android.text.Spanned
 import android.text.TextUtils
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
+import androidx.core.graphics.scale
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.inewise.QRcodeUtil
-import com.tencent.mars.xlog.Xlog
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
 import com.yaobing.framemvpproject.mylibrary.activity.WebpActivity
 import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
@@ -54,6 +53,7 @@ import com.yaobing.framemvpproject.mylibrary.activity.activity.SnapshotActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
 import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
+import com.yaobing.framemvpproject.mylibrary.util.XlogUtil
 import com.yaobing.module_apt.BindByTag
 import com.yaobing.module_apt.Router
 import com.yaobing.module_common_view.views.PageDragView
@@ -71,16 +71,21 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.reflect.Field
-import androidx.core.graphics.scale
 
 
+@Suppress("NAME_SHADOWING")
 @Router("asdf")
 class TestActivity : BaseActivity() {
     private var hide = true
     private val binding by lazy {
         ActivityTestBinding.inflate(layoutInflater)
     }
-
+    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // 处理返回的结果
+            Log.d("zxcv","get data : "+result.data?.getStringExtra("cccc").toString())
+        }
+    }
     private var imageFile: File? = null
 
     override fun onRequestPermissionsResult(
@@ -94,12 +99,7 @@ class TestActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                // 处理返回的结果
-                Log.d("zxcv","get data : "+result.data?.getStringExtra("cccc").toString())
-            }
-        }
+
         val widgetContent = intent.getStringExtra("aa")
         Log.d("zxcv","准备获取widget携带的数据$widgetContent")
         if (!TextUtils.isEmpty(widgetContent)) {
@@ -114,174 +114,123 @@ class TestActivity : BaseActivity() {
             ),
             0
         )
-        Log.d("zxv", "onCreate")
         setContentView(binding.root)
-        val aaa = packageManager.getApplicationInfo(
-            packageName,
-            PackageManager.GET_META_DATA
-        ).metaData.get("aaa")
-//        ToastUtils.show(this,aaa.toString(),0)
-        Log.i("zxcv", aaa.toString())
-        binding.btA.setOnClickListener {
-            bindTag(this, binding.root)
-            IntentRouter.go(this, "MainActivity")
-            var a: RoundedBorderImageView
-
-            //单例模式创建对象
-            val javaBestSingleton = JavaBestSingleton.getInstance()
-            Log.d("zxcv java 静态内部类", javaBestSingleton.toString())
-
-            //kotlin单例模式：懒汉
-            val kotlinSingleton = SingletonKotlin.getSingle()
-            Log.d("zxcv kotlin 懒汉", kotlinSingleton.toString())
-
-//            saveTestFile()
-//            checkFile()
-
-
-            //1w次 110k左右
-            //10w次 1200k左右
-            //10.w次 10700k左右
-            Thread {
-                for (i in 0..99998) {
-                    com.tencent.mars.xlog.Log.d("zxcv", "我要打印了：$i")
-                }
-                com.tencent.mars.xlog.Log.appenderFlush()
-                com.tencent.mars.xlog.Log.d("zxcv", "打印完了")
-            }.start()
-        }
-
         val permissions = arrayOf(
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE"
         )
 
         ActivityCompat.requestPermissions(this, permissions, 1)
-        binding.btB.setOnClickListener {
-            val person = Person(30, "敲代码")
-            person.work = "敲代码"
-            person.say("我用扩展方法说话了：" + person.work + ";且我跳转到moduleB页面了")
-
-            IntentRouter.go(this, "TestCActivity")
-        }
-
-        binding.seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
-
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                seekBar?.progressDrawable = getDrawable(R.drawable.custom_seekbar_track)
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                seekBar?.progressDrawable = getDrawable(R.drawable.custom_seekbar_track_low)
-            }
-
-        })
-
-        binding.btC.setOnClickListener {
-            IntentRouter.go(this, "testd")
-        }
-        binding.btRecyclerView.setOnClickListener {
-            IntentRouter.go(this, "recyclerviewactivity")
-        }
-        binding.btDoubleRecyclerView.setOnClickListener {
-            IntentRouter.go(this, "doubleRecyclerviewactivity")
-        }
-        binding.btTimeLineRecyclerView.setOnClickListener {
-            IntentRouter.go(this, "timeLineRecyclerviewactivity")
-        }
-        binding.btPathUri.setOnClickListener {
-            val path = "/storage/emulated/0/Android/data/com.dahua.leapmotor/cache/Leapmotor/smallVideo/tempPic_1729161414328.jpg"
-
-            val uri = Uri.fromFile(File(path))
-            val newPath = uri.path
-            val fileExist = File(newPath).exists()
-
-            val uriB = getImageContentUri(this,File(path))
-            val newPathB = uriB?.path
-            val fileBExist = File(newPathB).exists()
-            val bitmap = Images.Media.getBitmap(this.contentResolver, uri)// TODO: 这里获取不到，转换为uri之后无法获取文件了很奇怪 
-//            val fileBExist1 = File(URI.create(newPathB))
-        }
-
-        binding.btPaging.setOnClickListener {
-            IntentRouter.go(this, "PagingActivity")
-        }
-        binding.btLarge.setOnClickListener {
-            IntentRouter.go(this, "teste")
-        }
-        binding.btCeilingA.setOnClickListener {
-            IntentRouter.go(this, "CeilingAlphaActivity")
-        }
-        binding.btWebp.setOnClickListener {
-//            IntentRouter.go(this, "webpactivity")
-
-            val intent = Intent(this, WebpActivity::class.java)
-            launcher.launch(intent)
-        }
-        binding.customView.setOnClickListener {
-            IntentRouter.go(this, "customviewactivity")
-        }
-        binding.updateWidgetBroadcast.setOnClickListener {
-
-            val intent = Intent("com.yaobing.framemvpproject.mylibrary.update")
-            val appWidgetManager = AppWidgetManager.getInstance(context) // 获取 AppWidgetManager 实例
-            val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(context, javaClass))
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds)
-            context.sendBroadcast(intent)
-        }
-        binding.btCamera.setOnClickListener {
-            imageFile = createImageFile()
-//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile))
-//            startActivityForResult(intent, 111)
-
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.CAMERA
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // 请求权限
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 111);
-            } else {
-                // 权限已经被授予，可以进行相关操作
-                val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
-                // 确保有相机活动处理该Intent
-                if (takePictureIntent.resolveActivity(packageManager) != null) {
-
-                }
-                startActivityForResult(takePictureIntent, 1111)
-            }
-        }
-        binding.btTrans.setOnClickListener {
-            val x: Float = if (hide) {
-                -binding.btPaging.width.toFloat()
-            } else {
-                0f
-            }
-            binding.btPaging.animate().translationX(x)
-            binding.btTrans.animate().translationX(x).startDelay = 100L
-            hide = !hide
-        }
 
         stringMapper("Android") { input ->
             input.length
         }
 
-        binding.etCircle.addTextChangedListener {
-            try {
-                if (it.toString().isNotEmpty() && it.toString().toFloat() in 0f..1f) {
-                    binding.circleImage.roundPercent = it.toString().toFloat()
-                }
-            } catch (e: java.lang.Exception) {
-                ToastUtils.show(this, e.toString())
-            }
 
+        initTextViewImage()
+
+        initDragView()
+
+        initImageViewLeftCorner()
+
+        XlogUtil.initXlog(this)
+        measureAndSetText()
+
+    }
+
+    private fun initMultiLineText(text1: String) {
+        val combinedText = findViewById<TextView>(R.id.tv_multi_line)
+
+        // 第二个文本内容
+        val text2 = "[附加信息]"
+        // 初始化画笔，用于测量文本宽度
+        val paint = Paint().apply {
+            textSize = combinedText.textSize // 使用容器的默认文字大小
         }
+
+        // 测量第一个文本最后一行的可用宽度
+        val availableWidth = calculateAvailableWidth(combinedText, text1, paint)
+
+        // 测量第二个文本需要的宽度
+        val text2Width = paint.measureText(text2)
+
+        // 组合最终文本（根据空间判断是否换行）
+        val finalText = if (text2Width <= availableWidth) {
+            // 第一行空间足够，直接拼接
+            text1 + text2
+        } else {
+            // 第一行空间不足，换行显示第二个文本
+            text1 + "\n" + text2
+        }
+
+        // 创建SpannableString组合两个文本
+        val spannable = SpannableString(finalText)
+
+        // 可以给第二个文本设置不同样式（可选）
+        val text2Color = ForegroundColorSpan(Color.parseColor("#FF5722"))
+        spannable.setSpan(
+            text2Color,
+            text1.length,  // 起始位置（第一个文本结束处）
+            text1.length + text2.length + if (finalText.contains("\n")) 1 else 0,  // 结束位置
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        // 2. 给第二个文本设置不同字体大小（单位：像素）
+        // 注意：如果需要dp单位，可通过TypedValue.convertDpToPx()转换
+        val text2Size = AbsoluteSizeSpan(10, true) // 第二个参数true表示单位为sp
+        spannable.setSpan(
+            text2Size,
+            text1.length,
+            text1.length + text2.length + if (finalText.contains("\n")) 1 else 0,  // 结束位置,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        // 设置组合后的文本
+        combinedText.text = spannable
+    }
+    /**
+     * 计算第一个文本最后一行的可用宽度
+     */
+    private fun calculateAvailableWidth(container: TextView, text: String, paint: Paint): Float {
+        // 容器可用宽度（减去内边距）
+        val containerWidth = container.width - container.paddingLeft - container.paddingRight
+
+        if (containerWidth <= 0) {
+            // 如果还没测量完成，使用默认宽度估算
+            return 500f // 可根据实际需求调整
+        }
+
+        // 测量文本总宽度
+        val textWidth = paint.measureText(text)
+
+        // 如果文本总宽度小于容器宽度，第一行剩余空间就是容器宽度 - 文本宽度
+        if (textWidth <= containerWidth) {
+            return containerWidth - textWidth
+        }
+
+        // 文本超过一行，计算最后一行的可用宽度
+        // 这里简化处理，实际复杂情况可能需要更精确的测量
+        return containerWidth.toFloat()
+    }
+    private fun initImageViewLeftCorner() {
+        //加载原图（不含圆角，做个对比）
+        Glide.with(this)
+            .load("https://ueapp.oss-cn-hangzhou.aliyuncs.com/nativeApp/test/14465cc46b69453d8c8f367eeafd5eb3")
+            .centerCrop()
+            .placeholder(R.mipmap.ic_launcher)
+            .into(binding.ivSsl)
+
+        val cornerTransform = CornerTransform(this, 10f);
+        cornerTransform.setNeedCorner(true, false, true, false);
+        val centerCropOptions = RequestOptions().transform(CenterCrop(), cornerTransform);
+        //加载图片，只在左侧做圆角处理
+        Glide.with(this)
+            .load("https://ueapp.oss-cn-hangzhou.aliyuncs.com/nativeApp/test/14465cc46b69453d8c8f367eeafd5eb3")
+            .centerCrop()
+            .placeholder(R.mipmap.ic_launcher)
+            .apply(centerCropOptions)
+            .into(binding.ivRoundSpec)
+    }
+
+    private fun initTextViewImage() {
         //用TextView的drawableTop设置图片，有隐患：获取到的图片如果不裁剪那就很大，裁剪了指定大小又是根据左上的图片内容。
         //所以最后还是采取textview+iamgeview的方式来实现，这样能完美展示缩放图片
         val rul = "https://ueapp-oss-static.leapmotor.com/img/app/club/20230925/4d2c9bdab1d74515844c100519a22b35.png"
@@ -314,135 +263,6 @@ class TestActivity : BaseActivity() {
             override fun onLoadCleared(placeholder: Drawable?) {
             }
         })
-        binding.btLifeCycler.setOnClickListener {
-            var intent = Intent(this, HOmeActivity::class.java)
-            startActivity(intent)
-        }
-        AESUtils.testUnit("dfsdf",200,{
-            Log.d("zxcv", "it: $it")
-        },"123")
-        binding.btRsa.setOnClickListener {
-            val token = "eyJpc3MiOiJKb2huIeyJpc3MiOiJKb2heyJpc3MiOiJKb2huIeyJpc3MiOiJKb2h"
-            Log.d("zxcv", "token: $token")
-            val tokenEncode = AESUtils.encrypt(token)
-            Log.d("zxcv", "tokenEncode: $tokenEncode")
-            val token1Encode = AESUtils.decrypt(tokenEncode)
-            Log.d("zxcv", "token1Encode: $token1Encode")
-        }
-        binding.btAni.setOnClickListener {
-            val intent = Intent(this, AniRecyclerActivity::class.java) // 替换成你的新页面 Activity 类名
-            startActivity(intent)
-        }
-        binding.btSnapshotScrollview.setOnClickListener {
-            val intent = Intent(this, SnapshotActivity::class.java) // 替换成你的新页面 Activity 类名
-            startActivity(intent)
-        }
-        binding.btConstraint.setOnClickListener {
-            val intent = Intent(this, ConstraintActivity::class.java) // 替换成你的新页面 Activity 类名
-            startActivity(intent)
-        }
-        initDragView()
-        //加载原图（不含圆角，做个对比）
-        Glide.with(this)
-            .load("https://ueapp.oss-cn-hangzhou.aliyuncs.com/nativeApp/test/14465cc46b69453d8c8f367eeafd5eb3")
-            .centerCrop()
-            .placeholder(R.mipmap.ic_launcher)
-            .into(binding.ivSsl)
-        var cornerTransform =  CornerTransform(this, 10f);
-        cornerTransform.setNeedCorner(true, false, true, false);
-
-        var centerCropOptions = RequestOptions().transform( CenterCrop(), cornerTransform);
-        //加载图片，只在左侧做圆角处理
-        Glide.with(this)
-            .load("https://ueapp.oss-cn-hangzhou.aliyuncs.com/nativeApp/test/14465cc46b69453d8c8f367eeafd5eb3")
-            .centerCrop()
-            .placeholder(R.mipmap.ic_launcher)
-            .apply(centerCropOptions)
-            .into(binding.ivRoundSpec)
-        binding.btDecodeQr.setOnClickListener {
-            val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.bb)
-
-            //加载原图（不含圆角，做个对比）
-            Glide.with(context)
-                .load(resources.getDrawable(R.mipmap.bb,null))
-                .into(binding.ivDfds)
-
-            //获取圆角图片
-            val bitmapRound = BitmapUtil().getRoundedCornerBitmapWithoutScaling(bitmap,120f)
-            binding.ivGlide.setImageBitmap(bitmapRound)
-
-            //获取大图（在某些情况下比如小组件可能会有bitmap大小的限制，所以要进行压缩）
-            val bitmapBig = BitmapFactory.decodeResource(resources, R.mipmap.big_img)
-            Log.d("zxcv","bitmap size ${bitmapBig.byteCount}")
-            val bitmapCompress = BitmapUtil().compressImageByScale(bitmapBig, dp2pxInt(150f),dp2pxInt(150f))
-            bitmapCompress.let {
-                Log.d("zxcv","bitmapCompress size ${bitmapCompress!!.byteCount}")
-                binding.circleBordImage.setImageBitmap(bitmapCompress)
-            }
-
-        }
-
-//        Glide.with(this).load("https://www.wenjianbaike.com/wp-content/uploads/2021/04/apng_wenjan.png").set(
-//            AnimationDecoderOption.DISABLE_ANIMATION_GIF_DECODER, false).into(binding.ivDfds);
-        val requestListener: RequestListener<com.bumptech.glide.load.resource.gif.GifDrawable> =
-            object : RequestListener<com.bumptech.glide.load.resource.gif.GifDrawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<com.bumptech.glide.load.resource.gif.GifDrawable>,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: com.bumptech.glide.load.resource.gif.GifDrawable,
-                    model: Any,
-                    target: Target<com.bumptech.glide.load.resource.gif.GifDrawable>?,
-                    dataSource: DataSource,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    return false
-                }
-
-            }
-        Glide.with(context)
-            .asGif()
-            .load("file:///android_asset/world-cup.gif")
-            .listener(requestListener).into(binding.ivDfds)
-
-//        System.loadLibrary("c++_shared")
-//        System.loadLibrary("marsxlog")
-        val SDCARD: String =
-            Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).absolutePath
-        val logPath = "$SDCARD/marssample/log"
-        val cachePath: String = this.filesDir.path + "/xlog"
-//        val xlog = Xlog()
-//
-//        val config: Xlog.XLogConfig = Xlog.XLogConfig()
-//        //密钥
-//        config.pubkey = "455d048c62c53c54f4a3d0e26e95bdac9f69f29343156b2a7a7dea7ae2be928abae2560337de4d637f85a3d458c39fe7cdf52232d07216d38e7a6ed27070f70e"
-//        config.compressmode = Xlog.ZLIB_MODE
-////        config.compresslevel = 9
-//        val xlog = Xlog()
-//        xlog.newXlogInstance(config)
-//
-//        com.tencent.mars.xlog.Log.setLogImp(xlog)
-//        if (BuildConfig.DEBUG) {
-//            com.tencent.mars.xlog.Log.setConsoleLogOpen(true)
-//            com.tencent.mars.xlog.Log.appenderOpen(Xlog.LEVEL_DEBUG, Xlog.AppednerModeAsync, "", logPath, "hah", 0)
-//        } else {
-//            com.tencent.mars.xlog.Log.setConsoleLogOpen(false)
-//            com.tencent.mars.xlog.Log.appenderOpen(
-//                Xlog.LEVEL_DEBUG,
-//                Xlog.AppednerModeAsync,
-//                "",
-//                logPath,
-//                "hah",
-//                0
-//            )
-//        }
-        measureAndSetText()
     }
 
     private fun initDragView() {
@@ -593,9 +413,8 @@ class TestActivity : BaseActivity() {
         "输入的字符串$input 的长度为" + input.length
     }
 
-    //kt高阶函数
+    //kt高阶函数,传入一个字符串，返回一个Int类型的长度
     private fun stringMapper(str: String, mapper1: (String) -> Int): Int {
-        // Invoke function
         return mapper1(str)
     }
 
@@ -608,10 +427,200 @@ class TestActivity : BaseActivity() {
                 isBold = !isBold
                 binding.etB.isBold = !isBold
                 ToastUtils.show(this, it.toString().checkComma())
-                //hahahaha
-                //haha
+                initMultiLineText(it.toString())
 
             }
+        }
+        binding.etCircle.addTextChangedListener {
+            try {
+                if (it.toString().isNotEmpty() && it.toString().toFloat() in 0f..1f) {
+                    binding.circleImage.roundPercent = it.toString().toFloat()
+                }
+            } catch (e: java.lang.Exception) {
+                ToastUtils.show(this, e.toString())
+            }
+
+        }
+        binding.btDecodeQr.setOnClickListener {
+            val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.bb)
+
+            //加载原图（不含圆角，做个对比）
+            Glide.with(context)
+                .load(resources.getDrawable(R.mipmap.bb,null))
+                .into(binding.ivDfds)
+
+            //获取圆角图片
+            val bitmapRound = BitmapUtil().getRoundedCornerBitmapWithoutScaling(bitmap,120f)
+            binding.ivGlide.setImageBitmap(bitmapRound)
+
+            //获取大图（在某些情况下比如小组件可能会有bitmap大小的限制，所以要进行压缩）
+            val bitmapBig = BitmapFactory.decodeResource(resources, R.mipmap.big_img)
+            Log.d("zxcv","bitmap size ${bitmapBig.byteCount}")
+            val bitmapCompress = BitmapUtil().compressImageByScale(bitmapBig, dp2pxInt(150f),dp2pxInt(150f))
+            bitmapCompress.let {
+                Log.d("zxcv","bitmapCompress size ${bitmapCompress!!.byteCount}")
+                binding.circleBordImage.setImageBitmap(bitmapCompress)
+            }
+        }
+        binding.btLifeCycler.setOnClickListener {
+            var intent = Intent(this, HOmeActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btRsa.setOnClickListener {
+            val token = "eyJpc3MiOiJKb2huIeyJpc3MiOiJKb2heyJpc3MiOiJKb2huIeyJpc3MiOiJKb2h"
+            Log.d("zxcv", "token: $token")
+            val tokenEncode = AESUtils.encrypt(token)
+            Log.d("zxcv", "tokenEncode: $tokenEncode")
+            val token1Encode = AESUtils.decrypt(tokenEncode)
+            Log.d("zxcv", "token1Encode: $token1Encode")
+        }
+        binding.btAni.setOnClickListener {
+            val intent = Intent(this, AniRecyclerActivity::class.java) // 替换成你的新页面 Activity 类名
+            startActivity(intent)
+        }
+        binding.btSnapshotScrollview.setOnClickListener {
+            val intent = Intent(this, SnapshotActivity::class.java) // 替换成你的新页面 Activity 类名
+            startActivity(intent)
+        }
+        binding.btConstraint.setOnClickListener {
+            val intent = Intent(this, ConstraintActivity::class.java) // 替换成你的新页面 Activity 类名
+            startActivity(intent)
+        }
+        binding.btB.setOnClickListener {
+            val person = Person(30, "敲代码")
+            person.work = "敲代码"
+            person.say("我用扩展方法说话了：" + person.work + ";且我跳转到moduleB页面了")
+
+            IntentRouter.go(this, "TestCActivity")
+        }
+
+        binding.seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                seekBar?.progressDrawable = getDrawable(R.drawable.custom_seekbar_track)
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                seekBar?.progressDrawable = getDrawable(R.drawable.custom_seekbar_track_low)
+            }
+
+        })
+
+        binding.btC.setOnClickListener {
+            IntentRouter.go(this, "testd")
+        }
+        binding.btRecyclerView.setOnClickListener {
+            IntentRouter.go(this, "recyclerviewactivity")
+        }
+        binding.btDoubleRecyclerView.setOnClickListener {
+            IntentRouter.go(this, "doubleRecyclerviewactivity")
+        }
+        binding.btTimeLineRecyclerView.setOnClickListener {
+            IntentRouter.go(this, "timeLineRecyclerviewactivity")
+        }
+        binding.btPathUri.setOnClickListener {
+            val path = "/storage/emulated/0/Android/data/com.dahua.leapmotor/cache/Leapmotor/smallVideo/tempPic_1729161414328.jpg"
+
+            val uri = Uri.fromFile(File(path))
+            val newPath = uri.path
+            val fileExist = File(newPath).exists()
+
+            val uriB = getImageContentUri(this,File(path))
+            val newPathB = uriB?.path
+            val fileBExist = File(newPathB).exists()
+            val bitmap = Images.Media.getBitmap(this.contentResolver, uri)// TODO: 这里获取不到，转换为uri之后无法获取文件了很奇怪
+//            val fileBExist1 = File(URI.create(newPathB))
+        }
+
+        binding.btPaging.setOnClickListener {
+            IntentRouter.go(this, "PagingActivity")
+        }
+        binding.btLarge.setOnClickListener {
+            IntentRouter.go(this, "teste")
+        }
+        binding.btCeilingA.setOnClickListener {
+            IntentRouter.go(this, "CeilingAlphaActivity")
+        }
+        binding.btWebp.setOnClickListener {
+            val intent = Intent(this, WebpActivity::class.java)
+            launcher.launch(intent)
+        }
+        binding.customView.setOnClickListener {
+            IntentRouter.go(this, "customviewactivity")
+        }
+        binding.updateWidgetBroadcast.setOnClickListener {
+
+            val intent = Intent("com.yaobing.framemvpproject.mylibrary.update")
+            val appWidgetManager = AppWidgetManager.getInstance(context) // 获取 AppWidgetManager 实例
+            val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(context, javaClass))
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds)
+            context.sendBroadcast(intent)
+        }
+        binding.btCamera.setOnClickListener {
+            imageFile = createImageFile()
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile))
+//            startActivityForResult(intent, 111)
+
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // 请求权限
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 111);
+            } else {
+                // 权限已经被授予，可以进行相关操作
+                val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+                // 确保有相机活动处理该Intent
+                if (takePictureIntent.resolveActivity(packageManager) != null) {
+
+                }
+                startActivityForResult(takePictureIntent, 1111)
+            }
+        }
+        binding.btTrans.setOnClickListener {
+            val x: Float = if (hide) {
+                -binding.btPaging.width.toFloat()
+            } else {
+                0f
+            }
+            binding.btPaging.animate().translationX(x)
+            binding.btTrans.animate().translationX(x).startDelay = 100L
+            hide = !hide
+        }
+        binding.btA.setOnClickListener {
+            bindTag(this, binding.root)
+            IntentRouter.go(this, "MainActivity")
+            var a: RoundedBorderImageView
+
+            //单例模式创建对象
+            val javaBestSingleton = JavaBestSingleton.getInstance()
+            Log.d("zxcv java 静态内部类", javaBestSingleton.toString())
+
+            //kotlin单例模式：懒汉
+            val kotlinSingleton = SingletonKotlin.getSingle()
+            Log.d("zxcv kotlin 懒汉", kotlinSingleton.toString())
+
+//            saveTestFile()
+//            checkFile()
+
+
+            //1w次 110k左右
+            //10w次 1200k左右
+            //10.w次 10700k左右
+            Thread {
+                for (i in 0..99998) {
+                    com.tencent.mars.xlog.Log.d("zxcv", "我要打印了：$i")
+                }
+                com.tencent.mars.xlog.Log.appenderFlush()
+                com.tencent.mars.xlog.Log.d("zxcv", "打印完了")
+            }.start()
         }
     }
 
@@ -665,35 +674,8 @@ class TestActivity : BaseActivity() {
         return fieldList
     }
 
-
-    init {
-        Log.d("zxv", "init了")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("zxv", "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("zxv", "onResume")
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("zxv", "onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("zxv", "onStop")
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("zxv", "onDestroy")
         com.tencent.mars.xlog.Log.appenderClose();
     }
 
@@ -726,23 +708,4 @@ class TestActivity : BaseActivity() {
 //            e.printStackTrace()
 //        }
     }
-//    fun testNull() {
-//        var data_a :String? = null
-//        var data_b :String?  = "listOf<Any>()"
-//        if (Math.random().equals(1f)) {
-//            data_a = "aa"
-//        }
-//        try {
-//            if (TextUtils.isEmpty(data_a)) {
-//                Log.d("zxcv","data_a1?")
-//            }else {
-//                Log.d("zxcv",data_a!!)
-//            }
-//
-//        }catch (e : java.lang.Exception) {
-//            Log.d("zxcv","e")
-//        }
-//    }
-
 }
-
