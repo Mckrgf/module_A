@@ -6,6 +6,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.yaobing.framemvpproject.mylibrary.adapter.ViewPagerAdapter
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityFuncShowBinding
 import com.yaobing.framemvpproject.mylibrary.fragments.FuncFragment
+import com.yaobing.framemvpproject.mylibrary.fragments.KotlinFuncFragment
 import com.yaobing.module_apt.Router
 
 @Router(value = "funcShowActivity")
@@ -16,7 +17,7 @@ class FuncShowActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val fragments = listOf(FuncFragment.newInstance("kotlin相关","0"),
+        val fragments = listOf(KotlinFuncFragment.newInstance("kotlin相关","0"),
             FuncFragment.newInstance("待续","1"),
             FuncFragment.newInstance("待续","2"),
             FuncFragment.newInstance("待续","3"),
