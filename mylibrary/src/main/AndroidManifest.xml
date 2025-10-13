@@ -82,6 +82,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".activity.activity.FuncShowActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activity.activity.SplashActivity"
             android:exported="true"
             android:launchMode="singleTask">

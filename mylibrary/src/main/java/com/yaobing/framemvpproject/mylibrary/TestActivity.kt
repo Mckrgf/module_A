@@ -594,6 +594,9 @@ class TestActivity : BaseActivity() {
             binding.btTrans.animate().translationX(x).startDelay = 100L
             hide = !hide
         }
+        binding.btFuncShow.setOnClickListener {
+            IntentRouter.go(this, "funcShowActivity")
+        }
         binding.btA.setOnClickListener {
             bindTag(this, binding.root)
             IntentRouter.go(this, "MainActivity")
