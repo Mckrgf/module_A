@@ -1,21 +1,14 @@
-package com.yaobing.framemvpproject.mylibrary.activity.activity
+package com.yaobing.framemvpproject.mylibrary.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.yaobing.framemvpproject.mylibrary.R
 import com.yaobing.framemvpproject.mylibrary.adapter.ViewPagerAdapter
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityFuncShowBinding
-import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestDactivityBinding
-import com.yaobing.framemvpproject.mylibrary.databinding.ViewCBinding
-import com.yaobing.framemvpproject.mylibrary.databinding.ViewDBinding
 import com.yaobing.framemvpproject.mylibrary.fragments.FuncFragment
 import com.yaobing.module_apt.Router
 
-@Router(value = "CeilingAlphaActivity")
+@Router(value = "funcShowActivity")
 class FuncShowActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityFuncShowBinding.inflate(layoutInflater)
