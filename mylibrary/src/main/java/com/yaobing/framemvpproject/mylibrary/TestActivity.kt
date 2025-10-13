@@ -18,6 +18,7 @@ import android.graphics.Paint
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.Environment.getExternalStorageDirectory
@@ -35,6 +36,7 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
@@ -71,9 +73,11 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.reflect.Field
+import androidx.core.graphics.toColorInt
+import androidx.core.net.toUri
+import androidx.core.graphics.createBitmap
 
 
-@Suppress("NAME_SHADOWING")
 @Router("asdf")
 class TestActivity : BaseActivity() {
     private var hide = true
@@ -97,6 +101,7 @@ class TestActivity : BaseActivity() {
         com.tencent.mars.xlog.Log.d("zcxv", "dfsf")
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -135,7 +140,6 @@ class TestActivity : BaseActivity() {
 
         XlogUtil.initXlog(this)
         measureAndSetText()
-
     }
 
     private fun initMultiLineText(text1: String) {
@@ -167,7 +171,7 @@ class TestActivity : BaseActivity() {
         val spannable = SpannableString(finalText)
 
         // 可以给第二个文本设置不同样式（可选）
-        val text2Color = ForegroundColorSpan(Color.parseColor("#FF5722"))
+        val text2Color = ForegroundColorSpan("#FF5722".toColorInt())
         spannable.setSpan(
             text2Color,
             text1.length,  // 起始位置（第一个文本结束处）
@@ -265,6 +269,7 @@ class TestActivity : BaseActivity() {
         })
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun initDragView() {
         val dragView = PageDragView(this)
         //加载可拖动的图片
@@ -292,7 +297,7 @@ class TestActivity : BaseActivity() {
         val cursor = context.contentResolver.query(Images.Media.EXTERNAL_CONTENT_URI, arrayOf("_id"), "_data=? ", arrayOf(filePath), null as String?)
         return if (cursor != null && cursor.moveToFirst()) {
             val id = cursor.getInt(cursor.getColumnIndex("_id"))
-            val baseUri = Uri.parse("content://media/external/images/media")
+            val baseUri = "content://media/external/images/media".toUri()
             cursor.close()
             Uri.withAppendedPath(baseUri, id.toString())
         } else if (imageFile.exists()) {
@@ -390,13 +395,12 @@ class TestActivity : BaseActivity() {
     }
 
 
-    fun drawableToBitmap(drawable: Drawable): Bitmap? {
-        val bitmap = Bitmap
-            .createBitmap(
-                drawable.intrinsicWidth,
-                drawable.intrinsicHeight,
-                if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
-            )
+    fun drawableToBitmap(drawable: Drawable): Bitmap {
+        val bitmap = createBitmap(
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight,
+            if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
+        )
         val canvas = Canvas(bitmap)
 
 // canvas.setBitmap(bitmap);
@@ -418,6 +422,7 @@ class TestActivity : BaseActivity() {
         return mapper1(str)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables", "QueryPermissionsNeeded")
     override fun initListener() {
         var isBold = true
         super.initListener()
@@ -458,12 +463,12 @@ class TestActivity : BaseActivity() {
             Log.d("zxcv","bitmap size ${bitmapBig.byteCount}")
             val bitmapCompress = BitmapUtil().compressImageByScale(bitmapBig, dp2pxInt(150f),dp2pxInt(150f))
             bitmapCompress.let {
-                Log.d("zxcv","bitmapCompress size ${bitmapCompress!!.byteCount}")
+                Log.d("zxcv","bitmapCompress size ${bitmapCompress.byteCount}")
                 binding.circleBordImage.setImageBitmap(bitmapCompress)
             }
         }
         binding.btLifeCycler.setOnClickListener {
-            var intent = Intent(this, HOmeActivity::class.java)
+            val intent = Intent(this, HOmeActivity::class.java)
             startActivity(intent)
         }
         binding.btRsa.setOnClickListener {
@@ -531,8 +536,8 @@ class TestActivity : BaseActivity() {
 
             val uriB = getImageContentUri(this,File(path))
             val newPathB = uriB?.path
-            val fileBExist = File(newPathB).exists()
-            val bitmap = Images.Media.getBitmap(this.contentResolver, uri)// TODO: 这里获取不到，转换为uri之后无法获取文件了很奇怪
+            val fileBExist = newPathB?.let { it1 -> File(it1).exists() }
+            val bitmap = Images.Media.getBitmap(this.contentResolver, uri)//这里获取不到，转换为uri之后无法获取文件了很奇怪
 //            val fileBExist1 = File(URI.create(newPathB))
         }
 
