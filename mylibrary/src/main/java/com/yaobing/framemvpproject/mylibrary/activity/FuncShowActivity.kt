@@ -15,6 +15,7 @@ class FuncShowActivity : AppCompatActivity() {
         ActivityFuncShowBinding.inflate(layoutInflater)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.enterTransition = null
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         val fragments = listOf(KotlinFuncFragment.newInstance("kotlin相关","0"),

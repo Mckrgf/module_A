@@ -1,14 +1,14 @@
 package com.yaobing.framemvpproject.mylibrary.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.lifecycleScope
-import com.yaobing.framemvpproject.mylibrary.R
-import com.yaobing.framemvpproject.mylibrary.databinding.FragmentFuncBinding
+import com.yaobing.framemvpproject.mylibrary.activity.TestDActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.FragmentKotlinFuncBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -31,6 +31,15 @@ class KotlinFuncFragment : FuncFragment() {
                 }
             }
         }
+        bindingRoot.btAnimiation.setOnClickListener {
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                requireActivity(),                // 当前 Activity
+                bindingRoot.btAnimiation,          // 源 Activity 中的共享视图
+                "shared_element"     // 过渡名称，需与目标 Activity 匹配
+            )
+            val bundleA = options.toBundle()
+            startActivity(Intent(requireActivity(), TestDActivity::class.java), bundleA)
+        }
     }
     private suspend fun netRequest() {
         Log.d("zxcv","模拟请求开始，线程："  + Thread.currentThread().name)
@@ -45,15 +54,6 @@ class KotlinFuncFragment : FuncFragment() {
         return bindingRoot.root
     }
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FuncFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             KotlinFuncFragment().apply {

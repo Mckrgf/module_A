@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
 import com.yaobing.framemvpproject.mylibrary.R
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestDactivityBinding
 import com.yaobing.framemvpproject.mylibrary.databinding.ViewCBinding
@@ -52,6 +53,11 @@ class TestDActivity : AppCompatActivity() {
         val viewC = binding.vsC.inflate()
         //绑定vs和view
         ViewCBinding.bind(viewC)
+
+        ViewCompat.setTransitionName(binding.btC, "shared_element")
+        binding.btC.setOnClickListener {
+            finishAfterTransition()
+        }
 
     }
 }
