@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
     </style>
+    <style name="AppTheme2" parent="Theme.AppCompat.Light.DarkActionBar">
+    </style>
     <!-- Base application theme. -->
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/aaaaa</item>
@@ -61,7 +63,14 @@
         <item name="android:windowEnterAnimation">@anim/pop_option_in</item>
         <item name="android:windowExitAnimation">@anim/pop_option_out</item>
     </style>
-
+    <style name="TransparentNoFlashTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+<!--        <item name="android:windowBackground">@android:color/transparent</item>-->
+<!--        <item name="android:windowIsTranslucent">true</item>-->
+<!--        &lt;!&ndash; 避免转场时的黑色闪烁（API 21+） &ndash;&gt;-->
+<!--        <item name="android:windowContentTransitions">true</item>-->
+<!--        <item name="android:windowAllowEnterTransitionOverlap">true</item>-->
+<!--        <item name="android:windowAllowReturnTransitionOverlap">true</item>-->
+    </style>
     //沉浸式主题
     <style name="AppTheme.TransparentStatusBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>  <!-- 半透明 -->
