@@ -1,6 +1,8 @@
 package com.yaobing.framemvpproject.mylibrary.fragments
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.yaobing.framemvpproject.mylibrary.activity.TestDActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.FragmentKotlinFuncBinding
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +44,23 @@ class KotlinFuncFragment : FuncFragment() {
             )
             val bundleA = options.toBundle()
             startActivity(Intent(requireActivity(), TestDActivity::class.java), bundleA)
+        }
+        bindingRoot.btBitmap.setOnClickListener {
+            val rul = "https://ueapp-oss-static.leapmotor.com/img/app/club/20230925/4d2c9bdab1d74515844c100519a22b35.png"
+            Glide.with(requireActivity()).asBitmap().load(rul).into(object : CustomTarget<Bitmap?>() {
+                override fun onResourceReady(
+                    resource: Bitmap,
+                    transition: Transition<in Bitmap?>?
+                ) {
+                    Log.d("zxcv","图片加载成功，线程："  + Thread.currentThread().name)
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    Log.d("zxcv","图片加载失败，线程："  + Thread.currentThread().name)
+                }
+
+
+            })
         }
     }
     private suspend fun netRequest() {

@@ -76,6 +76,7 @@ import java.lang.reflect.Field
 import androidx.core.graphics.toColorInt
 import androidx.core.net.toUri
 import androidx.core.graphics.createBitmap
+import com.blankj.utilcode.util.DeviceUtils
 
 
 @Router("asdf")
@@ -138,7 +139,10 @@ class TestActivity : BaseActivity() {
 
         initImageViewLeftCorner()
 
-        XlogUtil.initXlog(this)
+        //该方法必须在真机上调用
+        if (!DeviceUtils.isEmulator()) {
+            XlogUtil.initXlog(this)
+        }
         measureAndSetText()
     }
 
