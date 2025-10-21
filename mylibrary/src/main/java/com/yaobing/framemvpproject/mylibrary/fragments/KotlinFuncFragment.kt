@@ -2,6 +2,10 @@ package com.yaobing.framemvpproject.mylibrary.fragments
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -13,8 +17,11 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.yaobing.framemvpproject.mylibrary.BitmapUtil
+import com.yaobing.framemvpproject.mylibrary.R
 import com.yaobing.framemvpproject.mylibrary.activity.TestDActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.FragmentKotlinFuncBinding
+import com.yaobing.module_middleware.Utils.BitmapUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -52,7 +59,8 @@ class KotlinFuncFragment : FuncFragment() {
                     resource: Bitmap,
                     transition: Transition<in Bitmap?>?
                 ) {
-                    Log.d("zxcv","图片加载成功，线程："  + Thread.currentThread().name)
+                    bindingRoot.ivBitmapUrl.setImageBitmap(resource)
+                    Log.d("zxcv","图片加载成功，线程："  )
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {
@@ -62,7 +70,26 @@ class KotlinFuncFragment : FuncFragment() {
 
             })
         }
+        bindingRoot.btCropImgWidth.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.image_width_long)
+                val bitmapWX = BitmapUtils.cropTo5x4WideBitmap(bitmap)
+                withContext(Dispatchers.Main) {
+                    bindingRoot.ivBitmapUrl.setImageBitmap(bitmapWX)
+                }
+            }
+        }
+        bindingRoot.btCropImgLong.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.image_height_long)
+                val bitmapWX = BitmapUtils.cropTo5x4WideBitmapV2(bitmap)
+                withContext(Dispatchers.Main) {
+                    bindingRoot.ivBitmapUrl.setImageBitmap(bitmapWX)
+                }
+            }
+        }
     }
+
     private suspend fun netRequest() {
         Log.d("zxcv","模拟请求开始，线程："  + Thread.currentThread().name)
         delay(5000)
