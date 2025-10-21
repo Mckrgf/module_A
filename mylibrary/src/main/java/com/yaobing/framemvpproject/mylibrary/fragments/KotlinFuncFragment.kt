@@ -79,6 +79,16 @@ class KotlinFuncFragment : FuncFragment() {
                 }
             }
         }
+        bindingRoot.btCropCompressImgWidth.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.image_width_long)
+                val bitmapWX = BitmapUtils.cropTo5x4WideBitmap(bitmap)
+                val bitmapWXCompress = bitmapWX?.let { it1 -> BitmapUtils.getThumbBitmap(it1) }
+                withContext(Dispatchers.Main) {
+                    bindingRoot.ivBitmapUrl.setImageBitmap(bitmapWXCompress)
+                }
+            }
+        }
         bindingRoot.btCropImgLong.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.image_height_long)

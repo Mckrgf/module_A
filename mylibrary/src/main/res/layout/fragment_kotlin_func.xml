@@ -60,6 +60,14 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/bt_crop_compress_img_width"
+        android:text="宽图裁剪并压缩图片"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toEndOf="@+id/iv_bitmap_url"
+        app:layout_constraintTop_toBottomOf="@+id/bt_crop_img_width" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/bt_crop_img_long"
         android:text="长图裁剪图片"
         android:textSize="@dimen/dp_10"
