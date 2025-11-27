@@ -277,7 +277,7 @@ class TestActivity : BaseActivity() {
     private fun initDragView() {
         val dragView = PageDragView(this)
         //加载可拖动的图片
-        val img: ImageView = dragView.findViewById<ImageView>(R.id.iv_img)
+        val img: ImageView = dragView.findViewById<ImageView>(com.yaobing.module_common_view.R.id.iv_img)
         Glide.with(context)
             .load(resources.getDrawable(R.mipmap.bb, null))
             .into(img)

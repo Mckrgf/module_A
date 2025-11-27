@@ -6,6 +6,8 @@ plugins {
 }
 group='com.github.MCKRGF'
 android {
+    namespace 'com.yaobing.framemvpproject.mylibrary2'  // Add this line matching your applicationId
+
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
@@ -19,14 +21,17 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '21'
     }
     lintOptions {
         abortOnError false
+    }
+    buildFeatures {
+        buildConfig true
     }
 }
 

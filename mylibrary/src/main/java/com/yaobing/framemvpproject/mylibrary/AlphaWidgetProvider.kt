@@ -45,7 +45,7 @@ class AlphaWidgetProvider : AppWidgetProvider() {
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         super.onDeleted(context, appWidgetIds)
         Log.d("zxcv", "AlphaWidgetProvider onDeleted")
-        alarmManager?.cancel(pendingIntent)
+        alarmManager?.cancel(pendingIntent!!)
     }
 
     override fun onDisabled(context: Context) {
@@ -107,7 +107,7 @@ class AlphaWidgetProvider : AppWidgetProvider() {
             AlarmManager.RTC_WAKEUP,
             System.currentTimeMillis(),
             1000 * 1 * 10,
-            pendingIntent
+            pendingIntent!!
         )
 
     }

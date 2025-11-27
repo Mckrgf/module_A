@@ -25,7 +25,7 @@ class NoPaddingTextView1 @JvmOverloads constructor(
         super.onSizeChanged(w, h, oldw, oldh)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         drawText(canvas)
     }
 
