@@ -73,4 +73,12 @@
         android:textSize="@dimen/dp_10"
         app:layout_constraintStart_toEndOf="@+id/bt_crop_img_width"
         app:layout_constraintTop_toBottomOf="@+id/bt_bitmap" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_take_pic_id_card"
+        android:text="拍身份证照片"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toEndOf="@+id/bt_crop_compress_img_width"
+        app:layout_constraintTop_toBottomOf="@+id/bt_crop_img_long" />
 </androidx.constraintlayout.widget.ConstraintLayout>
