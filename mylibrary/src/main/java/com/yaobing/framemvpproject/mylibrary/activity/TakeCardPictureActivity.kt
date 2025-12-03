@@ -195,6 +195,9 @@ class TakeCardPictureActivity : AppCompatActivity() {
         top = top.coerceIn(0, bitmap.height)
         right = right.coerceIn(left, bitmap.width)
         bottom = bottom.coerceIn(top, bitmap.height)
+        //扩大20%
+        top -= (top*0.2).toInt()
+        bottom += (bottom*0.2).toInt()
         val cropW = right - left
         val cropH = bottom - top
         if (cropW <= 0 || cropH <= 0) {
