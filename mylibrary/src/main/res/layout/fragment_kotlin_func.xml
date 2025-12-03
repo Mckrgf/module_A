@@ -79,6 +79,19 @@
         android:id="@+id/bt_take_pic_id_card"
         android:text="拍身份证照片"
         android:textSize="@dimen/dp_10"
-        app:layout_constraintStart_toEndOf="@+id/bt_crop_compress_img_width"
-        app:layout_constraintTop_toBottomOf="@+id/bt_crop_img_long" />
+        app:layout_constraintStart_toStartOf="@+id/bt_crop_compress_img_width"
+        app:layout_constraintTop_toBottomOf="@+id/bt_crop_compress_img_width" />
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/bt_take_pic_id_card_num"
+        android:text="1"
+        android:gravity="center"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toEndOf="@+id/bt_take_pic_id_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bt_take_pic_id_card" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

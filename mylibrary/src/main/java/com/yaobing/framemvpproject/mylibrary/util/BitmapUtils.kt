@@ -2,8 +2,14 @@ package com.yaobing.framemvpproject.mylibrary.util
 
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.text.TextUtils
+import android.util.Base64
 import android.util.Log
 import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.nio.file.Files
+import java.nio.file.Paths
 import kotlin.math.sqrt
 
 object BitmapUtils {
@@ -150,5 +156,34 @@ object BitmapUtils {
         // 缩放图片动作
         matrix.postScale(ratio.toFloat(), ratio.toFloat())
         return Bitmap.createBitmap(bgimage, 0, 0, width.toInt(), height.toInt(), matrix, true)
+    }
+
+    fun imageToBase64(path: String?, base64Flag: Int): String? {
+        if (TextUtils.isEmpty(path)) {
+            return null
+        } else {
+            var `is`: InputStream? = null
+            var data: ByteArray? = null
+            var result: String? = null
+
+            try {
+                `is` = Files.newInputStream(Paths.get(path))
+                data = ByteArray(`is`.available())
+                `is`.read(data)
+                result = Base64.encodeToString(data, base64Flag)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            } finally {
+                if (null != `is`) {
+                    try {
+                        `is`.close()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            return result
+        }
     }
 }

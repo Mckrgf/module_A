@@ -104,6 +104,8 @@ class KotlinFuncFragment : FuncFragment() {
         }
         bindingRoot.btTakePicIdCard.setOnClickListener {
             val intent = Intent(requireActivity(), TakeCardPictureActivity::class.java)
+            val a = bindingRoot.btTakePicIdCardNum.text
+            intent.putExtra(TakeCardPictureActivity.TYPE_KEY,a.toString().toInt())
             launcher.launch(intent)
         }
     }
