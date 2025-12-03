@@ -12,6 +12,7 @@ import android.provider.OpenableColumns
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -45,7 +46,7 @@ class TakeCardPictureActivity : AppCompatActivity() {
 
     private lateinit var previewView: PreviewView
     private lateinit var captureButton: View
-    private lateinit var ivCardFront: View
+    private lateinit var ivCardFront: ImageView
     private lateinit var tvTips: TextView
     private var imageCapture: ImageCapture? = null
 
@@ -57,9 +58,46 @@ class TakeCardPictureActivity : AppCompatActivity() {
         previewView = findViewById(R.id.previewView)
         captureButton = findViewById(R.id.iv_click_front_take_picture)
         ivCardFront = findViewById(R.id.iv_card_front)
+        ivCardFront.setImageResource(
+            when (intent.getIntExtra(TYPE_KEY, 0)) {
+                1 -> {
+                    R.mipmap.id_card_front_3
+                }
+
+                2 -> {
+                    R.mipmap.id_card_back
+                }
+
+                3 -> {
+                    R.mipmap.drive_3
+                }
+
+                4 -> {
+                    R.mipmap.passport_3
+                }
+
+                5 -> {
+                    R.mipmap.hoko_3
+                }
+
+                6 -> {
+                    R.mipmap.taiwan_3
+                }
+
+                7 -> {
+                    R.mipmap.lisense
+                }
+
+                8 -> {
+                    R.mipmap.lisense
+                }
+
+                else -> {
+                    R.mipmap.lisense
+                }
+            }
+        )
         tvTips = findViewById(R.id.tv_tips)
-        val a = intent.getIntExtra(TYPE_KEY, 0)
-        val b = intent.getStringExtra(TYPE_KEY)
         tvTips.text = when (intent.getIntExtra(TYPE_KEY, 0)) {
             1 -> {
                 CONTENT_HEAD + CONTENT_ID_FRONT
@@ -93,7 +131,9 @@ class TakeCardPictureActivity : AppCompatActivity() {
                 CONTENT_HEAD + CONTENT_BUSINESS_LICENSE
             }
 
-            else -> {""}
+            else -> {
+                ""
+            }
         }
 
         if (ContextCompat.checkSelfPermission(this, CAMERA_PERMISSION) == PackageManager.PERMISSION_GRANTED) {
