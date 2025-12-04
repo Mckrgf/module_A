@@ -1,6 +1,7 @@
 package com.yaobing.framemvpproject.mylibrary.activity
 
 import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Rect
@@ -24,6 +25,8 @@ import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.yaobing.framemvpproject.mylibrary.R
+import com.yaobing.framemvpproject.mylibrary.util.BitmapUtils.imageToBase64
+import com.yaobing.framemvpproject.mylibrary.util.BitmapUtils.imageToBase64ByUri
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -33,6 +36,7 @@ class TakeCardPictureActivity : AppCompatActivity() {
 
     companion object {
         const val TYPE_KEY: String = "TAKE_PIC_TYPE"
+        const val PIC_BASE_64: String = "TAKE_PIC_TYPE"
         const val CONTENT_HEAD: String = "请拍摄"
         const val CONTENT_ID_FRONT: String = "身份证人面像"
         const val CONTENT_ID_BACK: String = "身份证国徽面"
@@ -42,6 +46,7 @@ class TakeCardPictureActivity : AppCompatActivity() {
         const val CONTENT_TAIWAN: String = "台湾居民来往大陆通行证人面像"
         const val CONTENT_CAR_REGISTER: String = "机动车登记证书"
         const val CONTENT_BUSINESS_LICENSE: String = "营业执照"
+        const val RESULT_BASE_64_OK: Int = 100001
     }
 
     private lateinit var previewView: PreviewView
@@ -143,6 +148,7 @@ class TakeCardPictureActivity : AppCompatActivity() {
         }
 
         captureButton.setOnClickListener { takePhoto() }
+        findViewById<View>(R.id.iv_close).setOnClickListener { finish() }
     }
 
     private fun startCamera() {
@@ -195,9 +201,10 @@ class TakeCardPictureActivity : AppCompatActivity() {
         top = top.coerceIn(0, bitmap.height)
         right = right.coerceIn(left, bitmap.width)
         bottom = bottom.coerceIn(top, bitmap.height)
+        val add = ((bottom-top)*0.2).toInt()
         //扩大20%
-        top -= (top*0.2).toInt()
-        bottom += (bottom*0.2).toInt()
+        top -= add
+        bottom += add
         val cropW = right - left
         val cropH = bottom - top
         if (cropW <= 0 || cropH <= 0) {
@@ -256,9 +263,12 @@ class TakeCardPictureActivity : AppCompatActivity() {
                 val bytes = ins.readBytes()
                 Base64.encodeToString(bytes, Base64.NO_WRAP)
             } ?: ""
-            Log.d("CameraXApp", "保存裁剪图片到 $uri, 尺寸=${cropped.width}x${cropped.height}, 大小=${size ?: -1} bytes")
-            Log.d("CameraXApp", base64)
+
             Toast.makeText(this, "已保存裁剪图片", Toast.LENGTH_SHORT).show()
+            val aa = uri.toString()
+            val intent = Intent()
+            intent.putExtra("data",uri.toString())
+            setResult(RESULT_BASE_64_OK,intent)
         } catch (e: Exception) {
             Log.e("CameraXApp", "保存裁剪图片失败", e)
             Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show()

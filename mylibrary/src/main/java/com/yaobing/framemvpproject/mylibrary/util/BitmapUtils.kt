@@ -1,11 +1,16 @@
 package com.yaobing.framemvpproject.mylibrary.util
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.net.Uri
 import android.text.TextUtils
 import android.util.Base64
+import android.util.Base64OutputStream
 import android.util.Log
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.nio.file.Files
@@ -184,6 +189,66 @@ object BitmapUtils {
             }
 
             return result
+        }
+    }
+
+    /**
+     * New: Read content from a content Uri and return Base64 string.
+     * Uses stream-based encoding to avoid loading the whole file into memory.
+     * @param context required to open the Uri via ContentResolver
+     * @param uri content Uri (content://...) or file Uri
+     * @param base64Flag flags from android.util.Base64 (e.g. NO_WRAP)
+     */
+    fun imageToBase64ByUri(context: Context, uri: Uri, base64Flag: Int = Base64.NO_WRAP): String? {
+        try {
+            // Use ContentResolver for content:// and file:// alike
+            val input: InputStream? = try {
+                context.contentResolver.openInputStream(uri)
+            } catch (e: Exception) {
+                Log.w("BitmapUtils", "openInputStream failed for uri=$uri, falling back to file path: ${e.message}")
+                null
+            }
+
+            if (input == null) {
+                Log.w("BitmapUtils", "Cannot open input stream for uri=$uri")
+                return null
+            }
+
+            input.use { ins ->
+                val baos = ByteArrayOutputStream()
+                // Base64OutputStream will write base64 bytes into baos
+                Base64OutputStream(baos, base64Flag).use { b64Out ->
+                    val buffer = ByteArray(8 * 1024)
+                    while (true) {
+                        val read = ins.read(buffer)
+                        if (read <= 0) break
+                        b64Out.write(buffer, 0, read)
+                    }
+                    b64Out.flush()
+                }
+                // Base64OutputStream wrote US-ASCII bytes; convert to String
+                return try {
+                    baos.toString(Charsets.US_ASCII.name())
+                } catch (e: Exception) {
+                    // Fallback
+                    String(baos.toByteArray(), Charsets.US_ASCII)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("BitmapUtils", "imageToBase64ByUri failed for uri=$uri", e)
+            return null
+        }
+    }
+
+    // Convenience overload: accept Uri as String by parsing it
+    fun imageToBase64ByUri(context: Context, uriString: String?, base64Flag: Int = Base64.NO_WRAP): String? {
+        if (uriString == null) return null
+        return try {
+            val uri = Uri.parse(uriString)
+            imageToBase64ByUri(context, uri, base64Flag)
+        } catch (e: Exception) {
+            Log.w("BitmapUtils", "invalid uri string: $uriString", e)
+            null
         }
     }
 }

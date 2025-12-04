@@ -127,7 +127,7 @@ dependencies {
     implementation 'androidx.compose.runtime:runtime-livedata'
     // Optional - Integration with RxJava
     implementation 'androidx.compose.runtime:runtime-rxjava2'
-    def camerax_version = "1.6.0-alpha01"
+    def camerax_version = "1.2.3"
     // The following line is optional, as the core library is included indirectly by camera-camera2
     implementation "androidx.camera:camera-core:${camerax_version}"
     implementation "androidx.camera:camera-camera2:${camerax_version}"
@@ -138,7 +138,12 @@ dependencies {
     // If you want to additionally use the CameraX View class
     implementation "androidx.camera:camera-view:${camerax_version}"
     // If you want to additionally add CameraX ML Kit Vision Integration
-    implementation "androidx.camera:camera-mlkit-vision:${camerax_version}"
+//    implementation "androidx.camera:camera-mlkit-vision:${camerax_version}"
     // If you want to additionally use the CameraX Extensions library
-    implementation "androidx.camera:camera-extensions:${camerax_version}"
+//    implementation "androidx.camera:camera-extensions:${camerax_version}"
+
+    //这个可能和camera冲突
+    implementation('com.github.waynell:VideoListPlayer:1.4') {
+        exclude group: 'com.android.support', module: 'widget'
+    }
 }
