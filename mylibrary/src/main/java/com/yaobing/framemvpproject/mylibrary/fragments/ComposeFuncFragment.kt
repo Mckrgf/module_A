@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -112,12 +114,13 @@ open class ComposeFuncFragment : Fragment() {
                 val pagingItems: LazyPagingItems<RepoData> = Repository.getPagingData().collectAsLazyPagingItems()
 
                 LazyColumn(
-                    modifier = Modifier.height(250.dp)
+                    modifier = Modifier.height(250.dp)  // 去掉 fillMaxWidth()，让宽度自适应，由父 Column 的 horizontalAlignment 居中
                 ) {
-                    // TODO: 无法展示动态数据，很奇怪。先展示写死的数据好了 
-                    items(4) { repo ->
+                    // 用旧版 paging-compose 的写法
+                    items(pagingItems.itemCount) { index ->
+                        val repo = pagingItems[index]
                         repo?.let {
-                            MessageCard(content = "fewfw:" + repo)  // 显示 RepoData 的 name
+                            Text(text = it.name ?: "", maxLines = 1)
                         }
                     }
 
