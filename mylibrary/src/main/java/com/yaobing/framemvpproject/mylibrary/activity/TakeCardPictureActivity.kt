@@ -13,6 +13,7 @@ import android.provider.OpenableColumns
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -24,6 +25,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.yaobing.framemvpproject.mylibrary.MaskView
 import com.yaobing.framemvpproject.mylibrary.R
 import com.yaobing.framemvpproject.mylibrary.util.BitmapUtils.imageToBase64
 import com.yaobing.framemvpproject.mylibrary.util.BitmapUtils.imageToBase64ByUri
@@ -63,6 +65,17 @@ class TakeCardPictureActivity : AppCompatActivity() {
         previewView = findViewById(R.id.previewView)
         captureButton = findViewById(R.id.iv_click_front_take_picture)
         ivCardFront = findViewById(R.id.iv_card_front)
+
+        // 监听iv_card_front布局完成，动态设置MaskView的洞
+        ivCardFront.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                ivCardFront.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                val rect = Rect()
+                ivCardFront.getGlobalVisibleRect(rect)
+                findViewById<MaskView>(R.id.v_mask).setHoleRect(rect)
+            }
+        })
+
         ivCardFront.setImageResource(
             when (intent.getIntExtra(TYPE_KEY, 0)) {
                 1 -> {

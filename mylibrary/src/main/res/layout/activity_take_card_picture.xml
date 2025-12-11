@@ -5,9 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent_80"
-
-    tools:context=".activity.TakeCardPictureActivity">
+    android:background="@color/black">
 
     <!-- 在 ConstraintLayout 内放一个 PreviewView 做相机预览 -->
     <androidx.camera.view.PreviewView
@@ -21,10 +19,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <View
+    <com.yaobing.framemvpproject.mylibrary.MaskView
+        android:id="@+id/v_mask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/transparent_80"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

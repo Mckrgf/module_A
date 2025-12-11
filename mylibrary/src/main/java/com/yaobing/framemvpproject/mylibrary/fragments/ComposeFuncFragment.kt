@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -82,7 +83,7 @@ open class ComposeFuncFragment : Fragment() {
                 // 用 Box 包一层，真正做圆角裁剪
                 Box(
                     modifier = Modifier
-                        .height(50.dp)
+                        .height(30.dp)
                         .clip(RoundedCornerShape(10))   // 圆角裁在这里
                         .background(color = colorResource(id = R.color.color_6c9881))
                 ) {
@@ -91,23 +92,27 @@ open class ComposeFuncFragment : Fragment() {
                             .height(50.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = "count 0: $count", modifier = Modifier.padding(15.dp))
-                        VerticalDivider(thickness = 1.dp, color = colorResource(id = R.color.color_dddddd), modifier = Modifier
-                            .fillMaxHeight()
-                            .padding(5.dp))
-                        Text(text = "count 1: $count", modifier = Modifier.padding(15.dp))   // 顺手把 typo 也修了
-                        VerticalDivider(thickness = 1.dp, color = colorResource(id = R.color.color_dddddd), modifier = Modifier
-                            .fillMaxHeight()
-                            .padding(5.dp))
-                        Text(text = "count 2: $count", modifier = Modifier.padding(15.dp))
+                        Text(text = "count 0: $count", modifier = Modifier.padding(1.dp))
+                        VerticalDivider(
+                            thickness = 1.dp, color = colorResource(id = R.color.color_dddddd), modifier = Modifier
+                                .fillMaxHeight()
+                                .padding(5.dp)
+                        )
+                        Text(text = "count 1: $count", modifier = Modifier.padding(1.dp))   // 顺手把 typo 也修了
+                        VerticalDivider(
+                            thickness = 1.dp, color = colorResource(id = R.color.color_dddddd), modifier = Modifier
+                                .fillMaxHeight()
+                                .padding(5.dp)
+                        )
+                        Text(text = "count 2: $count", modifier = Modifier.padding(1.dp))
                     }
                 }
-                Text(text = "ComposeFuncFragment", modifier = Modifier.padding(16.dp))
-                Text(text = "count: $count", modifier = Modifier.padding(16.dp))
-                MessageCard(content = "Hello Compose", modifier = Modifier.padding(16.dp))
+                Text(text = "ComposeFuncFragment", modifier = Modifier.padding(5.dp))
+                Text(text = "count: $count", modifier = Modifier.padding(5.dp))
+                MessageCard(content = "Hello Compose", modifier = Modifier.padding(5.dp))
                 Button(
                     onClick = { count++ },
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(5.dp)
                 ) {
                     Text(text = "Increment")
                 }
@@ -120,7 +125,13 @@ open class ComposeFuncFragment : Fragment() {
                     items(pagingItems.itemCount) { index ->
                         val repo = pagingItems[index]
                         repo?.let {
-                            Text(text = it.name ?: "", maxLines = 1)
+                            Row(modifier = Modifier.fillMaxWidth()) {
+//                                items(3) {
+                                Text(text = repo.name + ": " ?: "", maxLines = 1)
+                                Text(text = repo.url ?: "", modifier = Modifier.weight(1f))
+//                                }
+                            }
+
                         }
                     }
 
@@ -130,9 +141,11 @@ open class ComposeFuncFragment : Fragment() {
                             loadState.refresh is LoadState.Loading -> {
                                 item { Text("Loading...") }
                             }
+
                             loadState.append is LoadState.Loading -> {
                                 item { Text("Loading more...") }
                             }
+
                             loadState.refresh is LoadState.Error -> {
                                 item { Text("Error: ${(loadState.refresh as LoadState.Error).error.message}") }
                             }
