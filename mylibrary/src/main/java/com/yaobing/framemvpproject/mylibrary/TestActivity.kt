@@ -77,6 +77,7 @@ import androidx.core.graphics.toColorInt
 import androidx.core.net.toUri
 import androidx.core.graphics.createBitmap
 import com.blankj.utilcode.util.DeviceUtils
+import com.yaobing.framemvpproject.mylibrary.util.XlogUtil.generateRandomStrings
 
 
 @Router("asdf")
@@ -141,7 +142,8 @@ class TestActivity : BaseActivity() {
 
         //该方法必须在真机上调用
         if (!DeviceUtils.isEmulator()) {
-            XlogUtil.initXlog(this)
+//            XlogUtil.initXlog(this)
+            XlogUtil.initXlogA(this)
         }
         measureAndSetText()
     }
@@ -627,8 +629,8 @@ class TestActivity : BaseActivity() {
             //10w次 1200k左右
             //10.w次 10700k左右
             Thread {
-                for (i in 0..99998) {
-                    com.tencent.mars.xlog.Log.d("zxcv", "我要打印了：$i")
+                for (i in 0..59999) {
+                    com.tencent.mars.xlog.Log.d("zxcv", "我要打印了：$i" + generateRandomStrings(10))
                 }
                 com.tencent.mars.xlog.Log.appenderFlush()
                 com.tencent.mars.xlog.Log.d("zxcv", "打印完了")
