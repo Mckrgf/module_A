@@ -1,174 +1,514 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:clipChildren="false"
     tools:context=".TestActivity">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="当前页面：TestActivity"/>
+
 
     <LinearLayout
-        android:background="@android:color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <LinearLayout
-            android:background="@android:color/white"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
+            android:layout_height="wrap_content"
+            android:text="当前页面：TestActivity" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="第0层"/>
-            <LinearLayout
-                android:background="@android:color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:background="@android:color/white">
+
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="第一层"/>
+                    android:text="第0层" />
+
                 <LinearLayout
-                    android:background="@android:color/white"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white">
+
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="跳转(动态代理/网络请求)"
-                        android:textSize="10sp"
-                        android:tag="bt_a"
-                        android:id="@+id/bt_a"/>
+                        android:text="第一层" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white">
+
+                        <Button
+                            android:id="@+id/bt_a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tag="bt_a"
+                            android:text="跳转(动态代理/网络请求)"
+                            android:textSize="10sp" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
+
+            <Button
+                android:id="@+id/bt_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="bt_b"
+                android:text="扩展函数/委托" />
+
         </LinearLayout>
 
+        <com.yaobing.framemvpproject.mylibrary.ui.DynamicHeightSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:visibility="gone"
+            android:progress="50" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/grayBg">
+
+            <SeekBar
+
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:foregroundGravity="center_vertical"
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:background="@null"
+                android:progressDrawable="@drawable/custom_seekbar_track_low"
+                android:thumb="@drawable/transparent_thumb"
+                android:max="100"
+                android:progress="50"/>
+
+        </RelativeLayout>
+
+
+        <SeekBar
+            android:layout_gravity="center_vertical"
+            android:foregroundGravity="center_vertical"
+            android:id="@+id/seekBar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="50"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:hint="通过扩展函数实现字符串检测"
+                android:tag="et_b" />
+            <Button
+                android:id="@+id/bt_func_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*******新页面展示功能"/>
+
+        </LinearLayout>
 
         <Button
+            android:id="@+id/bt_webp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="对象的扩展函数"
-            android:tag="bt_b"
-            android:id="@+id/bt_b"/>
+            android:hint="动态webp图片测试/圆角图片padding测试"
+            android:tag="et_b" />
+        <Button
+            android:id="@+id/customView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="自定义控件"
+            android:tag="et_b" />
+        <Button
+            android:id="@+id/bt_rsa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="rsa加密解密"
+            android:tag="et_b" />
+        <com.yaobing.framemvpproject.mylibrary.ui.DashedLineVerticalView
+            android:background="@color/lpGreen"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/dashLineA" />
+        <com.yaobing.framemvpproject.mylibrary.ui.DashedLineHorView
+            android:background="@color/lpGreen"
+            android:layout_width="100dp"
+            android:layout_height="10dp"
+            android:id="@+id/dashLineB" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:clipChildren="false"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/bt_paging"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="paging"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/bt_trans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="向左侧按钮"
+                app:layout_constraintStart_toEndOf="@id/bt_paging"
+                app:layout_constraintTop_toTopOf="@id/bt_paging" />
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/circle_image"
+                android:layout_width="170px"
+                android:layout_height="170px"
+                android:scaleType="fitXY"
+                android:src="@drawable/aaa"
+                app:altSrc="@drawable/aaaaa"
+                app:crossfade="0.5"
+                app:layout_constraintStart_toEndOf="@id/bt_trans"
+                app:layout_constraintTop_toTopOf="@id/bt_trans"
+                app:roundPercent="0.5" />
+
+            <EditText
+                android:id="@+id/et_circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="圆角进度0-1"
+                android:inputType="numberDecimal"
+                app:layout_constraintStart_toEndOf="@id/circle_image"
+                app:layout_constraintTop_toTopOf="@+id/circle_image" />
+
+            <Button
+                android:id="@+id/bt_c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="约束布局隐藏某个控件导致重叠问题"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/circle_image" />
+
+            <Button
+                android:id="@+id/bt_ceiling_a"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="吸顶效果01"
+                app:layout_constraintStart_toEndOf="@id/bt_c"
+                app:layout_constraintTop_toBottomOf="@+id/circle_image" />
+
+            <com.yaobing.framemvpproject.mylibrary.RoundedBorderImageView
+                android:id="@+id/circle_bord_image"
+                android:layout_width="170px"
+                android:layout_height="170px"
+                android:padding="1px"
+                android:scaleType="fitXY"
+                android:src="@drawable/aaa"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a" />
+
+
+            <ImageView
+                android:id="@+id/iv_dfds"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/circle_bord_image"
+                app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a" />
+
+            <ImageView
+                android:id="@+id/iv_glide"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/transparent"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@+id/iv_dfds"
+                app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a" />
+
+            <Button
+                android:id="@+id/bt_life_cycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试跳转生命周期"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_glide" />
+
+            <Button
+                android:id="@+id/bt_constraint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="约束布局相关"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/circle_bord_image" />
+
+            <TextView
+                android:id="@+id/tv_multi_line"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="测试两汉"
+                app:layout_constraintStart_toEndOf="@+id/bt_constraint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/bt_constraint" />
+
+            <Button
+                android:id="@+id/bt_add_drag_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="增加全局拖动view"
+                app:layout_constraintStart_toEndOf="@+id/bt_life_cycler"
+                app:layout_constraintTop_toBottomOf="@+id/iv_glide" />
+
+            <TextView
+                android:id="@+id/tv_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@color/purple_200"
+                android:text="aa"
+                app:layout_constraintStart_toEndOf="@+id/bt_add_drag_view"
+                app:layout_constraintTop_toTopOf="@+id/bt_add_drag_view" />
+
+            <TableLayout
+                android:id="@+id/tabLayout_b"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bt_add_drag_view">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+
+                        android:text="姓" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="年龄" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:text="年龄龄" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="4"
+                        android:gravity="center"
+                        android:text="年龄龄龄" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="5"
+                        android:gravity="center"
+                        android:text="年龄龄龄龄" />
+                </TableRow>
+                <!-- 假设我们动态添加行数据 -->
+            </TableLayout>
+
+            <Button
+                android:id="@+id/bt_ani"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="吸顶动画/隐藏头/滑动列表的效果"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tabLayout_b" />
+
+            <Button
+                android:id="@+id/bt_snapshot_scrollview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="scrollview长截图"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bt_ani" />
+
+            <Button
+                android:id="@+id/bt_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="拍照01"
+                app:layout_constraintStart_toEndOf="@+id/bt_ani"
+                app:layout_constraintTop_toTopOf="@+id/bt_ani" />
+
+            <Button
+                android:id="@+id/bt_decode_qr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="解析二维码"
+                app:layout_constraintStart_toEndOf="@+id/bt_camera"
+                app:layout_constraintTop_toTopOf="@+id/bt_ani" />
+
+            <Button
+                android:id="@+id/updateWidgetBroadcast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="广播更新小组件"
+                app:layout_constraintStart_toEndOf="@+id/bt_snapshot_scrollview"
+                app:layout_constraintTop_toTopOf="@+id/bt_snapshot_scrollview" />
+
+
+            <ImageView
+                android:id="@+id/iv_ssl"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@color/purple_200"
+                app:layout_constraintStart_toEndOf="@+id/bt_snapshot_scrollview"
+                app:layout_constraintTop_toBottomOf="@+id/bt_snapshot_scrollview" />
+
+            <View
+                android:id="@+id/iv_cover_rotate"
+                android:layout_width="186dp"
+                android:layout_height="182dp"
+                android:background="#009100"
+                android:rotation="30"
+                app:layout_constraintStart_toEndOf="@+id/iv_ssl"
+                app:layout_constraintTop_toTopOf="@+id/iv_ssl" />
+            <include
+                layout="@layout/pendant_layout"
+                android:id="@+id/rl_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/lpGreen"
+                android:clipChildren="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/updateWidgetBroadcast">
+
+            </include>
+
+
+            <RatingBar
+                android:id="@+id/ratingBarA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rl_small"/>
+
+            <RatingBar
+                android:id="@+id/ratingBarB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBarA"/>
+
+            <Button
+                android:id="@+id/btRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="recyclerviewfooterView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBarB"/>
+
+            <Button
+                android:id="@+id/btDoubleRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="竖向两个recyclerview"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btRecyclerView"/>
+            <Button
+                android:id="@+id/btTimeLineRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="时间轴列表"
+                app:layout_constraintStart_toEndOf="@+id/btDoubleRecyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/btRecyclerView"/>
+
+            <Button
+                android:id="@+id/btPathUri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="path-uri-path"
+                app:layout_constraintStart_toEndOf="@+id/btTimeLineRecyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/btRecyclerView"/>
+
+            <ImageView
+                android:layout_marginStart="20dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/aaa"
+                android:scaleType="centerCrop"
+                android:id="@+id/iv_round_spec"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btPathUri"/>
+
+
+            <TextView
+                android:id="@+id/tv_right"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/corner_left_5"
+                app:layout_constraintStart_toEndOf="@+id/iv_round_spec"
+                app:layout_constraintTop_toTopOf="@+id/iv_round_spec"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_round_spec"
+                android:text="我是蛤蛤蛤哈"/>
+            <Button
+                android:id="@+id/bt_large"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                app:layout_constraintStart_toEndOf="@+id/tv_right"
+                app:layout_constraintTop_toTopOf="@+id/iv_round_spec"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_round_spec"
+                android:text="大字体适配/clip实战"/>
+
+            <TextView
+                android:id="@+id/sharelib_iv_club_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="aaa"
+                android:drawableTop="@drawable/icon_share_club"
+
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="visible"
+                tools:ignore="RtlSymmetry,UseCompatTextViewDrawableXml"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bt_large"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="通过扩展函数实现字符串检测"
-        android:tag="et_b"
-        android:id="@+id/et_b"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/bt_paging"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="paging"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="向左侧按钮"
-            android:id="@+id/bt_trans"
-            app:layout_constraintStart_toEndOf="@id/bt_paging"
-            app:layout_constraintTop_toTopOf="@id/bt_paging"/>
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:id="@+id/circle_image"
-            android:layout_width="170px"
-            android:layout_height="170px"
-            android:scaleType="fitXY"
-            android:src="@drawable/aaa"
-            app:layout_constraintTop_toTopOf="@id/bt_trans"
-            app:layout_constraintStart_toEndOf="@id/bt_trans"
-            app:altSrc="@drawable/aaaaa"
-            app:crossfade="0.5"
-            app:roundPercent="0.5"/>
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="圆角进度0-1"
-            android:inputType="numberDecimal"
-            android:id="@+id/et_circle"
-            app:layout_constraintStart_toEndOf="@id/circle_image"
-            app:layout_constraintTop_toTopOf="@+id/circle_image"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="约束布局隐藏某个控件导致重叠问题"
-            android:id="@+id/bt_c"
-            app:layout_constraintTop_toBottomOf="@+id/circle_image"
-            app:layout_constraintStart_toStartOf="parent"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="吸顶效果01"
-            android:id="@+id/bt_ceiling_a"
-            app:layout_constraintTop_toBottomOf="@+id/circle_image"
-            app:layout_constraintStart_toEndOf="@id/bt_c"/>
-
-        <com.yaobing.framemvpproject.mylibrary.RoundedBorderImageView
-            android:padding="1px"
-            android:id="@+id/circle_bord_image"
-            android:layout_width="170px"
-            android:layout_height="170px"
-            android:scaleType="fitXY"
-            android:src="@drawable/aaa"
-            app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-
-        <ImageView
-            android:id="@+id/iv_dfds"
-            android:padding="2dp"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:layout_marginLeft="10dp"
-            android:scaleType="fitXY"
-            android:background="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a"
-            app:layout_constraintStart_toEndOf="@+id/circle_bord_image"/>
-
-        <ImageView
-            android:padding="4dp"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:layout_marginLeft="10dp"
-            android:scaleType="fitXY"
-            android:background="@drawable/ccc"
-            android:src="@mipmap/bb"
-            android:id="@+id/iv_glide"
-            app:layout_constraintTop_toBottomOf="@+id/bt_ceiling_a"
-            app:layout_constraintStart_toEndOf="@+id/iv_dfds"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="测试跳转生命周期"
-            android:id="@+id/bt_life_cycler"
-            app:layout_constraintTop_toBottomOf="@+id/iv_glide"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="增加全局拖动view"
-            android:id="@+id/bt_add_drag_view"
-            app:layout_constraintTop_toBottomOf="@+id/iv_glide"
-            app:layout_constraintStart_toEndOf="@+id/bt_life_cycler"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</LinearLayout>
+</ScrollView>

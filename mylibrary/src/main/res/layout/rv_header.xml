@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/iv_no_shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@mipmap/back"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="累计打卡"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="106dp"
+        android:layout_marginStart="24dp"/>
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
+        android:layout_marginLeft="4dp"
+        android:id="@+id/tv_count_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333333"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="30"
+        app:layout_constraintStart_toEndOf="@+id/tv_count"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_count"
+        android:layout_marginTop="106dp"/>
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
+        android:layout_marginLeft="4dp"
+        android:id="@+id/tv_count_tail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="次"
+        app:layout_constraintStart_toEndOf="@+id/tv_count_unit"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_count"
+        android:layout_marginTop="106dp"/>
+
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
+        android:id="@+id/tv_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="节省"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_count"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="24dp"/>
+
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
+        android:id="@+id/tv_save_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333333"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="15"
+        android:layout_marginLeft="4dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_save"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_save"/>
+
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
+        android:id="@+id/tv_save_tail"
+        android:layout_marginLeft="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="元"
+        app:layout_constraintStart_toEndOf="@+id/tv_save_unit"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_save_unit"/>
+
+    <TextView
+        android:id="@+id/tv_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#666666"
+        android:textSize="14sp"
+        android:text="使用过 8 个车主福利，遍布杭州、上海、北京"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_save_unit"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

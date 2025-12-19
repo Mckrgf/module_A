@@ -6,6 +6,8 @@ plugins {
 }
 group='com.github.MCKRGF'
 android {
+    namespace 'com.yaobing.framemvpproject.mylibrary2'  // Add this line matching your applicationId
+
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
@@ -19,21 +21,24 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '21'
     }
     lintOptions {
         abortOnError false
+    }
+    buildFeatures {
+        buildConfig true
     }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation "androidx.core:core-ktx:$rootProject.ext.ktxCoreVersion"
     implementation "androidx.appcompat:appcompat:$rootProject.ext.appcompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.constraintlayoutVersion"
     testImplementation 'junit:junit:4.12'

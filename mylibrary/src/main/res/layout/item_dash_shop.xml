@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <com.yaobing.framemvpproject.mylibrary.ui.DashedLineVerticalView
+        android:id="@+id/dashLine"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="26dp"
+        app:layout_constraintBottom_toBottomOf="@+id/vBottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:text="2024"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/dashLine"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="28dp"
+        android:text="6月17日 16：24"
+        app:layout_constraintStart_toEndOf="@id/dashLine"
+        app:layout_constraintTop_toBottomOf="@+id/tvYear"
+        app:layout_goneMarginTop="0dp" />
+
+    <ImageView
+        android:id="@+id/iv_shop"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/shop_a"
+        app:layout_constraintStart_toEndOf="@+id/dashLine"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+
+    <ImageView
+        android:id="@+id/iv_dot"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:src="@drawable/circel_green"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDate"
+        app:layout_constraintEnd_toEndOf="@+id/dashLine"
+        app:layout_constraintStart_toStartOf="@+id/dashLine"
+        app:layout_constraintTop_toTopOf="@+id/tvDate" />
+
+
+    <ImageView
+        android:id="@+id/iv_dot_year"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:src="@drawable/circel_year"
+        app:layout_constraintBottom_toBottomOf="@+id/tvYear"
+        app:layout_constraintEnd_toEndOf="@+id/dashLine"
+        app:layout_constraintStart_toStartOf="@+id/dashLine"
+        app:layout_constraintTop_toTopOf="@+id/tvYear" />
+
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:includeFontPadding="false"
+        android:gravity="top"
+        android:text="商店名称商店名称商店名称商店名称"
+        android:layout_marginEnd="10dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_shop"
+        app:layout_constraintEnd_toStartOf="@+id/tvComment"
+        app:layout_constraintTop_toTopOf="@id/iv_shop" />
+
+    <ImageView
+        android:id="@+id/iv_star"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_marginBottom="0dp"
+        android:src="@mipmap/star"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/tv_type"
+        app:layout_constraintStart_toStartOf="@id/tv_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+    <TextView
+        android:id="@+id/tv_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="5.0"
+        android:textColor="#666666"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_star"
+        app:layout_constraintStart_toEndOf="@+id/iv_star"
+        app:layout_constraintTop_toTopOf="@id/iv_star" />
+
+    <com.yaobing.framemvpproject.mylibrary.ui.NoPaddingTextView1
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="美食|1.3km|运动"
+        android:textColor="#666666"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_coupon"
+        app:layout_constraintStart_toStartOf="@+id/iv_star"
+        app:layout_constraintTop_toBottomOf="@id/iv_star" />
+
+
+    <TextView
+        android:id="@+id/tv_coupon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="#FDD6B1"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="送"
+        android:textColor="#956030"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_shop"
+        app:layout_constraintStart_toStartOf="@+id/iv_star" />
+
+    <TextView
+        android:id="@+id/tv_coupon_content"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="#FDEBC6"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="5dp"
+        android:text="零跑车友专享福利券"
+        android:textColor="#956030"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_shop"
+        app:layout_constraintStart_toEndOf="@+id/tv_coupon"
+        app:layout_constraintTop_toTopOf="@+id/tv_coupon" />
+
+    <TextView
+        android:id="@+id/tv_coupon_b"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:background="#FDD6B1"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="送"
+        android:textColor="#956030"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_shop"
+        app:layout_constraintStart_toEndOf="@+id/tv_coupon_content" />
+
+    <TextView
+        android:id="@+id/tv_coupon_content_b"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="#FDEBC6"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="5dp"
+        android:text="零跑车友专享福利券"
+        android:textColor="#956030"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_shop"
+        app:layout_constraintStart_toEndOf="@+id/tv_coupon_b"
+        app:layout_constraintTop_toTopOf="@+id/tv_coupon_b" />
+
+
+    <View
+        android:id="@+id/vBottom"
+        android:layout_width="1dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_shop" />
+
+    <TextView
+        android:id="@+id/tvComment"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:background="@drawable/shape_club_activity_button"
+        android:layout_marginRight="24dp"
+        android:text="写评价"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_name"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

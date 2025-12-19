@@ -1,0 +1,15 @@
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="280dp"
+    android:minHeight="140dp"
+    android:targetCellWidth="1"
+    android:targetCellHeight="1"
+    android:maxResizeWidth="280dp"
+    android:maxResizeHeight="280dp"
+    android:previewImage="@mipmap/sdasd"
+    android:updatePeriodMillis="0"
+    android:description="@string/alpha_widget"
+    android:initialKeyguardLayout="@layout/alpha_widget_layout_preview"
+    android:initialLayout="@layout/alpha_widget_layout"
+    android:resizeMode="horizontal|vertical"
+    android:widgetFeatures="reconfigurable|configuration_optional">
+</appwidget-provider>

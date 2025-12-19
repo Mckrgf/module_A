@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:padding="20dp"
     tools:context=".activity.TestDActivity">
 
@@ -29,6 +30,13 @@
         android:id="@+id/bt_b"
         android:text="bt_b"
         app:layout_constraintTop_toBottomOf="@+id/bt_a"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_c"
+        android:text="返回，且有动画共享"
+        app:layout_constraintTop_toBottomOf="@+id/bt_b"
         app:layout_constraintStart_toStartOf="parent"/>
     <ViewStub
         android:layout_width="match_parent"

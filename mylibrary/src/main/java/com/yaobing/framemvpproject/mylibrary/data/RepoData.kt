@@ -87,6 +87,7 @@ data class RepoData(var i:Int) {
     var isPrivateX = false
     var owner: OwnerBean? = null
     var html_url: String? = null
+    var year: String = ""
     var description: String? = null
     var isFork = false
     var url: String? = null

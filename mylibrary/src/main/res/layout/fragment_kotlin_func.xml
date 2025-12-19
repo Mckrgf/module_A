@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayBg"
+    tools:context=".fragments.KotlinFuncFragment">
+
+    <Button
+        android:id="@+id/bt_cor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="协程相关"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bt_viewModel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="viewModel相关"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toEndOf="@+id/bt_cor"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bt_animiation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="共享动画相关"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toEndOf="@+id/bt_viewModel"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bt_bitmap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="解析在线bitmap"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toEndOf="@+id/bt_animiation"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/iv_bitmap_url"
+        android:src="@mipmap/shop_a"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_bitmap" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_crop_img_width"
+        android:text="宽图裁剪图片"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toEndOf="@+id/iv_bitmap_url"
+        app:layout_constraintTop_toBottomOf="@+id/bt_bitmap" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_crop_compress_img_width"
+        android:text="宽图裁剪并压缩图片"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toEndOf="@+id/iv_bitmap_url"
+        app:layout_constraintTop_toBottomOf="@+id/bt_crop_img_width" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_crop_img_long"
+        android:text="长图裁剪图片"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toEndOf="@+id/bt_crop_img_width"
+        app:layout_constraintTop_toBottomOf="@+id/bt_bitmap" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_take_pic_id_card"
+        android:text="拍身份证照片"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toStartOf="@+id/bt_crop_compress_img_width"
+        app:layout_constraintTop_toBottomOf="@+id/bt_crop_compress_img_width" />
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/bt_take_pic_id_card_num"
+        android:text="1"
+        android:gravity="center"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toEndOf="@+id/bt_take_pic_id_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bt_take_pic_id_card" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

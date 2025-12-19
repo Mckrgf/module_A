@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.PagingActivity">
+
+    <RelativeLayout
+        android:id="@+id/ll_mine_header"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginBottom="6dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:id="@+id/iv_back"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_back_poi" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="店铺列表"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_check"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="打卡足迹"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:gravity="center_vertical"
+        android:text="综合排序"
+        android:textColor="#333333"
+        android:textSize="14sp"
+        android:layout_marginLeft="24dp"
+        android:id="@+id/tvSort"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_mine_header"/>
+    <ImageView
+        android:layout_marginLeft="3dp"
+        android:id="@+id/ivArrowSort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvSort"
+        app:layout_constraintTop_toTopOf="@id/tvSort"
+        app:layout_constraintBottom_toBottomOf="@id/tvSort"
+        android:src="@mipmap/ic_arrow_down"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:gravity="center_vertical"
+        android:text="全部类型"
+        android:textColor="#333333"
+        android:textSize="14sp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/tvType"
+        app:layout_constraintStart_toEndOf="@id/ivArrowSort"
+        app:layout_constraintTop_toBottomOf="@+id/ll_mine_header"/>
+    <ImageView
+        android:layout_marginLeft="3dp"
+        android:id="@+id/ivArrowType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvType"
+        app:layout_constraintTop_toTopOf="@id/tvType"
+        app:layout_constraintBottom_toBottomOf="@id/tvType"
+        android:src="@mipmap/ic_arrow_down"/>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSort"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_a"
+                android:paddingHorizontal="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+            <View
+                android:layout_marginHorizontal="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#eeeeee"
+                android:id="@+id/v"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDivider"
+                app:layout_constraintTop_toTopOf="@id/tvDivider"/>
+
+            <TextView
+                android:background="@color/white"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#999999"
+                android:text="看看附近城市的店铺"
+                android:id="@+id/tvDivider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/rv_b"
+                app:layout_constraintTop_toBottomOf="@id/rv_a"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_b"
+                android:paddingHorizontal="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDivider"/>
+
+            <TextView
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#999999"
+                android:text="没有更多了"
+                android:id="@+id/tvNoMore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_b"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/viewMask"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvSort"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        android:background="@color/popMask" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,61 @@
+package com.yaobing.framemvpproject.mylibrary.ui;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.util.AttributeSet;
+import android.view.View;
+
+import androidx.annotation.Nullable;
+
+public class DashedLineVerticalView extends View {
+
+    private Paint mPaint;
+    private Path mPath;
+
+    public DashedLineVerticalView(Context context) {
+        super(context);
+        init();
+    }
+
+    public DashedLineVerticalView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public DashedLineVerticalView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    private void init() {
+        mPaint = new Paint();
+        mPaint.setColor(Color.BLACK);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(2);
+        mPaint.setPathEffect(new DashPathEffect(new float[]{5, 5}, 0));
+        mPath = new Path();
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+//        int startX = 0;
+//        int startY = getHeight() / 2;
+//        int stopX = getWidth();
+//        int stopY = getHeight() / 2;
+//        mPath.moveTo(startX, startY);
+//        mPath.lineTo(stopX, stopY);
+//        canvas.drawPath(mPath, mPaint);
+
+        int startX = getWidth() / 2;
+        int startY = 0;
+        int endY = getHeight();
+
+        // 绘制竖向虚线
+        canvas.drawLine(startX, startY, startX, endY, mPaint);
+    }
+}

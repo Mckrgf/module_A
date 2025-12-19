@@ -25,6 +25,12 @@ public class MyApp extends BaseApp {
     @Override
     public void onCreate() {
         super.onCreate();
+        int a = 10;
+        int b = 7;
+        Object c = 444/555;
+        float d = a/(float)b;
+        int f = Math.round(d);
+        Object e = 444/555;
         initActivity();
     }
     private void changeTopActivity(Activity activity) {
@@ -56,10 +62,10 @@ public class MyApp extends BaseApp {
                         e.printStackTrace();
                         Log.d("zxcv", e.toString());
                     } //18:54:40.805开始home回到主页
-                    Intent intent = new Intent(topActivity, SplashActivity.class);
-                    intent.addFlags(FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-                    topActivity.startActivity(intent);
-                    Log.d("zxcv", "APP回到前台");
+//                    Intent intent = new Intent(topActivity, SplashActivity.class);
+//                    intent.addFlags(FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+//                    topActivity.startActivity(intent);
+//                    Log.d("zxcv", "APP回到前台");
                 }
 
             }

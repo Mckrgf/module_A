@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv"
+    android:textSize="14sp"
+    android:gravity="start"
+    android:layout_marginStart="12dp"
+    tools:text="排序"
+    android:padding="12dp"
+    android:textColor="@color/color_333333"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white" />
