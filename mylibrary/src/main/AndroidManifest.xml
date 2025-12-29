@@ -87,6 +87,7 @@
         <activity
             android:name=".activity.FuncShowActivity"
             android:exported="true"
+            android:theme="@style/AppTheme.TransparentStatusBar"
             android:launchMode="singleTask">
             <meta-data
                 android:name="android.app.lib_name"

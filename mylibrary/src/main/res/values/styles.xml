@@ -73,7 +73,6 @@
     </style>
     //沉浸式主题
     <style name="AppTheme.TransparentStatusBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>  <!-- 半透明 -->
         <item name="android:statusBarColor">@android:color/transparent</item>  <!-- 完全透明 -->
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>  <!-- 适配刘海屏 -->
     </style>

@@ -1,7 +1,8 @@
 package com.yaobing.framemvpproject.mylibrary.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import com.google.android.material.tabs.TabLayoutMediator
 import com.yaobing.framemvpproject.mylibrary.adapter.ViewPagerAdapter
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityFuncShowBinding
@@ -18,13 +19,14 @@ class FuncShowActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         window.enterTransition = null
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContentView(binding.root)
         val fragments = listOf(KotlinFuncFragment.newInstance("kotlin相关","0"),
             ComposeFuncFragment.newInstance("compose","1"),
             FuncFragment.newInstance("待续","2"),
             FuncFragment.newInstance("待续","3"),
             FuncFragment.newInstance("待续","4")
-            )
+        )
 
         val tabTitles = listOf("kotlin相关","compose","待续","待续","待续")
 
@@ -35,4 +37,5 @@ class FuncShowActivity : AppCompatActivity() {
             tab.text = tabTitles[pos]
         }.attach()
     }
+
 }
