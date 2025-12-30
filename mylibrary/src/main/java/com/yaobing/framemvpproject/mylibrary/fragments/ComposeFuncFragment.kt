@@ -14,10 +14,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
@@ -35,20 +36,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.setViewTreeLifecycleOwner
-import com.yaobing.framemvpproject.mylibrary.R
-import com.yaobing.framemvpproject.mylibrary.composeView.MessageCard
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.rememberScrollState
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.yaobing.framemvpproject.mylibrary.R
+import com.yaobing.framemvpproject.mylibrary.composeView.MessageCard
 import com.yaobing.framemvpproject.mylibrary.data.RepoData
 import com.yaobing.framemvpproject.mylibrary.data.Repository
-import androidx.paging.LoadState
 
 
 open class ComposeFuncFragment : Fragment() {
 
-
+//    var count = mutableIntStateOf(0)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved: Bundle?) = inflater.inflate(R.layout.fragment_compose, container, false)!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,6 +72,7 @@ open class ComposeFuncFragment : Fragment() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .statusBarsPadding()
                     .clip(RoundedCornerShape(10))
                     .background(color = colorResource(id = R.color.white))
                     .verticalScroll(rememberScrollState()), // 添加的代码：实现垂直滚动
@@ -116,7 +116,8 @@ open class ComposeFuncFragment : Fragment() {
                 ) {
                     Text(text = "Increment")
                 }
-                val pagingItems: LazyPagingItems<RepoData> = Repository.getPagingData().collectAsLazyPagingItems()
+                val pagingDataFlow = remember { Repository.getPagingData() }
+                val pagingItems: LazyPagingItems<RepoData> = pagingDataFlow.collectAsLazyPagingItems()
 
                 LazyColumn(
                     modifier = Modifier.height(250.dp)  // 去掉 fillMaxWidth()，让宽度自适应，由父 Column 的 horizontalAlignment 居中
