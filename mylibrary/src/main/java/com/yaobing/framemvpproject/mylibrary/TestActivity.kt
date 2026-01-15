@@ -77,6 +77,7 @@ import androidx.core.graphics.toColorInt
 import androidx.core.net.toUri
 import androidx.core.graphics.createBitmap
 import com.blankj.utilcode.util.DeviceUtils
+import com.yaobing.framemvpproject.mylibrary.ui.dialog.BottomDialog
 import com.yaobing.framemvpproject.mylibrary.util.XlogUtil.generateRandomStrings
 
 
@@ -607,6 +608,10 @@ class TestActivity : BaseActivity() {
         }
         binding.btFuncShow.setOnClickListener {
             IntentRouter.go(this, "funcShowActivity")
+        }
+        binding.btAlertDialog.setOnClickListener {
+            val dialog = BottomDialog(this)
+            dialog.show()
         }
         binding.btA.setOnClickListener {
             bindTag(this, binding.root)

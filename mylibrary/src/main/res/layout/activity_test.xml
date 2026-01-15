@@ -117,14 +117,21 @@
                 android:id="@+id/et_b"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12dp"
+                android:textSize="10sp"
                 android:hint="通过扩展函数实现字符串检测"
                 android:tag="et_b" />
             <Button
                 android:id="@+id/bt_func_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="10sp"
                 android:text="*******新页面展示功能"/>
+            <Button
+                android:id="@+id/bt_alertDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="alertDialog"/>
 
         </LinearLayout>
 

@@ -76,4 +76,21 @@
         <item name="android:statusBarColor">@android:color/transparent</item>  <!-- 完全透明 -->
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>  <!-- 适配刘海屏 -->
     </style>
+
+    <style name="bottom_pop_activity" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 模糊 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 遮罩层 -->
+        <item name="android:backgroundDimAmount">0.5</item>
+    </style>
 </resources>
