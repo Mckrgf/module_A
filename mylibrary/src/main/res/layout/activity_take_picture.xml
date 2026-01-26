@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_gravity="center"
+        android:id="@+id/frameContent_takePicture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.yaobing.framemvpproject.mylibrary.ui.CenterTransparentLayout
+        android:background="#99000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_gravity="center"
+            android:id="@+id/viewfinder_content"
+            android:layout_width="@dimen/dp_422"
+            android:layout_height="@dimen/dp_270"
+            android:background="@drawable/bg_takepic">
+
+
+
+        </FrameLayout>
+
+
+    </com.yaobing.framemvpproject.mylibrary.ui.CenterTransparentLayout>
+
+
+    <TextView
+        android:id="@+id/title_takePicture"
+        android:textSize="@dimen/dp_17"
+        android:textColor="#ffffff"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="扫描证件，尝试对齐边缘"/>
+
+
+    <ImageView
+        android:onClick="cancel"
+        android:layout_marginRight="@dimen/dp_64"
+        android:layout_marginBottom="@dimen/dp_46"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_cancel_red"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <ImageView
+        android:onClick="takePicture"
+        android:layout_marginRight="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_45"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_sure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:id="@+id/loadingLayout_takePicture"
+        android:visibility="gone"
+        android:background="#99000000"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:indeterminateTint="@android:color/white"
+            tools:targetApi="lollipop" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/dp_8"
+            android:textColor="#ffffff"
+            android:text="正在处理中..."
+            android:textSize="@dimen/dp_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -23,6 +23,10 @@
             android:name=".ConstraintActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.TakePictureActivity"
+            android:screenOrientation="landscape"
+            android:exported="false" />
+        <activity
             android:name=".activity.activity.SnapshotActivity"
             android:exported="false" />
         <activity

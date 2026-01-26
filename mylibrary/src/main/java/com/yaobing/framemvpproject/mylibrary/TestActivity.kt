@@ -77,6 +77,7 @@ import androidx.core.graphics.toColorInt
 import androidx.core.net.toUri
 import androidx.core.graphics.createBitmap
 import com.blankj.utilcode.util.DeviceUtils
+import com.yaobing.framemvpproject.mylibrary.activity.TakePictureActivity
 import com.yaobing.framemvpproject.mylibrary.ui.dialog.BottomDialog
 import com.yaobing.framemvpproject.mylibrary.util.XlogUtil.generateRandomStrings
 
@@ -533,6 +534,11 @@ class TestActivity : BaseActivity() {
         }
         binding.btTimeLineRecyclerView.setOnClickListener {
             IntentRouter.go(this, "timeLineRecyclerviewactivity")
+        }
+        binding.btPic.setOnClickListener {
+            val intent = Intent(this, TakePictureActivity::class.java)
+            startActivity(intent)
+//            IntentRouter.go(this, "timeLineRecyclerviewactivity")
         }
         binding.btPathUri.setOnClickListener {
             val path = "/storage/emulated/0/Android/data/com.dahua.leapmotor/cache/Leapmotor/smallVideo/tempPic_1729161414328.jpg"

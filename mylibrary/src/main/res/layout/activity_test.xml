@@ -135,12 +135,26 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/bt_webp"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="动态webp图片测试/圆角图片padding测试"
-            android:tag="et_b" />
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/bt_webp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="动态webp图片测试/圆角图片padding测试"
+                android:tag="et_b" />
+            <Button
+                android:id="@+id/bt_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="拍照页（测试小米15聚焦问题）"
+                android:tag="et_b" />
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/customView"
             android:layout_width="wrap_content"
