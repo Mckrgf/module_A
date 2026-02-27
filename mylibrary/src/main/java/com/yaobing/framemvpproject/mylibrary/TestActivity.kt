@@ -3,17 +3,18 @@ package com.yaobing.framemvpproject.mylibrary
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.ContentValues
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
@@ -39,9 +40,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.graphics.scale
+import androidx.core.graphics.toColorInt
+import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
+import com.blankj.utilcode.util.DeviceUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
@@ -49,13 +54,17 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.inewise.QRcodeUtil
 import com.yaobing.framemvpproject.mylibrary.activity.IntentRouter
+import com.yaobing.framemvpproject.mylibrary.activity.TakePictureActivity
 import com.yaobing.framemvpproject.mylibrary.activity.WebpActivity
 import com.yaobing.framemvpproject.mylibrary.activity.activity.HOmeActivity
 import com.yaobing.framemvpproject.mylibrary.activity.activity.SnapshotActivity
 import com.yaobing.framemvpproject.mylibrary.databinding.ActivityTestBinding
 import com.yaobing.framemvpproject.mylibrary.function.JavaBestSingleton
 import com.yaobing.framemvpproject.mylibrary.function.SingletonKotlin
+import com.yaobing.framemvpproject.mylibrary.ui.dialog.BottomDialog
+import com.yaobing.framemvpproject.mylibrary.util.DebugFaultTriggers
 import com.yaobing.framemvpproject.mylibrary.util.XlogUtil
+import com.yaobing.framemvpproject.mylibrary.util.XlogUtil.generateRandomStrings
 import com.yaobing.module_apt.BindByTag
 import com.yaobing.module_apt.Router
 import com.yaobing.module_common_view.views.PageDragView
@@ -73,13 +82,6 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.reflect.Field
-import androidx.core.graphics.toColorInt
-import androidx.core.net.toUri
-import androidx.core.graphics.createBitmap
-import com.blankj.utilcode.util.DeviceUtils
-import com.yaobing.framemvpproject.mylibrary.activity.TakePictureActivity
-import com.yaobing.framemvpproject.mylibrary.ui.dialog.BottomDialog
-import com.yaobing.framemvpproject.mylibrary.util.XlogUtil.generateRandomStrings
 
 
 @Router("asdf")
@@ -507,6 +509,47 @@ class TestActivity : BaseActivity() {
             IntentRouter.go(this, "TestCActivity")
         }
 
+        // Debug-only: long press the settings icon to trigger crash/ANR tests.
+        binding.btB.setOnLongClickListener(View.OnLongClickListener { view: View? ->
+
+
+            AlertDialog.Builder(this)
+                .setTitle("Debug Fault Triggers")
+                .setItems(
+                    arrayOf<CharSequence>(
+                        "Crash (main thread)",
+                        "Crash (background thread)",
+                        "ANR (block main thread ~12s)"
+                    ), DialogInterface.OnClickListener { dialog: DialogInterface?, which: Int ->
+                        when (which) {
+                            0 -> DebugFaultTriggers.confirmAndRun(
+                                this,
+                                "Trigger Crash",
+                                "This will crash the app immediately to test crash reporting.",
+                                DebugFaultTriggers::triggerCrashNow
+                            )
+
+                            1 -> DebugFaultTriggers.confirmAndRun(
+                                this,
+                                "Trigger NPE Crash",
+                                "This will crash a background thread to test reporting.",
+                                DebugFaultTriggers::triggerNullPointerCrash
+                            )
+
+                            2 -> DebugFaultTriggers.confirmAndRun(
+                                this,
+                                "Trigger ANR",
+                                "This will freeze the UI for ~12 seconds and may show the system ANR dialog.",
+                                DebugFaultTriggers::triggerMainThreadAnr
+                            )
+
+                            else -> {}
+                        }
+                    })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+            true
+        })
         binding.seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

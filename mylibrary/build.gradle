@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+    implementation 'io.sentry:sentry-android:7.20.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$rootProject.ext.ktxCoreVersion"
