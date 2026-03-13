@@ -35,11 +35,14 @@ class MyApp : BaseApp() {
 
         SentryAndroid.init(this) { options ->
             // Required: set your sentry.io project identifier (DSN)
-            options.dsn = "https://0747d390c864af702661f681923579a4@o4510792310521856.ingest.us.sentry.io/4510955555979264"
+//            options.dsn = "https://0747d390c864af702661f681923579a4@o4510792310521856.ingest.us.sentry.io/4510955555979264"
+            options.dsn = "https://fafdd70412f476abe823089d7962ea44@it-sentry.leapmotor.com/66"
             // Add data like request headers, user ip address and device name, see https://docs.sentry.io/platforms/android/data-management/data-collected/ for more info
             options.isSendDefaultPii = true
             // enable automatic traces for user interactions (clicks, swipes, scrolls)
             options.isEnableUserInteractionTracing = true
+
+            options.isEnablePerformanceV2 = true
             // enable screenshot for crashes
             options.isAttachScreenshot = true
             // enable view hierarchy for crashes
