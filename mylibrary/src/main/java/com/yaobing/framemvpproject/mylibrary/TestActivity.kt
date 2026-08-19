@@ -68,6 +68,7 @@ import com.yaobing.framemvpproject.mylibrary.util.XlogUtil.generateRandomStrings
 import com.yaobing.module_apt.BindByTag
 import com.yaobing.module_apt.Router
 import com.yaobing.module_common_view.views.PageDragView
+import com.yaobing.module_middleware.BaseConstant
 import com.yaobing.module_middleware.Utils.Person
 import com.yaobing.module_middleware.Utils.ToastUtils
 import com.yaobing.module_middleware.Utils.checkComma
@@ -568,6 +569,9 @@ class TestActivity : BaseActivity() {
 
         binding.btC.setOnClickListener {
             IntentRouter.go(this, "testd")
+        }
+        binding.btCompose.setOnClickListener {
+            IntentRouter.go(this, BaseConstant.ComposeDemoActivity)
         }
         binding.btRecyclerView.setOnClickListener {
             IntentRouter.go(this, "recyclerviewactivity")

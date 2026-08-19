@@ -154,13 +154,27 @@
                 android:tag="et_b" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/customView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="自定义控件"
+                android:tag="et_b" />
+            <Button
+                android:id="@+id/bt_compose"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="compose页面"
+                android:tag="et_b" />
 
-        <Button
-            android:id="@+id/customView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="自定义控件"
-            android:tag="et_b" />
+        </LinearLayout>
+
+
         <Button
             android:id="@+id/bt_rsa"
             android:layout_width="wrap_content"

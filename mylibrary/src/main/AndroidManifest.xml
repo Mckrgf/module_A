@@ -15,18 +15,21 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <meta-data android:name="io.sentry.auto-init" android:value="false" />
+        <meta-data
+            android:name="io.sentry.auto-init"
+            android:value="false" />
+
         <activity
             android:name=".activity.TakeCardPictureActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ConstraintActivity"
             android:exported="false" />
         <activity
             android:name=".activity.TakePictureActivity"
-            android:screenOrientation="landscape"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.activity.SnapshotActivity"
             android:exported="false" />
@@ -92,8 +95,8 @@
         <activity
             android:name=".activity.FuncShowActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.TransparentStatusBar"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.TransparentStatusBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -130,6 +133,12 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_beta_info" />
         </receiver>
+
+        <activity
+            android:name=".activity.ComposeDemoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
