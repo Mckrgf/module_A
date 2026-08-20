@@ -3,4 +3,5 @@
     <string name="alpha_widget">alpha widget</string>
     <string name="beta_widget">beta widget</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="compose_string_ps">" \nPs：enableEdgeToEdge是必选项！，即使只调用systemBarsPadding，内容也会下移，但是调用了enableEdgeToEdge再调用systemBarsPadding也是一样的效果，感觉enableEdgeToEdge会影响systemBarsPadding。但是但是！如果不选enableEdgeToEdge，状态栏的信息文字颜色不会和背景形成对比色"</string>
 </resources>

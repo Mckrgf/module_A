@@ -5,26 +5,37 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.yaobing.framemvpproject.mylibrary.R
 import com.yaobing.module_apt.Router
 import com.yaobing.module_middleware.BaseConstant
-import androidx.compose.material3.Typography // 新增正确的Material3 Typography导入
+import com.yaobing.module_middleware.compose.theme.GreetingCardTheme
+import com.yaobing.module_middleware.compose.view.CustomText
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @Router(BaseConstant.ComposeDemoActivity)
@@ -32,11 +43,12 @@ class ComposeDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent{
+        setContent {
             ContentView()
         }
 
     }
+
     @Preview(
         name = "暗黑主题",
         showBackground = true,
@@ -50,57 +62,44 @@ class ComposeDemoActivity : AppCompatActivity() {
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
-                Column(Modifier
-                    .systemBarsPadding()
-                    .padding(10.dp, 0.dp, 10.dp, 0.dp)) {
-                    Greeting("Android")
-                    Greeting("Android2")
-                    Greeting("Android3")
-                    Greeting("Android4")
-                    Row(){
-                        Greeting("Android5", Modifier.padding(end = 10.dp))
-                        Greeting("Android6")
+                Column(
+                    Modifier
+                        .systemBarsPadding()
+                        .padding(10.dp, 0.dp, 10.dp, 0.dp)
+                ) {
+                    CustomText("Compose如何实现沉浸式效果？")
+                    CustomText("1：调用 enableEdgeToEdge()，实现全屏效果")
+                    CustomText("2：设置 systemBarsPadding()，实现整体内容下滑")
+                    CustomText(stringResource(R.string.compose_string_ps))
+
+
+                    Column(modifier = Modifier.background(color = Color.Transparent).padding(top = 10.dp)) {
+                        SubmitExample()
+                        Button(onClick = {
+
+                        }) {
+                            Text("compose实现fragment加底部导航栏效果")
+                        }
                     }
                 }
 
             }
         }
     }
-}
+    @Composable
+    fun SubmitExample(){
+        var isLoading by remember { mutableStateOf(false) }
+        val scope = rememberCoroutineScope()
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    GreetingCardTheme {
-        Greeting("Meghan")
+        Button(onClick = {
+            scope.launch {
+                isLoading = true
+                delay(2000) // 模拟请求
+                isLoading = false
+            }
+        }, enabled = !isLoading){
+            if (isLoading) CircularProgressIndicator(modifier = Modifier.size(16.dp))
+            else Text("模拟点击加载2s动画/显示隐藏顶部介绍")
+        }
     }
-}
-
-@Composable
-fun GreetingCardTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    // 自定义符合Material3要求的Typography，你可以在这里自定义各类文本样式
-    val AppTypography = Typography(
-        bodyLarge = TextStyle(
-            fontSize = 16.sp,
-            lineHeight = 24.sp
-        ),
-        // 其他文本样式可以根据需要自行配置，不配置会使用Material3默认值
-    )
-    val colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme()
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = AppTypography,
-        content = content
-    )
 }
