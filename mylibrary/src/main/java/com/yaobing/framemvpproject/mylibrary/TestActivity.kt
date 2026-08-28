@@ -573,6 +573,9 @@ class TestActivity : BaseActivity() {
         binding.btCompose.setOnClickListener {
             IntentRouter.go(this, BaseConstant.ComposeDemoActivity)
         }
+        binding.btTabDemo.setOnClickListener {
+            IntentRouter.go(this, BaseConstant.TabViewPagerActivity)
+        }
         binding.btRecyclerView.setOnClickListener {
             IntentRouter.go(this, "recyclerviewactivity")
         }
