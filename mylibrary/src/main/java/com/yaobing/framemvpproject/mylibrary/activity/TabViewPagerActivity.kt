@@ -24,43 +24,19 @@ class TabViewPagerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tab_viewpager)
 
         // 模拟从后台动态获取：生成随机主 tab（固定 4 个）及每个主 tab 的 0..3 个子 tab
-        val mainCount = 4
-        val mainTabs = mutableListOf<MainTab>()
-        for (i in 1..mainCount) {
-            val childCount = Random.nextInt(0, 4) // 0..3
-            val children = mutableListOf<String>()
-            for (j in 1..childCount) {
-                // 命名如 2A/2B/2C
-                val suffix = ('A' + (j - 1)).toString()
-                children.add("${i}$suffix")
-            }
-            mainTabs.add(MainTab("Tab $i", children))
-        }
+        val mainTabs = mokeTabData()
 
         // 构建 pages 列表和映射：pages 按顺序包含主没有子时的主页，或子页
         // 例如 pages = [Tab1, 2A, 2B, Tab3, Tab4]
         val pages = mutableListOf<String>()
+        // 例如 pageToMain = [0, 1, 1, 2, 3]
         val pageToMain = mutableListOf<Int>()
-        val pageToChildIndex = mutableListOf<Int>() // -1 表示主页
+        // -1 表示主页,1-3 表示子页的位置
+        val pageToChildIndex = mutableListOf<Int>()
+        //表示每个主tab的第一个子页的索引
         val mainFirstPageIndex = IntArray(mainTabs.size)
 
-        var pageIndex = 0
-        for ((mIndex, main) in mainTabs.withIndex()) {
-            mainFirstPageIndex[mIndex] = pageIndex
-            if (main.children.isEmpty()) {
-                pages.add(main.title)
-                pageToMain.add(mIndex)
-                pageToChildIndex.add(-1)
-                pageIndex++
-            } else {
-                for ((cIndex, child) in main.children.withIndex()) {
-                    pages.add(child)
-                    pageToMain.add(mIndex)
-                    pageToChildIndex.add(cIndex)
-                    pageIndex++
-                }
-            }
-        }
+        cokeData(mainTabs, mainFirstPageIndex, pages, pageToMain, pageToChildIndex)
 
         val viewPager = findViewById<ViewPager2>(R.id.view_pager)
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
@@ -172,6 +148,42 @@ class TabViewPagerActivity : AppCompatActivity() {
 
         // 初始选中第一个主 tab（触发初始化逻辑）
         if (tabLayout.tabCount > 0) tabLayout.getTabAt(0)?.select()
+    }
+
+    private fun cokeData(mainTabs: MutableList<MainTab>, mainFirstPageIndex: IntArray, pages: MutableList<String>, pageToMain: MutableList<Int>, pageToChildIndex: MutableList<Int>) {
+        var pageIndex = 0
+        for ((mIndex, main) in mainTabs.withIndex()) {
+            mainFirstPageIndex[mIndex] = pageIndex
+            if (main.children.isEmpty()) {
+                pages.add(main.title)
+                pageToMain.add(mIndex)
+                pageToChildIndex.add(-1)
+                pageIndex++
+            } else {
+                for ((cIndex, child) in main.children.withIndex()) {
+                    pages.add(child)
+                    pageToMain.add(mIndex)
+                    pageToChildIndex.add(cIndex)
+                    pageIndex++
+                }
+            }
+        }
+    }
+
+    private fun mokeTabData(): MutableList<MainTab> {
+        val mainCount = 4
+        val mainTabs = mutableListOf<MainTab>()
+        for (i in 1..mainCount) {
+            val childCount = Random.nextInt(0, 4) // 0..3
+            val children = mutableListOf<String>()
+            for (j in 1..childCount) {
+                // 命名如 2A/2B/2C
+                val suffix = ('A' + (j - 1)).toString()
+                children.add("${i}$suffix")
+            }
+            mainTabs.add(MainTab("Tab $i", children))
+        }
+        return mainTabs
     }
 
     private class PagerAdapter(fa: FragmentActivity, private val pages: List<String>) : FragmentStateAdapter(fa) {
