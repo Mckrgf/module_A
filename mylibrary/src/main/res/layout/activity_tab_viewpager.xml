@@ -11,7 +11,8 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorFullWidth="false" />
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="scrollable" />
 
     <!-- 二级 Tab（仅当主 tab2 被选中时显示） -->
     <com.google.android.material.tabs.TabLayout
@@ -19,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:tabIndicatorFullWidth="false" />
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="scrollable" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"

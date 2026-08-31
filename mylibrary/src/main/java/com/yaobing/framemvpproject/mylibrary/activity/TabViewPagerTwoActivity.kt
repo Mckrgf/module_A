@@ -1,7 +1,9 @@
 package com.yaobing.framemvpproject.mylibrary.activity
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -16,141 +18,211 @@ import kotlin.random.Random
 
 @Router(BaseConstant.TabViewPagerTwoActivity)
 class TabViewPagerTwoActivity : AppCompatActivity() {
+
+    // 主 tab 数据模型
     data class MainTab(val title: String, val children: List<String>)
 
-    //思路
+    // 扁平化 page 表示：tabIndex + 可选 childIndex（null 表示无 child）
+    data class PageEntry(val tabIndex: Int, val childIndex: Int?)
+
+    private val mainTabs = mutableListOf<MainTab>()
+    private val pages = mutableListOf<PageEntry>()
+
+    // 映射：Pair(tabIndex, childIndex) -> pageIndex
+    private val pairToPage = HashMap<Pair<Int, Int?>, Int>()
+
+    private lateinit var tabLayout: TabLayout
+    private lateinit var subTabLayout: TabLayout
+    private lateinit var viewPager: ViewPager2
+
+    private var isSettingPagerProgrammatically = false
+    private var isSettingTabProgrammatically = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tab_viewpager)
 
-        // 模拟从后台动态获取：生成随机主 tab（固定 4 个）及每个主 tab 的 0..3 个子 tab
-        val mainCount = 4
-        val mainTabs = mutableListOf<MainTab>()
-        for (i in 1..mainCount) {
-            val childCount = Random.nextInt(0, 4) // 0..3
-            val children = mutableListOf<String>()
-            for (j in 1..childCount) {
-                // 命名如 2A/2B/2C
-                val suffix = ('A' + (j - 1)).toString()
-                children.add("${i}$suffix")
+        tabLayout = findViewById(R.id.tab_layout)
+        subTabLayout = findViewById(R.id.tab_sub_layout)
+        viewPager = findViewById(R.id.view_pager)
+
+        // 随机生成 10 个主 tab，每个 0-4 个 child
+        generateRandomTabs()
+
+        // 构建扁平 pages 和映射
+        buildPagesAndMappings()
+
+        // 初始化 ViewPager 的 adapter
+        viewPager.adapter = object : FragmentStateAdapter(this as FragmentActivity) {
+            override fun getItemCount(): Int = pages.size
+            override fun createFragment(position: Int): Fragment {
+                val entry = pages[position]
+                val main = mainTabs[entry.tabIndex]
+                val label = if (entry.childIndex == null) {
+                    "Tab ${entry.tabIndex}: ${main.title}"
+                } else {
+                    "Tab ${entry.tabIndex} - Child ${entry.childIndex}: ${main.title} / ${main.children[entry.childIndex] }"
+                }
+                return PageFragment.newInstance(label)
             }
-            mainTabs.add(MainTab("Tab $i", children))
         }
 
-        // 构建 pages 列表和映射：pages 按顺序包含主没有子时的主页，或子页
-        // 例如 pages = [Tab1, 2A, 2B, Tab3, Tab4]
-        val pages = mutableListOf<String>()
-        val mainFirstPageIndex = IntArray(mainTabs.size)
+        // 填充主 Tab UI
+        populateMainTabs()
 
-        var pageIndex = 0
-        for ((mIndex, main) in mainTabs.withIndex()) {
-            mainFirstPageIndex[mIndex] = pageIndex
-            if (main.children.isEmpty()) {
-                pages.add(main.title)
-                pageIndex++
+        // 监听主 tab 点击（用户交互）
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab == null) return
+                if (isSettingTabProgrammatically) return // 忽略程序化触发
+
+                val tabIndex = tab.position
+                val main = mainTabs[tabIndex]
+
+                // 如果主 tab 有 children，默认选第一个 child
+                val targetPair = if (main.children.isEmpty()) {
+                    Pair(tabIndex, null)
+                } else {
+                    Pair(tabIndex, 0)
+                }
+
+                val page = pairToPage[targetPair] ?: 0
+                isSettingPagerProgrammatically = true
+                viewPager.setCurrentItem(page, true)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+
+        // 监听子 tab 点击
+        subTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab == null) return
+                if (isSettingTabProgrammatically) return
+
+                val mainIndex = tab.tag as? Int ?: return
+                val childIndex = tab.position
+                val page = pairToPage[Pair(mainIndex, childIndex)] ?: return
+
+                isSettingPagerProgrammatically = true
+                viewPager.setCurrentItem(page, true)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+
+        // 当 ViewPager 页面变化时，更新主/子 Tab 的选中状态
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                val entry = pages[position]
+
+                // 程序设置页面时，避免在 tab listener 中触发 setCurrentItem 循环
+                isSettingTabProgrammatically = true
+
+                // 选中主 tab（如果需要）
+                val mainTab = tabLayout.getTabAt(entry.tabIndex)
+                mainTab?.select()
+
+                // 更新并展示/隐藏子 tab
+                val main = mainTabs[entry.tabIndex]
+                if (main.children.isEmpty()) {
+                    subTabLayout.visibility = View.GONE
+                } else {
+                    subTabLayout.visibility = View.VISIBLE
+                    // 重新填充子 tab（也可以缓存，但为了简单直接重建）
+                    populateSubTabs(entry.tabIndex)
+                    // 选择对应 child（entry.childIndex 不应为 null）
+                    val childIndex = entry.childIndex ?: 0
+                    val childTab = subTabLayout.getTabAt(childIndex)
+                    childTab?.select()
+                }
+
+                // 重置标志
+                isSettingPagerProgrammatically = false
+                isSettingTabProgrammatically = false
+            }
+        })
+
+        // 默认选中第一个主 tab
+        if (pages.isNotEmpty()) viewPager.setCurrentItem(0, false)
+    }
+
+    // 随机生成数据
+    private fun generateRandomTabs() {
+        mainTabs.clear()
+        val rnd = Random(System.currentTimeMillis())
+        repeat(10) { i ->
+            val childCount = rnd.nextInt(0, 5) // 0..4
+            val children = mutableListOf<String>()
+            repeat(childCount) { c -> children.add("Child-$c") }
+            mainTabs.add(MainTab("Main-$i", children))
+        }
+    }
+
+    // 构建扁平 pages 列表和映射
+    private fun buildPagesAndMappings() {
+        pages.clear()
+        pairToPage.clear()
+        for (t in mainTabs.indices) {
+            val children = mainTabs[t].children
+            if (children.isEmpty()) {
+                val idx = pages.size
+                pages.add(PageEntry(t, null))
+                pairToPage[Pair(t, null)] = idx
             } else {
-                for ((cIndex, child) in main.children.withIndex()) {
-                    pages.add(child)
-                    pageIndex++
+                for (c in children.indices) {
+                    val idx = pages.size
+                    pages.add(PageEntry(t, c))
+                    pairToPage[Pair(t, c)] = idx
                 }
             }
         }
-
-        val viewPager = findViewById<ViewPager2>(R.id.view_pager)
-        val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
-        val tabSubLayout = findViewById<TabLayout>(R.id.tab_sub_layout)
-
-        viewPager.adapter = PagerAdapter(this, pages)
-
-        var currentMainIndex = 0
-
-        // 初始化主 tabs
-        for (main in mainTabs) {
-            tabLayout.addTab(tabLayout.newTab().setText(main.title))
-        }
-
-        // helper: show/hide and set sub tabs for given main index
-        fun setupSubTabsFor(mainIndex: Int) {
-            tabSubLayout.removeAllTabs()
-            val children = mainTabs[mainIndex].children
-            if (children.isEmpty()) {
-                tabSubLayout.visibility = View.GONE
-            } else {
-                for (c in children) tabSubLayout.addTab(tabSubLayout.newTab().setText(c))
-                tabSubLayout.visibility = View.VISIBLE
-            }
-        }
-
-        // 主 Tab 点击：若有子 tab 则显示并默认选中第一子项（并跳转到相应 page）；否则跳到主页
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-
-                val mainIndex = tab.position
-                currentMainIndex = mainIndex
-                setupSubTabsFor(mainIndex)
-
-                val target = mainFirstPageIndex[mainIndex]
-                // 使用无动画切换，避免触发复杂的回调链
-                if (viewPager.currentItem != target) viewPager.setCurrentItem(target, false)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
-
-        // 二级 tab 点击 -> 切换到对应页面（mainFirstPageIndex + childIndex）
-        tabSubLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-
-                // 使用 currentMainIndex 来计算目标
-                val mainIndex = currentMainIndex
-                if (mainIndex < 0 || mainIndex >= mainTabs.size) return
-                val childIndex = tab.position
-                val target = mainFirstPageIndex[mainIndex] + childIndex
-                if (viewPager.currentItem != target) viewPager.setCurrentItem(target, false)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
-
-        // ViewPager 页面变更监听：根据 page 更新主 tab 与二级 tab（全部通过手动 select）
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-            }
-        })
-
-        // 初始选中第一个主 tab（触发初始化逻辑）
-        if (tabLayout.tabCount > 0) tabLayout.getTabAt(0)?.select()
     }
 
-    private class PagerAdapter(fa: FragmentActivity, private val pages: List<String>) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = pages.size
-        override fun createFragment(position: Int): Fragment = PageFragment.newInstance(position + 1, pages[position])
+    // 填充主 tab（只执行一次）
+    private fun populateMainTabs() {
+        tabLayout.removeAllTabs()
+        for (i in mainTabs.indices) {
+            val t = tabLayout.newTab().setText(mainTabs[i].title)
+            tabLayout.addTab(t)
+        }
     }
 
-    class PageFragment : Fragment(R.layout.fragment_page) {
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
-            val args = requireArguments()
-            val index = args.getInt(ARG_INDEX)
-            val title = args.getString(ARG_TITLE)
-            val tv = view.findViewById<TextView>(R.id.text_page)
-            tv.text = "第 $index 页：$title"
+    // 填充子 tab：将子 tab 的 tag 设为主 tab index，方便在监听中取回
+    private fun populateSubTabs(mainIndex: Int) {
+        subTabLayout.removeAllTabs()
+        val children = mainTabs[mainIndex].children
+        for (i in children.indices) {
+            val t = subTabLayout.newTab().setText(children[i])
+            t.tag = mainIndex
+            subTabLayout.addTab(t)
         }
+    }
 
+    // 简单页面 Fragment：仅展示 label
+    class PageFragment : Fragment() {
         companion object {
-            private const val ARG_INDEX = "arg_index"
-            private const val ARG_TITLE = "arg_title"
-            fun newInstance(index: Int, title: String): PageFragment {
+            private const val ARG_LABEL = "arg_label"
+            fun newInstance(label: String): PageFragment {
                 val f = PageFragment()
                 val b = Bundle()
-                b.putInt(ARG_INDEX, index)
-                b.putString(ARG_TITLE, title)
+                b.putString(ARG_LABEL, label)
                 f.arguments = b
                 return f
             }
+        }
+
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            val v = inflater.inflate(R.layout.fragment_page, container, false)
+            val tv = v.findViewById<TextView>(R.id.text_page)
+            tv.text = arguments?.getString(ARG_LABEL) ?: "Page"
+            return v
         }
     }
 }
