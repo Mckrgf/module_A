@@ -1,22 +1,34 @@
 package com.yaobing.framemvpproject.mylibrary.activity
 
+import android.R.id.tabs
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,6 +36,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -48,7 +61,25 @@ class ComposeDemoActivity : AppCompatActivity() {
         }
 
     }
-
+    @Preview(
+        name = "卡片",
+        showBackground = true,
+        uiMode = UI_MODE_NIGHT_NO
+    )
+    @Composable
+    fun GreetingCard(name: String = "123") {
+        Card(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+            Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                Box(modifier = Modifier.size(56.dp).background(Color.Gray, CircleShape))
+                Spacer(Modifier.width(12.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(name, style = MaterialTheme.typography.titleMedium)
+                    Text("Android 开发者", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                }
+                Button(onClick = {}) { Text("关注") }
+            }
+        }
+    }
     @Preview(
         name = "暗黑主题",
         showBackground = true,
@@ -56,6 +87,9 @@ class ComposeDemoActivity : AppCompatActivity() {
     )
     @Composable
     private fun ContentView() {
+        val tabs = listOf("Tab 1", "Tab 2", "Tab 3", "Tab 4")
+        val pagerState = rememberPagerState(pageCount = { tabs.size }, initialPage = 0)
+        val scope = rememberCoroutineScope()
         GreetingCardTheme {
             // A surface container using the 'background' color from the theme
             Surface(
@@ -79,6 +113,28 @@ class ComposeDemoActivity : AppCompatActivity() {
 
                         }) {
                             Text("compose实现fragment加底部导航栏效果")
+                        }
+
+                        TabRow(selectedTabIndex = pagerState.currentPage) {
+                            tabs.forEachIndexed { index, title ->
+                                Tab(
+                                    selected = pagerState.currentPage == index,
+                                    onClick = { scope.launch { pagerState.animateScrollToPage(index) } }
+                                ) {
+                                    Text(text = title, modifier = Modifier.padding(16.dp))
+                                }
+                            }
+                        }
+
+                        HorizontalPager(
+                            state = pagerState,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp)
+                        ) { page ->
+                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                Text(text = "这是 ${tabs[page]} 的内容", style = MaterialTheme.typography.labelLarge)
+                            }
                         }
                     }
                 }
