@@ -1,15 +1,15 @@
 plugins {
     id 'com.android.library'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
     id 'maven-publish'
-    id 'org.jetbrains.kotlin.plugin.compose' version "$kotlin_version"
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
+
 group='com.github.MCKRGF'
 
-
 android {
-    namespace 'com.yaobing.framemvpproject.mylibrary'  // Add this line matching your applicationId
+    namespace 'com.yaobing.framemvpproject.mylibrary'
 
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -38,13 +38,7 @@ android {
         compose true
         buildConfig true
     }
-//    composeOptions {
-//        kotlinCompilerExtensionVersion "$kotlin_version" // 关键：与 Kotlin 版本匹配
-//    }
 
-    kotlinOptions {
-        jvmTarget = "21"
-    }
     // 添加以下配置排除重复的 LICENSE.txt 文件
     packagingOptions {
         exclude 'META-INF/androidx/annotation/annotation/LICENSE.txt'
@@ -80,28 +74,13 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.13.2'
     kapt 'com.github.bumptech.glide:compiler:4.13.2'
-//    implementation 'com.github.sahasbhop.apngdecoder:apngdecoder:1.5'
-//    implementation 'com.github.penfeizhou.android.animation:apng:2.24.0'
-//    implementation 'com.github.penfeizhou.android.animation:glide-plugin:2.24.0'
-//    implementation 'com.github.zjupure:webpdecoder:2.6.4.16.0'
-
-
     implementation 'com.github.getActivity:EasyWindow:10.6'
     implementation 'com.tencent.mars:mars-xlog:1.2.6'
-//    implementation 'com.github.bumptech.glide:avif-integration:4.13.2'//16kb异常，不用了
     implementation 'com.github.bumptech.glide:okhttp3-integration:4.13.0'
-//    implementation 'com.gcssloop.widget:rclayout:1.8.1'
-//    implementation "io.github.cymchad:BaseRecyclerViewAdapterHelper:3.0.14"
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
     //2.x
     implementation 'com.scwang.smart:refresh-layout-horizontal:2.0.0'
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'
-    implementation 'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
-    implementation 'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
-
-    def composeBom = platform('androidx.compose:compose-bom:2024.09.03')
-    implementation composeBom
-    androidTestImplementation composeBom
-
-
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.1'
+    implementation 'com.scwang.smart:refresh-header-material:2.0.1'
 }
