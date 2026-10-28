@@ -36,6 +36,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -111,7 +112,7 @@ class TestActivity : BaseActivity() {
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        enableEdgeToEdge()
         val widgetContent = intent.getStringExtra("aa")
         Log.d("zxcv","准备获取widget携带的数据$widgetContent")
         if (!TextUtils.isEmpty(widgetContent)) {
@@ -669,6 +670,9 @@ class TestActivity : BaseActivity() {
         binding.btAlertDialog.setOnClickListener {
             val dialog = BottomDialog(this)
             dialog.show()
+        }
+        binding.btBottomNav.setOnClickListener {
+            IntentRouter.go(this, BaseConstant.BottomNavActivity)
         }
         binding.btA.setOnClickListener {
             bindTag(this, binding.root)
