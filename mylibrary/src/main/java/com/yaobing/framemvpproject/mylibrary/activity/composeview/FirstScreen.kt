@@ -115,8 +115,12 @@ private fun RecommendTabContent(
     val listItems = (1..50).map { "推荐内容 item $it" }
     val listState = rememberLazyListState()
 
-    // List 的 paddingTop - Tab 隐藏时减小到 0
-    val listTopPadding = 20.dp
+    // List 的 paddingTop - Tab 隐藏时减小到 0，Tab 显示时等于 tabTotalHeight
+    val listTopPadding by animateDpAsState(
+        targetValue = if (tabVisibility == 1) 0.dp else tabTotalHeight,
+        animationSpec = tween(300),
+        label = "list_padding"
+    )
 
     // 监听滚动方向
     var previousIndex by remember { mutableIntStateOf(0) }
