@@ -103,5 +103,7 @@ dependencies {
     implementation composeBom
     androidTestImplementation composeBom
 
+    // Lottie
+    implementation 'com.airbnb.android:lottie:6.4.0'
 
 }
