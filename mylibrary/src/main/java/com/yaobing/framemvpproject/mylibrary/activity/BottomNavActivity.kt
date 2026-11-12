@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yaobing.framemvpproject.mylibrary.activity.composeview.BottomNavBar
@@ -35,10 +37,10 @@ class BottomNavActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            GreetingCardTheme {
+            GreetingCardTheme(darkTheme = false) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = Color.White
                 ) {
                     BottomNavScreen()
                 }
@@ -53,14 +55,15 @@ class BottomNavActivity : AppCompatActivity() {
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize().background(Color.White)
         ) {
             // 上方内容区域
             Box(
                 modifier = Modifier
-                    .weight(1f)
+                    .weight(0.5f)
                     .fillMaxWidth()
-                    .padding(16.dp,0.dp,16.dp,0.dp),
+                    .padding(16.dp,0.dp,16.dp,0.dp)
+                    ,
                 contentAlignment = Alignment.Center
             ) {
                 when (selectedIndex) {
