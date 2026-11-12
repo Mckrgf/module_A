@@ -36,6 +36,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import kotlin.math.roundToInt
 
 @Preview
@@ -73,15 +74,29 @@ fun FirstScreen(title: String = "fef") {
                 }
             )
             else -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = tabTitles[selectedTabIndex],
-                        style = MaterialTheme.typography.headlineMedium
+                if (selectedTabIndex == 1) {
+                    // "关注" tab 显示居中标题
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = tabTitles[selectedTabIndex],
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                    }
+                } else {
+                    // 其他 tab 用 WebView 展示
+                    AndroidView(
+                        factory = { context ->
+                            android.webkit.WebView(context).apply {
+                                settings.javaScriptEnabled = true
+                                loadUrl("https://www.baidu.com")
+                            }
+                        },
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             }

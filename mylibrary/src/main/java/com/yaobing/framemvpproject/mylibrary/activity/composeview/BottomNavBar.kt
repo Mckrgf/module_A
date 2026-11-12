@@ -17,14 +17,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.airbnb.lottie.LottieAnimationView
-
+@Preview
 @Composable
 fun BottomNavBar(
-    selectedIndex: Int,
-    onItemSelected: (Int) -> Unit
+    selectedIndex: Int = 1,
+    onItemSelected: (Int) -> Unit = {}
 ) {
     val items = listOf("首页", "发现", "消息", "收藏", "我的")
     val lottieFiles = listOf(
@@ -38,7 +39,7 @@ fun BottomNavBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp),
+            .padding(vertical = 2.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         items.forEachIndexed { index, title ->
@@ -55,37 +56,28 @@ fun BottomNavBar(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // 图标区域：选中时显示 Lottie 动画，非选中时显示静态图片
-                if (isSelected) {
-                    AndroidView(
-                        factory = { context ->
-                            LottieAnimationView(context).apply {
-                                setAnimation(lottieFiles[index])
-                                repeatCount = 0
-                                playAnimation()
-                            }
-                        },
-                        modifier = Modifier
-                            .padding(4.dp)
-                            .height(32.dp)
-                            .fillMaxWidth(0.3f)
-                    )
-                } else {
-                    AndroidView(
-                        factory = { context ->
-                            ImageView(context).apply {
-                                // 从 assets 加载 test.png
-                                val bitmap = BitmapFactory.decodeStream(
-                                    context.assets.open("test.png")
-                                )
-                                setImageBitmap(bitmap)
-                            }
-                        },
-                        modifier = Modifier
-                            .padding(4.dp)
-                            .height(32.dp)
-                            .fillMaxWidth(0.3f)
-                    )
-                }
+                AndroidView(
+                    factory = { context ->
+                        LottieAnimationView(context).apply {
+                            setAnimation(lottieFiles[index])
+                            repeatCount = 0
+                        }
+                    },
+                    update = { view ->
+                        // 仅在选中且未播放时触发动画
+                        if (isSelected && !view.isAnimating) {
+                            view.playAnimation()
+                        }else if (!isSelected) {
+                            // 未选中时重置到第一帧，确保显示静态图标
+                            view.cancelAnimation()
+                            view.progress = 0f
+                        }
+                    },
+                    modifier = Modifier
+                        .padding(0.dp)
+                        .height(30.dp)
+                        .fillMaxWidth(0.3f)
+                )
 
                 // 文字标签
                 Text(
@@ -96,7 +88,8 @@ fun BottomNavBar(
                         MaterialTheme.colorScheme.onSurfaceVariant
                     },
                     style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(bottom = 12.dp)
                 )
             }
         }
