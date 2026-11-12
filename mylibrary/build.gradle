@@ -53,6 +53,7 @@ android {
 
 dependencies {
     implementation 'androidx.activity:activity-ktx:1.8.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0'
     implementation 'io.sentry:sentry-android:7.20.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation files('libs/rclayout-1.0.0.aar')

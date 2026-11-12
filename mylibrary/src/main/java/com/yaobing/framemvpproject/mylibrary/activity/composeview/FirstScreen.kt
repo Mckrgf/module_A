@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.blankj.utilcode.util.SnackbarUtils.addView
 import kotlin.math.roundToInt
 
 @Preview
@@ -60,6 +61,9 @@ fun FirstScreen(title: String = "fef") {
         label = "tab_offset"
     )
 
+    // 缓存每个 tab 的 WebView 实例
+    val webViewCache = remember { mutableMapOf<Int, android.webkit.WebView>() }
+
     // 使用 Box 叠加 Tab 和 List
     Box(
         modifier = Modifier.fillMaxSize()
@@ -79,7 +83,7 @@ fun FirstScreen(title: String = "fef") {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(16.dp),
+                            .padding(top = tabTotalHeight + 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
@@ -88,15 +92,13 @@ fun FirstScreen(title: String = "fef") {
                         )
                     }
                 } else {
-                    // 其他 tab 用 WebView 展示
-                    AndroidView(
-                        factory = { context ->
-                            android.webkit.WebView(context).apply {
-                                settings.javaScriptEnabled = true
-                                loadUrl("https://www.baidu.com")
-                            }
-                        },
-                        modifier = Modifier.fillMaxSize()
+                    // 其他 tab 用 WebView 展示，带下拉刷新
+                    WebViewWithRefresh(
+                        tabIndex = selectedTabIndex,
+                        webViewCache = webViewCache,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = tabTotalHeight)
                     )
                 }
             }
@@ -197,5 +199,40 @@ private fun RecommendTabContent(
                     .padding(vertical = 4.dp)
             )
         }
+    }
+}
+
+@Composable
+private fun WebViewWithRefresh(
+    tabIndex: Int,
+    webViewCache: MutableMap<Int, android.webkit.WebView>,
+    modifier: Modifier = Modifier
+) {
+    // 使用 key 强制在 tab 切换时重新组合
+    androidx.compose.runtime.key(tabIndex) {
+        AndroidView(
+            factory = { context ->
+                // 从缓存获取或创建新的 WebView
+                val webView = webViewCache.getOrPut(tabIndex) {
+                    android.webkit.WebView(context).apply {
+                        settings.javaScriptEnabled = true
+                        loadUrl("https://www.baidu.com")
+                    }
+                }
+                
+                // 如果 WebView 已经有父 View，先移除
+                (webView.parent as? android.view.ViewGroup)?.removeView(webView)
+                
+                // 使用 SwipeRefreshLayout 包裹 WebView
+                androidx.swiperefreshlayout.widget.SwipeRefreshLayout(context).apply {
+                    addView(webView)
+                    setOnRefreshListener {
+                        webView.reload()
+                        isRefreshing = false
+                    }
+                }
+            },
+            modifier = modifier
+        )
     }
 }
