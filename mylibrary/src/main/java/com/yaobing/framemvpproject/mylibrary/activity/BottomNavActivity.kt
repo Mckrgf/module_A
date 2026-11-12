@@ -10,17 +10,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -55,23 +55,31 @@ class BottomNavActivity : AppCompatActivity() {
 
         Column(
             modifier = Modifier
-                .fillMaxSize().background(Color.White)
+                .fillMaxSize()
+                .background(Color.White)
         ) {
-            // 上方内容区域
+            // 上方内容区域 - 所有页面始终在组合树中，切换时不销毁
             Box(
                 modifier = Modifier
-                    .weight(0.5f)
+                    .weight(1f)
                     .fillMaxWidth()
-                    .padding(16.dp,0.dp,16.dp,0.dp)
-                    ,
-                contentAlignment = Alignment.Center
             ) {
-                when (selectedIndex) {
-                    0 -> FirstScreen("首页")
-                    1 -> ContentScreen("发现")
-                    2 -> ContentScreen("消息")
-                    3 -> ContentScreen("收藏")
-                    4 -> ContentScreen("我的")
+                // 所有页面始终存在，用带动画的 alpha 控制可见性
+                // 这样切换时页面不会销毁重建，状态保持，同时有淡入淡出效果
+                PageWrapper(isVisible = selectedIndex == 0) {
+                    FirstScreen("首页")
+                }
+                PageWrapper(isVisible = selectedIndex == 1) {
+                    ContentScreen("发现")
+                }
+                PageWrapper(isVisible = selectedIndex == 2) {
+                    ContentScreen("消息")
+                }
+                PageWrapper(isVisible = selectedIndex == 3) {
+                    ContentScreen("收藏")
+                }
+                PageWrapper(isVisible = selectedIndex == 4) {
+                    ContentScreen("我的")
                 }
             }
 
@@ -84,5 +92,23 @@ class BottomNavActivity : AppCompatActivity() {
             )
         }
     }
+}
 
+@Composable
+private fun PageWrapper(
+    isVisible: Boolean,
+    content: @Composable () -> Unit
+) {
+    val alpha by animateFloatAsState(
+        targetValue = if (isVisible) 1f else 0f,
+        animationSpec = tween(durationMillis = 200),
+        label = "page_alpha"
+    )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .alpha(alpha)
+    ) {
+        content()
+    }
 }

@@ -27,6 +27,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,9 +45,9 @@ import kotlin.math.roundToInt
 @Composable
 fun FirstScreen(title: String = "fef") {
     val tabTitles = listOf("推荐", "关注") + (1..10).map { "其他$it" }
-    var selectedTabIndex by remember { mutableIntStateOf(0) }
+    var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
     // 0=显示, 1=隐藏
-    var tabVisibility by remember { mutableIntStateOf(0) }
+    var tabVisibility by rememberSaveable { mutableIntStateOf(0) }
     
     // 获取状态栏高度
     val statusBarHeight = 20.dp
@@ -216,6 +217,8 @@ private fun WebViewWithRefresh(
                 val webView = webViewCache.getOrPut(tabIndex) {
                     android.webkit.WebView(context).apply {
                         settings.javaScriptEnabled = true
+                        // 设置 WebViewClient 让链接在内部打开
+                        webViewClient = android.webkit.WebViewClient()
                         loadUrl("https://www.baidu.com")
                     }
                 }
