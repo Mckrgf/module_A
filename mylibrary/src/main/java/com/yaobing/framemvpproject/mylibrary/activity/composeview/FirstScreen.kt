@@ -31,6 +31,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
@@ -38,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.zIndex
 import com.blankj.utilcode.util.SnackbarUtils.addView
 import kotlin.math.roundToInt
 
@@ -69,39 +71,50 @@ fun FirstScreen(title: String = "fef") {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        // 内容区域
-        when (selectedTabIndex) {
-            0 -> RecommendTabContent(
+        // 推荐页始终保留在组合树中，避免切换 tab 时被销毁导致状态丢失
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(if (selectedTabIndex == 0) 1f else 0f)
+                .zIndex(if (selectedTabIndex == 0) 1f else 0f)
+        ) {
+            RecommendTabContent(
                 tabVisibility = tabVisibility,
                 tabTotalHeight = tabTotalHeight,
                 onScrollDirectionChange = { isScrollingUp ->
                     tabVisibility = if (isScrollingUp) 1 else 0
                 }
             )
-            else -> {
-                if (selectedTabIndex == 1) {
-                    // "关注" tab 显示居中标题
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(top = tabTotalHeight + 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = tabTitles[selectedTabIndex],
-                            style = MaterialTheme.typography.headlineMedium
-                        )
-                    }
-                } else {
-                    // 其他 tab 用 WebView 展示，带下拉刷新
-                    WebViewWithRefresh(
-                        tabIndex = selectedTabIndex,
-                        webViewCache = webViewCache,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(top = tabTotalHeight)
+        }
+
+        if (selectedTabIndex != 0) {
+            if (selectedTabIndex == 1) {
+                // "关注" tab 显示居中标题
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = tabTotalHeight + 16.dp,
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 16.dp
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = tabTitles[selectedTabIndex],
+                        style = MaterialTheme.typography.headlineMedium
                     )
                 }
+            } else {
+                // 其他 tab 用 WebView 展示，带下拉刷新
+                WebViewWithRefresh(
+                    tabIndex = selectedTabIndex,
+                    webViewCache = webViewCache,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = tabTotalHeight)
+                )
             }
         }
 
@@ -117,11 +130,11 @@ fun FirstScreen(title: String = "fef") {
                 Box(
                     modifier = Modifier
                         .tabIndicatorOffset(tabPositions[selectedTabIndex])
-                        .padding(16.dp,0.dp,16.dp,2.dp,)
+                        .padding(16.dp, 0.dp, 16.dp, 2.dp)
                         .height(4.dp)
                         .background(
                             brush = Brush.horizontalGradient(
-                                colors = listOf(Color.Blue, Color.Green,Color.Blue)
+                                colors = listOf(Color.Blue, Color.Green, Color.Blue)
                             ),
                             shape = RoundedCornerShape(12.dp)
                         )
