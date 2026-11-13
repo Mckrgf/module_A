@@ -52,7 +52,13 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.activity:activity-compose:1.8.0'
     implementation 'androidx.activity:activity-ktx:1.8.0'
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.ui:ui-graphics'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.navigation:navigation-compose:2.8.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0'
     implementation 'io.sentry:sentry-android:7.20.0'
@@ -72,12 +78,15 @@ dependencies {
     implementation 'androidx.activity:activity:1.8.0'
     implementation 'androidx.paging:paging-compose:3.3.6'
     testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation project(':module_middleware')
     api project(path: ':module_common_view')
     implementation project(path: ':module_base:module_apt')
+    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
     kapt project(path: ':module_base:module_compiler')
 
     implementation 'com.github.bumptech.glide:glide:4.13.2'

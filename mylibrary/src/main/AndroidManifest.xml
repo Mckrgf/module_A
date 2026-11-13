@@ -164,6 +164,12 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activity.EmptyComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_empty_compose"
+            android:theme="@style/Theme.FrameMvpProject"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
