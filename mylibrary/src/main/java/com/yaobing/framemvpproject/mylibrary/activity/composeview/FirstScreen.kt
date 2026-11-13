@@ -1,8 +1,10 @@
 package com.yaobing.framemvpproject.mylibrary.activity.composeview
 
+import android.content.Intent
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
@@ -41,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.zIndex
 import com.blankj.utilcode.util.SnackbarUtils.addView
+import com.yaobing.framemvpproject.mylibrary.activity.BottomNavV2Activity
 import kotlin.math.roundToInt
 
 @Preview
@@ -164,7 +168,8 @@ private fun RecommendTabContent(
     tabTotalHeight: androidx.compose.ui.unit.Dp,
     onScrollDirectionChange: (Boolean) -> Unit
 ) {
-    val listItems = (1..50).map { "推荐内容 item $it" }
+    val context = LocalContext.current
+    val listItems = (1..50).map { "新的架构 item $it" }
     val listState = rememberLazyListState()
 
     // List 的 paddingTop - Tab 隐藏时减小到 0，Tab 显示时等于 tabTotalHeight
@@ -211,6 +216,10 @@ private fun RecommendTabContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp)
+                    .clickable {
+                        // 点击跳转到 BottomNavV2Activity
+                        context.startActivity(Intent(context, BottomNavV2Activity::class.java))
+                    }
             )
         }
     }
