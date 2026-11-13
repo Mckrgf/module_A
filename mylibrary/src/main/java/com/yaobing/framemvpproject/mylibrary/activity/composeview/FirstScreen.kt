@@ -7,7 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.WindowInsets
@@ -93,8 +92,8 @@ fun FirstScreen(title: String = "fef") {
 
         if (selectedTabIndex != 0) {
             if (selectedTabIndex == 1) {
-                // "关注" tab 显示居中标题
-                Box(
+                // "关注" tab 展示 Typography 用法
+                TypographyDemo(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(
@@ -102,14 +101,8 @@ fun FirstScreen(title: String = "fef") {
                             start = 16.dp,
                             end = 16.dp,
                             bottom = 16.dp
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = tabTitles[selectedTabIndex],
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                }
+                        )
+                )
             } else {
                 // 其他 tab 用 WebView 展示，带下拉刷新
                 WebViewWithRefresh(
