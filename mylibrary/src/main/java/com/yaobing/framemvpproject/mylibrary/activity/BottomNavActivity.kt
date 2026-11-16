@@ -59,11 +59,9 @@ class BottomNavActivity : AppCompatActivity() {
                 .background(Color.White)
         ) {
             // 上方内容区域 - 所有页面始终在组合树中，切换时不销毁
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-            ) {
+            Box(modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()) {
                 // 所有页面始终存在，用带动画的 alpha 控制可见性
                 // 这样切换时页面不会销毁重建，状态保持，同时有淡入淡出效果
                 PageWrapper(isVisible = selectedIndex == 0) {

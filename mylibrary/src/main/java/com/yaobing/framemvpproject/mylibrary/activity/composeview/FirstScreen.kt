@@ -49,7 +49,7 @@ import kotlin.math.roundToInt
 @Preview
 @Composable
 fun FirstScreen(title: String = "fef") {
-    val tabTitles = listOf("推荐", "关注") + (1..10).map { "其他$it" }
+    val tabTitles = listOf("列表", "字体") + (1..10).map { "其他$it" }
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
     // 0=显示, 1=隐藏
     var tabVisibility by rememberSaveable { mutableIntStateOf(0) }
@@ -94,6 +94,17 @@ fun FirstScreen(title: String = "fef") {
             if (selectedTabIndex == 1) {
                 // "关注" tab 展示 Typography 用法
                 TypographyDemo(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = tabTotalHeight + 16.dp,
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 16.dp
+                        )
+                )
+            } else if (selectedTabIndex == 2) {
+                LayoutDemo(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(
