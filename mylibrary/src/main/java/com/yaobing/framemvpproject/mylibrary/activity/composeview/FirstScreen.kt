@@ -49,7 +49,7 @@ import kotlin.math.roundToInt
 @Preview
 @Composable
 fun FirstScreen(title: String = "fef") {
-    val tabTitles = listOf("列表", "字体") + (1..10).map { "其他$it" }
+    val tabTitles = listOf("列表", "字体","布局排列") + (1..10).map { "其他$it" }
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
     // 0=显示, 1=隐藏
     var tabVisibility by rememberSaveable { mutableIntStateOf(0) }
@@ -60,9 +60,9 @@ fun FirstScreen(title: String = "fef") {
     // Tab 高度（状态栏 padding + Tab 内容高度）
     val tabTotalHeight = statusBarHeight + 48.dp
 
-    // Tab 偏移动画
+    // Tab 偏移动画 - 只有第一个 tab 才根据滚动方向隐藏/显示
     val tabOffsetY by animateDpAsState(
-        targetValue = if (tabVisibility == 1) (-tabTotalHeight) else 0.dp,
+        targetValue = if (selectedTabIndex == 0 && tabVisibility == 1) (-tabTotalHeight) else 0.dp,
         animationSpec = tween(300),
         label = "tab_offset"
     )
@@ -190,17 +190,29 @@ private fun RecommendTabContent(
     LaunchedEffect(listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset) {
         val currentIndex = listState.firstVisibleItemIndex
         val currentOffset = listState.firstVisibleItemScrollOffset
+        
+        // 检测是否到达边界（顶部或底部）
+        val layoutInfo = listState.layoutInfo
+        val totalItems = layoutInfo.totalItemsCount
+        val visibleItems = layoutInfo.visibleItemsInfo
+        val isAtTop = currentIndex == 0 && currentOffset == 0
+        val isAtBottom = visibleItems.isNotEmpty() && 
+            visibleItems.last().index == totalItems - 1 &&
+            visibleItems.last().offset + visibleItems.last().size <= layoutInfo.viewportEndOffset
 
-        // 判断滚动方向
-        val isScrollingUp = when {
-            currentIndex > previousIndex -> true
-            currentIndex < previousIndex -> false
-            currentOffset > previousScrollOffset -> true
-            currentOffset < previousScrollOffset -> false
-            else -> null
+        // 到达边界时不更新 tabVisibility，避免过度滚动导致的误判
+        if (!isAtTop && !isAtBottom) {
+            // 判断滚动方向
+            val isScrollingUp = when {
+                currentIndex > previousIndex -> true
+                currentIndex < previousIndex -> false
+                currentOffset > previousScrollOffset -> true
+                currentOffset < previousScrollOffset -> false
+                else -> null
+            }
+
+            isScrollingUp?.let { onScrollDirectionChange(it) }
         }
-
-        isScrollingUp?.let { onScrollDirectionChange(it) }
 
         previousIndex = currentIndex
         previousScrollOffset = currentOffset
