@@ -1,6 +1,7 @@
 package com.yaobing.framemvpproject.mylibrary.activity.composeview
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,14 +23,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import android.content.Intent
+import androidx.compose.ui.platform.LocalContext
+import com.yaobing.framemvpproject.mylibrary.activity.EmptyComposeActivity
 import androidx.compose.ui.unit.dp
-
+@Preview
 @Composable
 fun TypographyDemo(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     Column(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(rememberScrollState())
+            .background(Color.White),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         // Display 系列 - 超大标题
@@ -40,7 +46,9 @@ fun TypographyDemo(modifier: Modifier = Modifier) {
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
         // Headline 系列 - 大标题
-        Text("Headline Large", style = MaterialTheme.typography.headlineLarge)
+        Text("Headline Large(点击跳转Scaffold)", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.clickable {
+            context.startActivity(Intent(context, EmptyComposeActivity::class.java))
+        })
         Text("Headline Medium", style = MaterialTheme.typography.headlineMedium)
         Text("Headline Small", style = MaterialTheme.typography.headlineSmall)
 

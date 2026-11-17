@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,7 +57,9 @@ class BottomNavActivity : AppCompatActivity() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background(Color.White).clickable(enabled = true, onClick = {
+                    // 点击空白区域，隐藏键盘
+                })
         ) {
             // 上方内容区域 - 所有页面始终在组合树中，切换时不销毁
             Box(modifier = Modifier
